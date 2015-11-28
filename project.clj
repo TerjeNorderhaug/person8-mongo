@@ -5,8 +5,8 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[org.clojure/clojure "1.7.0"]
-                 [org.clojure/clojurescript "1.7.48"]
-                 [org.clojure/core.async "0.1.346.0-17112a-alpha"]
+                 [org.clojure/clojurescript "1.7.170"]
+                 [org.clojure/core.async "0.2.374"]
                  [reagent "0.5.1"]
                  [kioo "0.4.1"]]
 
@@ -17,10 +17,10 @@
                        [react "0.13.3"]]
         :root :root}
 
-  :plugins [[lein-cljsbuild "1.1.0"]
+  :plugins [[lein-cljsbuild "1.1.1"]
             [lein-npm "0.6.1"]]
 
-  :min-lein-version "2.1.2"
+  :min-lein-version "2.1.3"
 
   :hooks [leiningen.cljsbuild]
 
@@ -59,7 +59,7 @@
 
   :profiles {:dev
              {:plugins
-              [[lein-figwheel "0.3.9"]]
+              [[lein-figwheel "0.5.0-2"]]
               :cljsbuild
               {:builds
                {:app
