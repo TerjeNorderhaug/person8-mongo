@@ -10,6 +10,10 @@ Check it out at https://cljsnode.herokuapp.com
 Fork on github as a starting point for your own projects.
 A goal is to turn this into a Leiningen template.
 
+## Requirements
+
+leiningen, heroku, npm
+
 ## Run Locally
 
 To start a server on your own computer:
