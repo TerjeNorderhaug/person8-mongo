@@ -13,7 +13,7 @@
 ;; 2. Kioo (enlive style) injecting transformations into external template;
 ;;    The template file is in the resources directory.
 
-(defn jokes-view-1 [jokes]
+(defn view-1 [jokes]
   [:div.row
    (for [joke jokes]
      ^{:key (gstring/hashCode joke)}
@@ -21,23 +21,23 @@
       [:div.well
        [:div.joke joke]]])])
 
-(defsnippet joke-card "template.html" [:main :.joke-card]
+(defsnippet card "template.html" [:main :.joke-card]
   [joke]
   {[:.joke] (content joke) })
 
-(defsnippet jokes-view-2 "template.html" [:main :.row]
+(defsnippet view-2 "template.html" [:main :.row]
   [jokes]
-  {[:.joke-card] (substitute (map joke-card jokes)) })
+  {[:.joke-card] (substitute (map card jokes)) })
 
-;; Use either of the jokes-view-* templates from above:
+;; Use either of the view-* templates from above:
 
-(def jokes-view jokes-view-2)
+(def view view-2)
 
 ;; Template for the html page:
 
-(defsnippet jokes-page "template.html" [:html]
+(defsnippet page "template.html" [:html]
   [jokes & {:keys [scripts]}]
-  {[:main] (content [jokes-view jokes])
+  {[:main] (content [view jokes])
    [:body] (append [:div (for [src scripts]
                            ^{:key (gstring/hashCode (pr-str src))}
                            [:script src])]) })
@@ -46,4 +46,4 @@
   (str "<!DOCTYPE html>\n" content))
 
 (defn test-views []
-  (html5 (jokes-page ["Chuck Norris eats parentheses for breakfast"])))
+  (html5 (page ["Chuck Norris eats parentheses for breakfast"])))

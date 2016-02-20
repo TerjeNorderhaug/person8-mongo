@@ -7,7 +7,7 @@
    [goog.events :as events]
    [reagent.core :as reagent :refer [atom]]
    [app.jokes :refer [fresh-jokes]]
-   [app.views :refer [jokes-view jokes-page html5]]))
+   [app.views :refer [view page html5]]))
 
 (def scripts [{:src "/js/out/app.js"}
               "main_cljs_fn()"])
@@ -20,7 +20,7 @@
     (go
       (put! out
             (-> (<! (jokes-chan))
-                (jokes-page :scripts scripts)
+                (page :scripts scripts)
                 (reagent/render-to-string)
                 (html5))))
     out))
@@ -38,5 +38,5 @@
       (when (some? (<! user-action))
         (reset! jokes (<! jokes-buf))
         (when-not initialized
-          (reagent/render [#(jokes-view @jokes)] el))
+          (reagent/render [#(view @jokes)] el))
         (recur true)))))
