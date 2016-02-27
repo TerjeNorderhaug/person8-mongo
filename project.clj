@@ -59,7 +59,7 @@
 
   :profiles {:dev
              {:plugins
-              [[lein-figwheel "0.5.0-2"]]
+              [[lein-figwheel "0.5.0-6"]]
               :cljsbuild
               {:builds
                {:app
