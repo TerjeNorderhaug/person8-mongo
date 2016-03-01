@@ -1,7 +1,8 @@
 (ns polyfill.compat
   (:require
    [cljs.nodejs :as nodejs]
-   [polyfill.simple]))
+   [polyfill.simple]
+   [goog.dom :as dom]))
 
 "
 Load before any module that depends on basic browser context.
@@ -261,27 +262,10 @@ but that doesn't seem to be the case, which may require additional concerns.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(deftype Node [] Object)
-(override-prototype Node node-prototype (aget js/global "Node"))
-(set! js/Node Node)
-;(set! js/Node
-;      (clone-merge (or (aget js/global "Node") Node)
-;                    node-prototype))
+(when-not (exists? js/Node)
+  (set! js/Node dom/NodeType))
 
-; for testing - from hickory
-(defn extend-type-with-seqable
-  [t]
-  (extend-type t
-    ISeqable
-    (-seq [array] (array-seq array))))
-
-;; (def doc2 (.parseFromString (new dom-parser) xhtml "application/xml"))
-;; (extend-type-with-seqable Node)
-;; (map identity (Node.))
-;; Now even an existing document should be seqable:
-;; (map identity doc2)
-;; Yes! Works...
-
+;; for testing - from hickory
 ;; js/NodeList (used in hickory.core)
 
 (def nodelist-prototype (prototype-of (.-childNodes doc)))
@@ -294,6 +278,12 @@ but that doesn't seem to be the case, which may require additional concerns.
 ;;                     NodeList
 ;;                    (aget js/global "NodeList"))
 ;;                    nodelist-prototype))
+
+(defn extend-type-with-seqable
+  [t]
+  (extend-type t
+    ISeqable
+    (-seq [array] (array-seq array))))
 
 (extend-type-with-seqable js/NodeList) ; test
 
