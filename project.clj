@@ -7,7 +7,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.89"]
                  [org.clojure/core.async "0.2.385"]
-                 [reagent "0.6.0"]
+                 [reagent "0.6.0-rc"]
                  [kioo "0.4.2"]]
 
   :npm {:dependencies [[express "4.13.4"]
