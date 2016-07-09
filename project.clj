@@ -14,7 +14,8 @@
                        [xmlhttprequest "*"]
                        [xmldom "0.1.19"]
                        [source-map-support "*"]
-                       [react "15.2.1"]]
+                       [react "15.2.1"]
+                       [react-dom "15.2.1"]]
         :root :root}
 
   :plugins [[lein-cljsbuild "1.1.2"]
