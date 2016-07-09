@@ -4,17 +4,17 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  :dependencies [[org.clojure/clojure "1.7.0"]
-                 [org.clojure/clojurescript "1.7.228"]
-                 [org.clojure/core.async "0.2.374"]
-                 [reagent "0.5.1"]
-                 [kioo "0.4.1"]]
+  :dependencies [[org.clojure/clojure "1.8.0"]
+                 [org.clojure/clojurescript "1.9.89"]
+                 [org.clojure/core.async "0.2.385"]
+                 [reagent "0.6.0"]
+                 [kioo "0.4.2"]]
 
   :npm {:dependencies [[express "4.13.4"]
                        [xmlhttprequest "*"]
                        [xmldom "0.1.19"]
                        [source-map-support "*"]
-                       [react "0.13.3"]]
+                       [react "0.15.2"]]
         :root :root}
 
   :plugins [[lein-cljsbuild "1.1.2"]
