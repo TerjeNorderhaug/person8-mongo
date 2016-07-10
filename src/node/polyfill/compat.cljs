@@ -24,11 +24,11 @@ but that doesn't seem to be the case, which may require additional concerns.
 (when xhr
   (set! js/XMLHttpRequest (.-XMLHttpRequest xhr)))
 
-;; Reagent uses js/React:
+;; Reagent uses js/React
 
-(def react (nodejs/require "react"))
-(when react
-  (aset js/global "React" react)) ; work-arounds "constant React assigned a value more than once."
+#_(def react (nodejs/require "react"))
+#_(when react
+    (aset js/global "React" react))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DOM

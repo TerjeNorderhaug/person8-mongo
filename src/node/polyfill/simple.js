@@ -13,10 +13,10 @@
 // Don't use :libs as it unfortunately injects late in :simple executables.
 // Same holds for using :require from clojurescript.
 
-if (typeof React == 'undefined') {
-  // React = require("react"); // maybe compat can set js/React instead?
-  global["React"] = require("react"); // avoid compiler err redefine constant
-}
+//if (typeof React == 'undefined') {
+// React = require("react"); // maybe compat can set js/React instead?
+//  global["React"] = require("react"); // avoid compiler err redefine constant
+//}
 
 // Stand-ins redefined elsewhere... for hickory.core.cljs
 function Node() {};

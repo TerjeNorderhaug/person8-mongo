@@ -51,7 +51,7 @@ Figwheel will push code changes to the app and server.
 
 ## License
 
-Copyright © 2015 Terje Norderhaug
+Copyright © 2015-2016 Terje Norderhaug
 
 Based on an app concept by Marian Schubert.
 

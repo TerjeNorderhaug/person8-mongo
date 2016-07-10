@@ -8,14 +8,14 @@
                  [org.clojure/clojurescript "1.9.89"]
                  [org.clojure/core.async "0.2.385"]
                  [reagent "0.6.0-rc"]
-                 [kioo "0.4.2"]]
+                 [kioo "0.5.0-SNAPSHOT" :exclusions [cljsjs/react]]]
 
   :npm {:dependencies [[express "4.13.4"]
                        [xmlhttprequest "*"]
                        [xmldom "0.1.19"]
                        [source-map-support "*"]
                        [react "15.2.1"]
-                       [react-dom "15.2.1"]]
+                       #_[react-dom "15.2.1"]]
         :root :root}
 
   :plugins [[lein-cljsbuild "1.1.2"]
