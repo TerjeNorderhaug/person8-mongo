@@ -24,12 +24,6 @@ but that doesn't seem to be the case, which may require additional concerns.
 (when xhr
   (set! js/XMLHttpRequest (.-XMLHttpRequest xhr)))
 
-;; Reagent uses js/React
-
-#_(def react (nodejs/require "react"))
-#_(when react
-    (aset js/global "React" react))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DOM
 
@@ -77,14 +71,8 @@ but that doesn't seem to be the case, which may require additional concerns.
         frag (.parseFromString parser markup "text/html")]
     frag))
 
-(def doc (html-from-string (default-html-markup "untitled")))
-
-(when-not (aget js/global "document")
-  ; (set! js/document doc)
-  (aset js/global "document" doc)) ; avoid compiler reset constant error
-
-(when-not (try goog.global.document (catch js/Error e false))
-  (set! goog.global.document doc))
+(def doc (or (aget js/global "document")
+             (html-from-string (default-html-markup "untitled"))))
 
 (def dom-implementation (.-implementation doc))
 
@@ -153,7 +141,7 @@ but that doesn't seem to be the case, which may require additional concerns.
      (map #(.serializeToString serializer (.item children %)) (range n))
      (apply str))))
 
-(def div (.createElement js/document "div"))
+(def div (.createElement doc "div"))
 
 (defn prototype-of [instance] ; works
   (.getPrototypeOf js/Object instance))
@@ -204,7 +192,7 @@ but that doesn't seem to be the case, which may require additional concerns.
 
 (def doc2 (.parseFromString (new dom-parser) xhtml "application/xml"))
 
-(def node (.createElement js/document "main"))
+(def node (.createElement doc "main"))
 
 ;; (get-inner-html node)
 ;; (set-inner-html node "<p>hello</p>");
@@ -326,11 +314,6 @@ but that doesn't seem to be the case, which may require additional concerns.
 
 ;;(assert (.-firstChild div))
 ;;(assert (.getElementsByTagName div "tbody"))
-
-;; Still can be a problem that dependenices aren't required in order,
-;; as js/document need to be defined before certain modules.
-
-;; may have to run goog.nodeGlobalRequire per the goog bootstrap.js
 
 ; Soon we should be able to use jsdom instead for more comprehensive browser dom emulation:
 ; (def jsdom (nodejs/require "jsdom"))
