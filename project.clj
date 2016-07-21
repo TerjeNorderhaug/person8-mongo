@@ -60,16 +60,16 @@
 
   :profiles {:dev
              {:plugins
-              [[lein-figwheel "0.5.0-6"]]
+              [[lein-figwheel "0.5.4-7"]]
               :cljsbuild
               {:builds
                {:app
-                {:compiler {:pretty-print true}
-                 :source-map true
+                {:compiler {:pretty-print true
+                            :source-map true}
                  :figwheel true}
                 :server
-                {:compiler {:pretty-print true}
-                 :source-map true
+                {:compiler {:pretty-print true
+                            :source-map true}
                  :figwheel {:heads-up-display false}}}}
               :npm {:dependencies [[ws "*"]]}}
 
