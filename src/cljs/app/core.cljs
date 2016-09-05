@@ -2,7 +2,7 @@
   (:require-macros
    [cljs.core.async.macros :refer [go go-loop]])
   (:require
-   [cljs.core.async :as async :refer [chan close! timeout put!]]
+   [cljs.core.async :as async :refer [chan close! alts! timeout put!]]
    [goog.dom :as dom]
    [goog.events :as events]
    [reagent.core :as reagent :refer [atom]]
@@ -17,13 +17,15 @@
   (memoize #(fresh-jokes 12 2)))
 
 (defn static-page []
-  (let [out (chan 1)]
+  (let [out (chan 1)
+        in (jokes-chan)]
     (go
-      (put! out
-            (-> (<! (jokes-chan))
-                (page :scripts scripts)
-                (render-to-string)
-                (html5))))
+      (let [[val ch] (alts! [in (timeout 2000)])]
+        (put! out
+              (-> (if (identical? in ch) val ["No Joke!"])
+                  (page :scripts scripts)
+                  (render-to-string)
+                  (html5)))))
     out))
 
 (defn activate []

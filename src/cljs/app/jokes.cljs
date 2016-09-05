@@ -18,7 +18,9 @@
                         (map gstring/unescapeEntities)
                         (partition-all n)))]
      (async/pipeline-async concur out
-                           (fn [url ch](fetch-json url #(put! ch % (partial close! ch))))
+                           (fn [url ch](fetch-json url #(if %
+                                                          (put! ch % (partial close! ch))
+                                                          (close! ch))))
                              ;; Preferable but cannot do yet due to bug in core.async:
                              ;; http://dev.clojure.org/jira/browse/ASYNC-108
                              ;; (async/to-chan (repeat (:url endpoint)))
