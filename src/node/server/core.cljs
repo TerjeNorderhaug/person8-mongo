@@ -24,7 +24,7 @@
       (.send res (<! (static-page))))))
 
 (defn api-handler [req res]
-  (go-loop [in (app/jokes-chan)
+  (go-loop [in (app/resource-chan)
             [val ch] (alts! [in (timeout 5000)])]
     (if (identical? in ch)
       (do
