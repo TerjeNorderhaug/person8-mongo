@@ -19,8 +19,8 @@
 
 (defn view-1 [data]
   [:div.row
-   (for [entity data]
-     ^{:key (gstring/hashCode entity)}
+   (for [[ix entity] (map-indexed vector data)]
+     ^{:key (gstring/hashCode (str entity ix))}
      [:div.card.col-xs-12.col-sm-6.col-md-4.col-lg-3
       [:div.well
        [:div.entity entity]]])])
@@ -42,6 +42,7 @@
 (defsnippet page "template.html" [:html]
   [data & {:keys [scripts title forkme]}]
   {[:head :title] (if title (content title) identity)
+   [:nav :.navbar-brand] (if title (content title) identity)
    [:main] (content [view data])
    [:#forkme] (if forkme identity (content nil))
    [:body] (append [:div (for [src scripts]

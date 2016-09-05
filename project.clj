@@ -36,6 +36,7 @@
                                     :target-path :compile-path]
 
   :figwheel {:http-server-root "public"
+             :load-all-builds false
              :css-dirs ["resources/public/css"]
              :server-logfile "logs/figwheel.log"}
 
