@@ -7,15 +7,17 @@
    [goog.events :as events]
    [reagent.core :as reagent :refer [atom]]
    [reagent.dom.server :refer [render-to-string]]
-   [app.jokes :as jokes
-    :refer [fresh-jokes]]
+   [app.bridge :as bridge]
    [app.views :refer [view page html5]]))
 
 (def scripts [{:src "/js/out/app.js"}
               "main_cljs_fn()"])
 
+(def endpoint {:url "http://api.icndb.com/jokes/random"
+               :extract #(get-in % ["value" "joke"]) })
+
 (def jokes-chan
-  (memoize #(fresh-jokes 12 2)))
+  (memoize #(bridge/open-resource endpoint 12 2)))
 
 (defn static-page []
   (let [out (chan 1)
@@ -33,7 +35,7 @@
   (let [el (dom/getElement "jokes")
         joke-num 12
         buf-size 3
-        jokes-buf (fresh-jokes joke-num buf-size :concur (* joke-num buf-size))
+        jokes-buf (bridge/open-resource endpoint joke-num buf-size :concur (* joke-num buf-size))
         jokes (atom nil)
         user-action (chan)]
     (events/listen el events/EventType.CLICK
