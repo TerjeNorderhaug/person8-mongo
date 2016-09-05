@@ -7,7 +7,8 @@
    [goog.events :as events]
    [reagent.core :as reagent :refer [atom]]
    [reagent.dom.server :refer [render-to-string]]
-   [app.jokes :refer [fresh-jokes]]
+   [app.jokes :as jokes
+    :refer [fresh-jokes]]
    [app.views :refer [view page html5]]))
 
 (def scripts [{:src "/js/out/app.js"}

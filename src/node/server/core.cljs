@@ -1,12 +1,16 @@
 (ns server.core
   (:require-macros
-   [cljs.core.async.macros :as m :refer [go go-loop alt!]])
+   [cljs.core.async.macros :as m
+    :refer [go go-loop alt!]])
   (:require
    [polyfill.compat]
    [cljs.nodejs :as nodejs]
-   [cljs.core.async :as async :refer [chan close! timeout put!]]
-   [reagent.core :as reagent :refer [atom]]
-   [app.core :refer [static-page]]))
+   [cljs.core.async :as async
+    :refer [chan close! timeout put!]]
+   [reagent.core :as reagent
+    :refer [atom]]
+   [app.core :as app
+    :refer [static-page]]))
 
 (enable-console-print!)
 
@@ -19,9 +23,20 @@
       (.set res "Content-Type" "text/html")
       (.send res (<! (static-page))))))
 
+(defn api-handler [req res]
+  (go-loop [in (app/jokes-chan)
+            [val ch] (alts! [in (timeout 5000)])]
+    (if (identical? in ch)
+      (do
+        (.set res "Content-Type" "application/json")
+        (.send res (clj->js val)))
+      (do
+        (.send (.status res 504) "Gateway Timeout")))))
+
 (defn server [port success]
   (doto (express)
     (.get "/" handler)
+    (.get "/api" api-handler)
     (.use (.static express "resources/public"))
     (.listen port success)))
 
