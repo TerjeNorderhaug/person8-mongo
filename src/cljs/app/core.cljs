@@ -26,7 +26,7 @@
       (let [[val ch] (alts! [in (timeout 2000)])]
         (put! out
               (-> (if (identical? in ch) val (repeat 12 "No Joke!"))
-                  (page :scripts scripts)
+                  (page :scripts scripts :title "Jokes" :forkme true)
                   (render-to-string)
                   (html5)))))
     out))

@@ -40,8 +40,10 @@
 ;; Template for the html page:
 
 (defsnippet page "template.html" [:html]
-  [data & {:keys [scripts]}]
-  {[:main] (content [view data])
+  [data & {:keys [scripts title forkme]}]
+  {[:head :title] (if title (content title) identity)
+   [:main] (content [view data])
+   [:#forkme] (if forkme identity (content nil))
    [:body] (append [:div (for [src scripts]
                            ^{:key (gstring/hashCode (pr-str src))}
                            [:script src])]) })
