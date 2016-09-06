@@ -1,14 +1,14 @@
 # cljsnode
 
-Clojurescript based reference SPA on Heroku using node express, bootstrap,
-reactjs/reagent and Kioo templates, demonstrating "isomorphic" clojurescript
-shared between frontend and backend and Figwheel hotloading code changes
+Reference implementation for universal (nee isomporhic) Clojurescript React SPA.
+Runs on Heroku using node express, bootstrap, reagent and Kioo templates,
+with code shared between frontend and backend, where Figwheel hotloads code changes
 to both.
 
 Check it out at https://cljsnode.herokuapp.com
 
 Fork on github as a starting point for your own projects.
-A goal is to turn this into a Leiningen template.
+Soon to be available as a Leiningen template.
 
 ## Requirements
 

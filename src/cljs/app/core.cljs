@@ -12,7 +12,6 @@
    [reagent.dom.server
     :refer [render-to-string]]
    [app.bridge :as bridge]
-   [app.session :as session]
    [app.views
     :refer [view page html5]]))
 

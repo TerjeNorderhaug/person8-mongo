@@ -8,6 +8,7 @@
                  [org.clojure/clojurescript "1.9.227"]
                  [org.clojure/core.async "0.2.385"]
                  [reagent "0.6.0-rc"]
+                 [secretary "1.2.3"]
                  [kioo "0.5.0-SNAPSHOT" :exclusions [cljsjs/react]]]
 
   :npm {:dependencies [[express "4.14.0"]
