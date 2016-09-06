@@ -10,14 +10,15 @@
     :refer [handle-wrapper]]
    [reagent.core :as reagent
     :refer [atom]]
-   [goog.string :as gstring]))
+   [goog.string :as gstring]
+   [app.session :as session]))
 
 ;; Showcasing combining different ways to generate the markup for the page:
 ;; 1. Hiccup-style templating with elements as inline clojure vectors;
 ;; 2. Kioo (enlive style) injecting transformations into external template;
 ;;    The template file is in the resources directory.
 
-(defn view-1 [data]
+(defn hiccup-view [data]
   [:div.row
    (for [[ix entity] (map-indexed vector data)]
      ^{:key (gstring/hashCode (str entity ix))}
@@ -27,15 +28,13 @@
 
 (defsnippet card "template.html" [:main :.card]
   [entity]
-  {[:.entity] (content entity) })
+  {[:.entity] (content entity)})
 
-(defsnippet view-2 "template.html" [:main :.row]
+(defsnippet kioo-view "template.html" [:main :.row]
   [data]
   {[:.card] (substitute (map card data)) })
 
-(def view-option {:hiccup view-1 :kioo view-2})
-
-(def view (view-option :hiccup)) ;; Use either of the view-* templates from above
+(def view kioo-view) ;; Use either kioo-view or hiccup-view
 
 ;; Template for the html page:
 
@@ -44,6 +43,7 @@
   {[:head :title] (if title (content title) identity)
    [:nav :.navbar-brand] (if title (content title) identity)
    [:main] (content [view data])
+   [:.refresh-activator] (set-attr :href "#refresh")
    [:#forkme] (if forkme identity (content nil))
    [:body] (append [:div (for [src scripts]
                            ^{:key (gstring/hashCode (pr-str src))}

@@ -1,14 +1,20 @@
 (ns app.core
   (:require-macros
-   [cljs.core.async.macros :refer [go go-loop]])
+   [cljs.core.async.macros
+    :refer [go go-loop]])
   (:require
-   [cljs.core.async :as async :refer [chan close! alts! timeout put!]]
+   [cljs.core.async :as async
+    :refer [<! chan close! alts! timeout put!]]
    [goog.dom :as dom]
    [goog.events :as events]
-   [reagent.core :as reagent :refer [atom]]
-   [reagent.dom.server :refer [render-to-string]]
+   [reagent.core :as reagent
+    :refer [atom]]
+   [reagent.dom.server
+    :refer [render-to-string]]
    [app.bridge :as bridge]
-   [app.views :refer [view page html5]]))
+   [app.session :as session]
+   [app.views
+    :refer [view page html5]]))
 
 (def scripts [{:src "/js/out/app.js"}
               "main_cljs_fn()"])
@@ -31,18 +37,17 @@
                   (html5)))))
     out))
 
-(defn activate []
+(defn activate [dispatcher]
   (let [el (dom/getElement "canvas")
         buf-num 12
         buf-size 3
         in (bridge/open-resource endpoint buf-num buf-size :concur (* buf-num buf-size))
-        content (atom nil)
-        user-action (chan)]
-    (events/listen el events/EventType.CLICK
-                   (partial put! user-action))
-    (go-loop [initialized false]
-      (when (some? (<! user-action))
-        (reset! content (<! in))
-        (when-not initialized
-          (reagent/render [#(view @content)] el))
-        (recur true)))))
+        content (atom nil)]
+    (go-loop []
+      (when-let [event (<! dispatcher)]
+        (case (first event)
+          :refresh (let [initialize (nil? @content)]
+                     (reset! content (<! in))
+                     (when initialize
+                       (reagent/render [#(view @content)] el))))
+        (recur)))))
