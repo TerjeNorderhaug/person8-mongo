@@ -25,7 +25,8 @@
 
   :hooks [leiningen.cljsbuild]
 
-  :aliases {"start" ["npm" "start"]}
+  :aliases {"start" ["npm" "start"]
+            "test" ["with-profile" "test" "doo" "node" "server" "once"]}
 
   :main "main.js"
 
@@ -61,7 +62,8 @@
 
   :profiles {:dev
              {:plugins
-              [[lein-figwheel "0.5.4-7"]]
+              [[lein-figwheel "0.5.10"]
+               [lein-doo "0.1.7"]]
               :cljsbuild
               {:builds
                {:app
@@ -74,7 +76,16 @@
                  :figwheel {:heads-up-display false}}}}
               :npm {:dependencies [[ws "*"]]}}
 
-             :prod
+             :test {:cljsbuild
+                    {:builds
+                     {:server
+                      {:source-paths ["test"]
+                       :compiler {:main runners.doo ;; eliminate ^:replace?
+                                  :optimizations :none
+                                  :output-to "target/test/server.js"
+                                  :output-dir "target/test"}}}}}
+
+             :production
              {:env {:production true}
               :cljsbuild
               {:builds

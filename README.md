@@ -49,6 +49,10 @@ start a server in another terminal:
 Open the displayed URL in a browser.
 Figwheel will push code changes to the app and server.
 
+To test the system, execute:
+
+    lein test
+
 ## License
 
 Copyright © 2015-2016 Terje Norderhaug
