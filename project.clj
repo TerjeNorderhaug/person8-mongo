@@ -62,7 +62,7 @@
 
   :profiles {:dev
              {:plugins
-              [[lein-figwheel "0.5.10"]
+              [[lein-figwheel "0.5.4-7"]
                [lein-doo "0.1.7"]]
               :cljsbuild
               {:builds
@@ -80,7 +80,7 @@
                     {:builds
                      {:server
                       {:source-paths ["test"]
-                       :compiler {:main runners.doo ;; eliminate ^:replace?
+                       :compiler {:main runners.doo
                                   :optimizations :none
                                   :output-to "target/test/server.js"
                                   :output-dir "target/test"}}}}}
@@ -90,9 +90,9 @@
               :cljsbuild
               {:builds
                {:server
-                {:compiler {:optimizations :simple
-                            :foreign-libs [{:file "src/node/polyfill/simple.js"
-                                            :provides ["polyfill.simple"]}]
+                {:compiler {;:optimizations :simple
+                            ;:foreign-libs [{:file "src/node/polyfill/simple.js"
+                            ;                :provides ["polyfill.simple"]}]
                             :pretty-print false}}
                 :app
                 {:compiler {:output-dir "target/app/out"
