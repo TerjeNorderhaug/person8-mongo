@@ -5,9 +5,9 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.293"] ;; 473
-                 [org.clojure/core.async "0.2.395"]
-                 [reagent "0.6.0"]
+                 [org.clojure/clojurescript "1.9.562"]
+                 [org.clojure/core.async "0.3.443"]
+                 [reagent "0.6.2"]
                  [secretary "1.2.3"]
                  [kioo "0.5.0-SNAPSHOT" :exclusions [cljsjs/react]]]
 
@@ -57,8 +57,8 @@
                            :output-to "main.js"
                            :output-dir "target"
                            :main server.core
-                           :optimizations :none}
-                }}}
+                           :optimizations :none}}}}
+
 
   :profiles {:dev
              {:plugins
@@ -90,9 +90,9 @@
               :cljsbuild
               {:builds
                {:server
-                {:compiler {;:optimizations :simple
-                            ;:foreign-libs [{:file "src/node/polyfill/simple.js"
-                            ;                :provides ["polyfill.simple"]}]
+                {:compiler {:optimizations :simple
+                            :foreign-libs [{:file "src/node/polyfill/simple.js"
+                                            :provides ["polyfill.simple"]}]
                             :pretty-print false}}
                 :app
                 {:compiler {:output-dir "target/app/out"

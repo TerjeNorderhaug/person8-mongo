@@ -214,17 +214,22 @@ but that doesn't seem to be the case, which may require additional concerns.
     (set! (.-__proto__ inst) p)
     inst))
 
+(defn js-merge [obj1 obj2]
+  (js/Object.assign obj1 obj2))
+
 (defn override-prototype [obj prototype & [type]]
   (set! (.-prototype obj)
-        (merge
+        (js-merge
          (if type (type-prototype type) #{})
          prototype))
+  #_
   (set! (.-__proto__ obj)
-        (merge
-         (if type (proto type) #{})
-         prototype))
+    (if (and type (proto type))
+      (js-merge (proto type) prototype)
+      prototype))
   obj)
 
+#_
 (defn clone-merge ; rename to mutate-prototype or merge-prototype
   ;; ... use clone-merge for one with only create?
   "The object merged with the js prototype"
@@ -257,8 +262,10 @@ but that doesn't seem to be the case, which may require additional concerns.
 ;; js/NodeList (used in hickory.core)
 
 (def nodelist-prototype (prototype-of (.-childNodes doc)))
+(assert nodelist-prototype)
 
 (deftype NodeList [] Object)
+(assert (aget js/global "NodeList"))
 (override-prototype NodeList nodelist-prototype (aget js/global "NodeList"))
 (set! js/NodeList NodeList)
 ;;(set! js/NodeList
