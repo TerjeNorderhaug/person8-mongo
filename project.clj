@@ -90,9 +90,9 @@
               :cljsbuild
               {:builds
                {:server
-                {:compiler {:optimizations :simple
-                            :foreign-libs [{:file "src/node/polyfill/simple.js"
-                                            :provides ["polyfill.simple"]}]
+                {:compiler {;:optimizations :simple
+                            ;:foreign-libs [{:file "src/node/polyfill/simple.js"
+                            ;                :provides ["polyfill.simple"]
                             :pretty-print false}}
                 :app
                 {:compiler {:output-dir "target/app/out"
