@@ -7,21 +7,22 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.562"]
                  [org.clojure/core.async "0.3.443"]
-                 [reagent "0.6.2"]
+                 [reagent "0.7.0"]
                  [secretary "1.2.3"]
-                 [kioo "0.5.0-SNAPSHOT" :exclusions [cljsjs/react]]]
+                 [kioo "0.5.0"
+                  :exclusions [cljsjs/react cljsjs/react-dom]]]
 
   :npm {:dependencies [[express "4.14.1"]
-                       [xmlhttprequest "*"]
+                       [xmlhttprequest "1.8.0"]
                        [xmldom "0.1.27"]
                        [source-map-support "*"]
-                       [react "15.4.0"]]
+                       [react "15.5.4"]]
         :root :root}
 
-  :plugins [[lein-cljsbuild "1.1.5"]
+  :plugins [[lein-cljsbuild "1.1.7"]
             [lein-npm "0.6.2"]]
 
-  :min-lein-version "2.1.3"
+  :min-lein-version "2.5.3"
 
   :hooks [leiningen.cljsbuild]
 
@@ -62,7 +63,7 @@
 
   :profiles {:dev
              {:plugins
-              [[lein-figwheel "0.5.4-7"]
+              [[lein-figwheel "0.5.10"]
                [lein-doo "0.1.7"]]
               :cljsbuild
               {:builds
