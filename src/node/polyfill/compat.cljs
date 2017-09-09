@@ -19,10 +19,8 @@ but that doesn't seem to be the case, which may require additional concerns.
 ;; http://stackoverflow.com/questions/21839156/node-js-javascript-html-xmlhttprequest-cannot-load
 
 ;; Required for goog.net.XhrIo on node:
-
-(def xhr (nodejs/require "xmlhttprequest"))
-(when xhr
-  (set! js/XMLHttpRequest (.-XMLHttpRequest xhr)))
+(when-let [xhr (nodejs/require "xhr2")]
+  (set! js/XMLHttpRequest xhr))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DOM

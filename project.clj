@@ -1,4 +1,4 @@
-(defproject cljsnode "0.1.1-SNAPSHOT"
+(defproject cljsnode "0.2.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
@@ -8,12 +8,13 @@
                  [org.clojure/clojurescript "1.9.562"]
                  [org.clojure/core.async "0.3.443"]
                  [reagent "0.7.0"]
+                 [cljs-http "0.1.43"]
                  [secretary "1.2.3"]
                  [kioo "0.5.0"
                   :exclusions [cljsjs/react cljsjs/react-dom]]]
 
   :npm {:dependencies [[express "4.14.1"]
-                       [xmlhttprequest "1.8.0"]
+                       [xhr2 "0.1.4"]
                        [xmldom "0.1.27"]
                        [source-map-support "*"]
                        [react "15.5.4"]]
@@ -39,9 +40,10 @@
                                     :target-path :compile-path]
 
   :figwheel {:http-server-root "public"
-             :load-all-builds false
              :css-dirs ["resources/public/css"]
-             :server-logfile "logs/figwheel.log"}
+             :server-logfile "logs/figwheel.log"
+             :load-all-builds false
+             :builds-to-start [:app :server]}
 
   :cljsbuild {:builds
               {:app
@@ -58,6 +60,8 @@
                            :output-to "main.js"
                            :output-dir "target"
                            :main server.core
+                           :foreign-libs [{:file "src/node/polyfill/simple.js"
+                                           :provides ["polyfill.simple"]}]
                            :optimizations :none}}}}
 
 
@@ -92,8 +96,6 @@
               {:builds
                {:server
                 {:compiler {;:optimizations :simple
-                            ;:foreign-libs [{:file "src/node/polyfill/simple.js"
-                            ;                :provides ["polyfill.simple"]
                             :pretty-print false}}
                 :app
                 {:compiler {:output-dir "target/app/out"

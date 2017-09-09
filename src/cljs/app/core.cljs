@@ -7,6 +7,7 @@
     :refer [<! chan close! alts! timeout put!]]
    [goog.dom :as dom]
    [goog.events :as events]
+   [goog.string :as gstring]
    [reagent.core :as reagent
     :refer [atom]]
    [reagent.dom.server
@@ -19,7 +20,11 @@
               "main_cljs_fn()"])
 
 (def endpoint {:url "http://api.icndb.com/jokes/random"
-               :extract #(get-in % ["value" "joke"]) })
+               :extract (fn [{:keys [success body error-code error-text]
+                              :as response}]
+                          (if-let [joke (get-in body [:value :joke])]
+                            (gstring/unescapeEntities joke)
+                            ""))})
 
 (def resource-chan
   (memoize #(bridge/open-resource endpoint 12 2)))
@@ -40,7 +45,8 @@
   (let [el (dom/getElement "canvas")
         buf-num 12
         buf-size 3
-        in (bridge/open-resource endpoint buf-num buf-size :concur (* buf-num buf-size))
+        in (bridge/open-resource endpoint buf-num buf-size
+                                 :concur (* buf-num buf-size))
         content (atom nil)]
     (go-loop []
       (when-let [event (<! dispatcher)]

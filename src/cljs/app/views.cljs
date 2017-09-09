@@ -32,7 +32,7 @@
 
 (defsnippet kioo-view "template.html" [:main :.row]
   [data]
-  {[:.card] (substitute (map card data)) })
+  {[:.card] (substitute (map card data))})
 
 (def view kioo-view) ;; Use either kioo-view or hiccup-view
 
@@ -47,7 +47,7 @@
    [:#forkme] (if forkme identity (content nil))
    [:body] (append [:div (for [src scripts]
                            ^{:key (gstring/hashCode (pr-str src))}
-                           [:script src])]) })
+                           [:script src])])})
 
 (defn html5 [data]
   (str "<!DOCTYPE html>\n" data))

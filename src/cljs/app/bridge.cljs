@@ -6,32 +6,24 @@
    [cljs.core.async :as async
     :refer [chan close! timeout put!]]
    [goog.net.XhrIo :as xhr]
-   [goog.string :as gstring]))
+   [cljs-http.client :as http]))
 
-(defn fetch-json [uri cb]
-  (xhr/send uri (fn [e]
-                  (let [target (.-target e)]
-                    (if (.isSuccess target)
-                      (-> target .getResponseJson js->clj cb)
-                      (cb nil {:status (.getStatus target)
-                               :explanation (.getStatusText target)}))))))
+(defn json-onto [url ch]
+  (-> (http/get url {:with-credentials? false})
+      (async/pipe ch)))
 
 (defn open-resource
   ([endpoint n]
    (open-resource endpoint n 1))
   ([{:keys [url extract] :as endpoint} n buf & {:keys [concur] :or {concur n}}]
-   (let [out (chan buf (comp
-                        (map extract)
-                        (map gstring/unescapeEntities)
-                        (partition-all n)))]
-     (async/pipeline-async concur out
-                           (fn [url ch](fetch-json url #(if %
-                                                          (put! ch % (partial close! ch))
-                                                          (close! ch))))
-                           ;; Preferable but cannot do yet due to bug in core.async:
-                           ;; http://dev.clojure.org/jira/browse/ASYNC-108
-                           ;; (async/to-chan (repeat (:url endpoint)))
-                           (let [ch (chan n)]
-                             (async/onto-chan ch (repeat url))
-                             ch))
-     out)))
+   {:pre [(string? url) (fn? extract)(int? n)]}
+   (let [out> (chan buf (comp
+                         (map extract)
+                         (partition-all n)))
+         in> (chan n)]
+     ;; Preferable but cannot do yet due to bug in core.async:
+     ;; http://dev.clojure.org/jira/browse/ASYNC-108
+     ;; (async/to-chan (repeat url))
+     (async/onto-chan in> (repeat url))
+     (async/pipeline-async concur out> json-onto in>)
+     out>)))
