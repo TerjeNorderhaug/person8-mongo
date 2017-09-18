@@ -13,8 +13,10 @@
    [reagent.dom.server
     :refer [render-to-string]]
    [app.bridge :as bridge]
-   [app.views
-    :refer [view page html5]]))
+   [app.view.page
+    :refer [page html5]]
+   [app.view.view
+    :refer [view]]))
 
 (def scripts [{:src "/js/out/app.js"}
               "main_cljs_fn()"])
