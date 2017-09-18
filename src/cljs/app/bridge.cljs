@@ -9,21 +9,20 @@
    [cljs-http.client :as http]))
 
 (defn json-onto [url ch]
-  (-> (http/get url {:with-credentials? false})
-      (async/pipe ch)))
+  (http/get url {:channel ch :with-credentials? false}))
 
 (defn open-resource
   ([endpoint n]
    (open-resource endpoint n 1))
   ([{:keys [url extract] :as endpoint} n buf & {:keys [concur] :or {concur n}}]
    {:pre [(string? url) (fn? extract)(int? n)]}
-   (let [out> (chan buf (comp
+   (let [out (chan buf (comp
                          (map extract)
                          (partition-all n)))
-         in> (chan n)]
+         in (chan n)]
      ;; Preferable but cannot do yet due to bug in core.async:
      ;; http://dev.clojure.org/jira/browse/ASYNC-108
      ;; (async/to-chan (repeat url))
-     (async/onto-chan in> (repeat url))
-     (async/pipeline-async concur out> json-onto in>)
-     out>)))
+     (async/onto-chan in (repeat url))
+     (async/pipeline-async concur out json-onto in)
+     out)))
