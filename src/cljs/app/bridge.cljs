@@ -5,7 +5,6 @@
   (:require
    [cljs.core.async :as async
     :refer [chan close! timeout put!]]
-   [goog.net.XhrIo :as xhr]
    [cljs-http.client :as http]))
 
 (defn json-onto [url ch]

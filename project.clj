@@ -5,13 +5,13 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.562"]
+                 [org.clojure/clojurescript "1.9.671"]
                  [org.clojure/core.async "0.3.443"]
                  [reagent "0.7.0"]
                  [cljs-http "0.1.43"]
                  [secretary "1.2.3"]
                  [kioo "0.5.0"
-                  :exclusions [cljsjs/react cljsjs/react-dom]]]
+                  :exclusions [org.clojure/clojure cljsjs/react cljsjs/react-dom]]]
 
   :npm {:dependencies [[express "4.14.1"]
                        [xhr2 "0.1.4"]
