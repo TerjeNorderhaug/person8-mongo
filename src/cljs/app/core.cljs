@@ -10,9 +10,7 @@
    [goog.string :as gstring]
    [reagent.core :as reagent
     :refer [atom]]
-   [reagent.dom.server
-    :refer [render-to-string]]
-   [app.bridge :as bridge]
+   [api.jokes :as jokes]
    [app.view.page
     :refer [page html5]]
    [app.view.view
@@ -21,34 +19,16 @@
 (def scripts [{:src "/js/out/app.js"}
               "main_cljs_fn()"])
 
-(def endpoint {:url "http://api.icndb.com/jokes/random"
-               :extract (fn [{:keys [success body error-code error-text]
-                              :as response}]
-                          (if-let [joke (get-in body [:value :joke])]
-                            (gstring/unescapeEntities joke)
-                            ""))})
-
-(def resource-chan
-  (memoize #(bridge/open-resource endpoint 12 2)))
-
 (defn static-page []
-  (let [out (chan 1)
-        in (resource-chan)]
-    (go
-      (let [[val ch] (alts! [in (timeout 2000)])]
-        (put! out
-              (-> (if (identical? in ch) val (repeat 12 "No Joke!"))
-                  (page :scripts scripts :title "Jokes" :forkme true)
-                  (render-to-string)
-                  (html5)))))
-    out))
+  (go-loop [in (jokes/resource-chan)
+            [val ch] (alts! [in (timeout 2000)])]
+    (-> (if (identical? in ch) val (repeat 12 "No Joke!"))
+        (page :scripts scripts :title "Jokes" :forkme true)
+        (html5))))
 
 (defn activate [dispatcher]
   (let [el (dom/getElement "canvas")
-        buf-num 12
-        buf-size 3
-        in (bridge/open-resource endpoint buf-num buf-size
-                                 :concur (* buf-num buf-size))
+        in (jokes/resource-chan)
         content (atom nil)]
     (go-loop []
       (when-let [event (<! dispatcher)]

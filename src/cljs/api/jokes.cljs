@@ -1,8 +1,9 @@
-(ns app.bridge
+(ns api.jokes
   (:require-macros
    [cljs.core.async.macros
     :refer [go go-loop alt!]])
   (:require
+   [goog.string :as gstring]
    [cljs.core.async :as async
     :refer [chan close! timeout put!]]
    [cljs-http.client :as http]))
@@ -25,3 +26,13 @@
      (async/onto-chan in (repeat url))
      (async/pipeline-async concur out json-onto in)
      out)))
+
+(def endpoint {:url "http://api.icndb.com/jokes/random"
+               :extract (fn [{:keys [success body error-code error-text]
+                              :as response}]
+                          (if-let [joke (get-in body [:value :joke])]
+                            (gstring/unescapeEntities joke)
+                            ""))})
+
+(defonce resource-chan
+  (memoize #(open-resource endpoint 12 2)))

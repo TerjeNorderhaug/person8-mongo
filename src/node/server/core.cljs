@@ -9,6 +9,7 @@
     :refer [chan close! timeout put!]]
    [reagent.core :as reagent
     :refer [atom]]
+   [api.jokes :as jokes]
    [app.core :as app
     :refer [static-page]]))
 
@@ -24,7 +25,7 @@
       (.send res (<! (static-page))))))
 
 (defn api-handler [req res]
-  (go-loop [in (app/resource-chan)
+  (go-loop [in (jokes/resource-chan)
             [val ch] (alts! [in (timeout 5000)])]
     (if (identical? in ch)
       (do

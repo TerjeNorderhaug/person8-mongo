@@ -8,6 +8,8 @@
             substitute listen unwrap]]
    [reagent.core :as reagent
     :refer [atom]]
+   [reagent.dom.server
+    :refer [render-to-string]]
    [goog.string :as gstring]
    [app.view.view
     :refer [view]]))
@@ -23,8 +25,9 @@
                            ^{:key (gstring/hashCode (pr-str src))}
                            [:script src])])})
 
-(defn html5 [data]
-  (str "<!DOCTYPE html>\n" data))
+(defn html5 [content]
+  (->> (render-to-string content)
+       (str "<!DOCTYPE html>\n")))
 
 (defn test-views []
   (html5 (page ["Chuck Norris eats parentheses for breakfast"])))
