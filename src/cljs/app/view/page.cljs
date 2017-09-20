@@ -21,9 +21,13 @@
    [:main] (content [view data])
    [:.refresh-activator] (set-attr :href "#refresh")
    [:#forkme] (if forkme identity (content nil))
-   [:body] (append [:div (for [src scripts]
-                           ^{:key (gstring/hashCode (pr-str src))}
-                           [:script src])])})
+   [:body] (append [:div (for [[ix src] (map-indexed vector scripts)]
+                           ^{:key (str ix)}
+                           [:script
+                            (if (map? src)
+                              src
+                              {:dangerouslySetInnerHTML
+                                {:__html src}})])])})
 
 (defn html5 [content]
   (->> (render-to-string content)

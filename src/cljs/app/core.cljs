@@ -16,25 +16,26 @@
    [app.view.view
     :refer [view]]))
 
-(def scripts [{:src "/js/out/app.js"}
-              "main_cljs_fn()"])
+(defn scripts [initial]
+  [{:src "/js/out/app.js"}
+   (str "main_cljs_fn("
+        (pr-str (pr-str initial))
+        ")")])
 
 (defn static-page []
   (go-loop [in (jokes/resource-chan)
             [val ch] (alts! [in (timeout 2000)])]
     (-> (if (identical? in ch) val (repeat 12 "No Joke!"))
-        (page :scripts scripts :title "Jokes" :forkme true)
+        (page :scripts (scripts val) :title "Jokes" :forkme true)
         (html5))))
 
-(defn activate [dispatcher]
+(defn activate [initial dispatcher]
   (let [el (dom/getElement "canvas")
-        in (jokes/resource-chan)
-        content (atom nil)]
-    (go-loop []
-      (when-let [event (<! dispatcher)]
-        (case (first event)
-          :refresh (let [initialize (nil? @content)]
-                     (reset! content (<! in))
-                     (when initialize
-                       (reagent/render [#(view @content)] el))))
-        (recur)))))
+        content (atom (cljs.reader/read-string initial))]
+    (reagent/render [#(view @content)] el)
+    (let [in (jokes/resource-chan)]
+      (go-loop []
+        (when-let [event (<! dispatcher)]
+          (case (first event)
+            :refresh (reset! content (<! in)))
+          (recur))))))

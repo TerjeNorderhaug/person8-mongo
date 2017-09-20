@@ -6,8 +6,8 @@
 
 (enable-console-print!)
 
-(defn ^:export main []
-  (app/activate session/dispatcher)
+(defn ^:export main [initial]
+  (app/activate initial session/dispatcher)
   (routes/hook-browser-navigation!))
 
 (set! js/main-cljs-fn main)
