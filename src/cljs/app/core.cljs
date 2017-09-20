@@ -6,8 +6,6 @@
    [cljs.core.async :as async
     :refer [<! chan close! alts! timeout put!]]
    [goog.dom :as dom]
-   [goog.events :as events]
-   [goog.string :as gstring]
    [reagent.core :as reagent
     :refer [atom]]
    [api.jokes :as jokes]
