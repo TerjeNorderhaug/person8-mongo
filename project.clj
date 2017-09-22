@@ -5,19 +5,26 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.671"]
+                 [org.clojure/clojurescript "1.9.908"]
                  [org.clojure/core.async "0.3.443"]
+                 [cljsjs/react "15.6.1-2"]
+                 [cljsjs/react-dom "15.6.1-2"]
+                 [cljsjs/react-dom-server "15.6.1-2"]
+                 [cljsjs/create-react-class "15.6.0-3"]
                  [reagent "0.7.0"]
                  [cljs-http "0.1.43"]
                  [secretary "1.2.3"]
                  [kioo "0.5.0"
                   :exclusions [org.clojure/clojure cljsjs/react cljsjs/react-dom]]]
 
-  :npm {:dependencies [[express "4.14.1"]
+  :npm {:dependencies [[~(symbol "@cljs-oss/module-deps") "1.1.1"] ; for cljs 1.9.908
+                       [express "4.14.1"]
                        [xhr2 "0.1.4"]
                        [xmldom "0.1.27"]
-                       [source-map-support "*"]
-                       [react "15.5.4"]]
+                       [react "16.0.0-beta.5"]
+                       [react-dom "16.0.0-beta.5"]
+                       [create-react-class "15.6.0"]
+                       [source-map-support "*"]]
         :root :root}
 
   :plugins [[lein-cljsbuild "1.1.7"]
