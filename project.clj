@@ -17,7 +17,7 @@
                  [kioo "0.5.0"
                   :exclusions [org.clojure/clojure cljsjs/react cljsjs/react-dom]]]
 
-  :npm {:dependencies [[express "4.14.1"]
+  :npm {:dependencies [[express "4.15.4"]
                        [xhr2 "0.1.4"]
                        [xmldom "0.1.27"]
                        [react "16.0.0-beta.5"]
