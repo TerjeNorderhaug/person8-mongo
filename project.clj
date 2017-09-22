@@ -1,4 +1,4 @@
-(defproject cljsnode "0.2.0-SNAPSHOT"
+(defproject cljsnode "0.2.1-SNAPSHOT"
   :description "FIXME: write description"
   :url "https://cljsnode.herokuapp.com"
   :license {:name "Eclipse Public License"
