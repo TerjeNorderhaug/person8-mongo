@@ -49,6 +49,10 @@ start a server in another terminal:
 Open the displayed URL in a browser.
 Figwheel will push code changes to the app and server.
 
+Alternatively, to set the local environment from a .env file, start the server with:
+
+    heroku local web
+
 To test the system, execute:
 
     lein test

@@ -7,10 +7,10 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.908"]
                  [org.clojure/core.async "0.3.443"]
-                 [cljsjs/react "15.6.1-2"]
-                 [cljsjs/react-dom "15.6.1-2"]
-                 [cljsjs/react-dom-server "15.6.1-2"]
-                 [cljsjs/create-react-class "15.6.0-3"]
+                 [cljsjs/react "15.6.2-0"]
+                 [cljsjs/react-dom "15.6.2-0"]
+                 [cljsjs/react-dom-server "15.6.2-0"]
+                 [cljsjs/create-react-class "15.6.2-0"]
                  [reagent "0.7.0"]
                  [cljs-http "0.1.43"]
                  [secretary "1.2.3"]
@@ -73,7 +73,7 @@
 
   :profiles {:dev
              {:plugins
-              [[lein-figwheel "0.5.10"]
+              [[lein-figwheel "0.5.13"]
                [lein-doo "0.1.7"]]
               :cljsbuild
               {:builds
