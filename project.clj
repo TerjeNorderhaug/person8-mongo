@@ -1,4 +1,4 @@
-(defproject cljsnode "0.2.1-SNAPSHOT"
+(defproject cljsnode "0.2.2-SNAPSHOT"
   :description "FIXME: write description"
   :url "https://cljsnode.herokuapp.com"
   :license {:name "Eclipse Public License"
@@ -17,13 +17,13 @@
                  [kioo "0.5.0"
                   :exclusions [org.clojure/clojure cljsjs/react cljsjs/react-dom]]]
 
-  :npm {:dependencies [[express "4.15.4"]
+  :npm {:dependencies [[express "4.16.0"]
                        [xhr2 "0.1.4"]
                        [xmldom "0.1.27"]
-                       [react "16.0.0-beta.5"]
-                       [react-dom "16.0.0-beta.5"]
-                       [create-react-class "15.6.0"]
-                       [source-map-support "*"]]
+                       [react "16.0.0"]
+                       [react-dom "16.0.0"]
+                       [create-react-class "15.6.2"]
+                       [source-map-support "0.5.0"]]
         :root :root}
 
   :plugins [[lein-cljsbuild "1.1.7"]
@@ -73,7 +73,7 @@
 
   :profiles {:dev
              {:plugins
-              [[lein-figwheel "0.5.13"]
+              [[lein-figwheel "0.5.14"]
                [lein-doo "0.1.7"]]
               :cljsbuild
               {:builds
@@ -85,7 +85,7 @@
                 {:compiler {:pretty-print true
                             :source-map true}
                  :figwheel {:heads-up-display false}}}}
-              :npm {:dependencies [[ws "*"]]}}
+              :npm {:dependencies [[ws "3.2.0"]]}}
 
              :test {:cljsbuild
                     {:builds
