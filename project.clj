@@ -1,27 +1,27 @@
-(defproject cljsnode "0.2.2-SNAPSHOT"
+(defproject cljsnode "0.3.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "https://cljsnode.herokuapp.com"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.908"]
-                 [org.clojure/core.async "0.3.443"]
+  :dependencies [[org.clojure/clojure "1.9.0"]
+                 [org.clojure/clojurescript "1.9.946"]
+                 [org.clojure/core.async "0.3.465"]
                  [cljsjs/react "15.6.2-0"]
                  [cljsjs/react-dom "15.6.2-0"]
                  [cljsjs/react-dom-server "15.6.2-0"]
                  [cljsjs/create-react-class "15.6.2-0"]
                  [reagent "0.7.0"]
-                 [cljs-http "0.1.43"]
+                 [cljs-http "0.1.44"]
                  [secretary "1.2.3"]
                  [kioo "0.5.0"
                   :exclusions [org.clojure/clojure cljsjs/react cljsjs/react-dom]]]
 
-  :npm {:dependencies [[express "4.16.0"]
+  :npm {:dependencies [[express "4.16.2"]
                        [xhr2 "0.1.4"]
                        [xmldom "0.1.27"]
-                       [react "16.0.0"]
-                       [react-dom "16.0.0"]
+                       [react "16.2.0"]
+                       [react-dom "16.2.0"]
                        [create-react-class "15.6.2"]
                        [source-map-support "0.5.0"]]
         :root :root}
@@ -74,7 +74,7 @@
   :profiles {:dev
              {:plugins
               [[lein-figwheel "0.5.14"]
-               [lein-doo "0.1.7"]]
+               [lein-doo "0.1.8"]]
               :cljsbuild
               {:builds
                {:app
