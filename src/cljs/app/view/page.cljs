@@ -14,20 +14,23 @@
    [app.view.view
     :refer [view]]))
 
+(defn script-element [src]
+  [:script
+     (if (map? src)
+       src
+       {:dangerouslySetInnerHTML
+        {:__html src}})])
+
 (defsnippet page "template.html" [:html]
-  [data & {:keys [scripts title forkme]}]
+  [state & {:keys [scripts title forkme]}]
   {[:head :title] (if title (content title) identity)
    [:nav :.navbar-brand] (if title (content title) identity)
-   [:main] (content [view data])
+   [:main] (content [view state])
    [:.refresh-activator] (set-attr :href "#refresh")
    [:#forkme] (if forkme identity (content nil))
    [:body] (append [:div (for [[ix src] (map-indexed vector scripts)]
                            ^{:key (str ix)}
-                           [:script
-                            (if (map? src)
-                              src
-                              {:dangerouslySetInnerHTML
-                                {:__html src}})])])})
+                           (script-element src))])})
 
 (defn html5 [content]
   (->> (render-to-string content)

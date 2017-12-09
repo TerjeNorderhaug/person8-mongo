@@ -18,3 +18,8 @@
       (when-let [f (get dispatch-map (first event))]
         (apply f (rest event)))
       (recur))))
+
+(defn state [initial]
+  (->> initial
+       (map #(vector (first %)(reagent/atom (second %))))
+       (into {})))

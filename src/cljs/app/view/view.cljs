@@ -15,9 +15,9 @@
 ;; 2. Kioo (enlive style) injecting transformations into external template;
 ;;    The template file is in the resources directory.
 
-(defn hiccup-view [data]
+(defn hiccup-view [{:keys [jokes] :as data}]
   [:div.row
-   (for [[ix entity] (map-indexed vector data)]
+   (for [[ix entity] (map-indexed vector @jokes)]
      ^{:key (gstring/hashCode (str entity ix))}
      [:div.card.col-xs-12.col-sm-6.col-md-4.col-lg-3
       [:div.well
@@ -28,7 +28,7 @@
   {[:.entity] (content entity)})
 
 (defsnippet kioo-view "template.html" [:main :.row]
-  [data]
-  {[:.card] (substitute (map card data))})
+  [{:keys [jokes] :as state}]
+  {[:.card] (substitute (map card @jokes))})
 
 (def view kioo-view) ;; Use either kioo-view or hiccup-view

@@ -24,14 +24,22 @@
 (defn static-page []
   (go-loop [in (jokes/resource-chan)
             [val ch] (alts! [in (timeout 2000)])]
-    (-> (if (identical? in ch) val (repeat 12 "No Joke!"))
-        (page :scripts (scripts val) :title "Jokes" :forkme true)
-        (html5))))
+    (let [success (identical? in ch)
+          jokes (if success val (repeat 12 "No Joke!"))
+          initial {:jokes jokes}
+          state (session/state initial)]
+      (-> state
+          (page :scripts (scripts initial)
+                :title "Jokes"
+                :forkme true)
+          (html5)))))
 
 (defn activate [initial]
   (let [el (dom/getElement "canvas")
-        content (atom (cljs.reader/read-string initial))]
-    (reagent/render [#(view @content)] el)
+        content (cljs.reader/read-string initial)
+        state (session/state content)]
+    (reagent/render [#(view state)] el)
     (let [in (jokes/resource-chan)]
       (session/dispatcher
-       {:refresh #(go (reset! content (<! in)))}))))
+       {:refresh #(go-loop [value (<! in)]
+                    (reset! (:jokes state) value))}))))
