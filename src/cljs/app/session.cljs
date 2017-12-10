@@ -9,17 +9,28 @@
 
 (defonce event-queue (async/chan))
 
+(defonce event-mult (async/mult event-queue))
+
 (defn dispatch [event]
   (async/put! event-queue event))
 
 (defn dispatcher [dispatch-map]
-  (go-loop []
-    (when-let [event (<! event-queue)]
-      (when-let [f (get dispatch-map (first event))]
-        (apply f (rest event)))
-      (recur))))
+  (let [in (async/tap event-mult (async/chan))]
+    (go-loop []
+      (when-let [event (<! in)]
+        (when-let [f (get dispatch-map (first event))]
+          (apply f (rest event)))
+        (recur)))))
 
 (defn state [initial]
   (->> initial
        (map #(vector (first %)(reagent/atom (second %))))
        (into {})))
+
+(defn reg-event-handler [k f]
+  (let [in (->> (async/chan 1 (filter #(= k (first %))))
+                (async/tap event-mult))]
+    (go-loop []
+      (when-let [event (<! in)]
+        (apply f (rest event))
+        (recur)))))

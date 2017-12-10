@@ -40,6 +40,8 @@
         state (session/state content)]
     (reagent/render [#(view state)] el)
     (let [in (jokes/resource-chan)]
-      (session/dispatcher
-       {:refresh #(go-loop [value (<! in)]
-                    (reset! (:jokes state) value))}))))
+      (session/reg-event-handler
+       :refresh
+       (fn [_]
+         (go (when-let [value (<! in)]
+               (reset! (:jokes state) value))))))))
