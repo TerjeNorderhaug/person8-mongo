@@ -59,7 +59,7 @@ To test the system, execute:
 
 ## License
 
-Copyright © 2015-2016 Terje Norderhaug
+Copyright © 2015-2018 Terje Norderhaug
 
 Based on an app concept by Marian Schubert.
 
