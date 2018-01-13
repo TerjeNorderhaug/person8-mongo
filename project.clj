@@ -1,5 +1,5 @@
-(defproject cljsnode "0.3.0-SNAPSHOT"
-  :description "FIXME: write description"
+(defproject wcef-well "0.3.0-SNAPSHOT"
+  :description "Well demo with Exonum for hospitals"
   :url "https://cljsnode.herokuapp.com"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
@@ -20,6 +20,7 @@
   :npm {:dependencies [[express "4.16.2"]
                        [xhr2 "0.1.4"]
                        [xmldom "0.1.27"]
+                       [exonum-client "0.3.0"]
                        [react "16.2.0"]
                        [react-dom "16.2.0"]
                        [create-react-class "15.6.2"]

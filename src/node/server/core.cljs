@@ -10,6 +10,7 @@
    [reagent.core :as reagent
     :refer [atom]]
    [api.jokes :as jokes]
+   [api.exonum-client :as exonum-client]
    [app.core :as app
     :refer [static-page]]))
 
