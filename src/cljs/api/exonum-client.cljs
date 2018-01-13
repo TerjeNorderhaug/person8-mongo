@@ -12,13 +12,19 @@
 
 (def User
   (new-type {:size 9
-             :fields {:name {:type Exonum.String :size 8 :from 8 :to 8}
+             :fields {:name {:type Exonum.String :size 8 :from 0 :to 8}
                       :age {:type Exonum.Int8 :size 1 :from 8 :to 9}}}))
 
-(def user-data {:name "Tom" :age 3})
+(def user-data {:name "Tom" :age 34})
 
 (defn serialize-user [data]
   (.serialize User (clj->js data)))
 
 #_
 (serialize-user user-data)
+
+(defn hash-user [data]
+  (.hash Exonum (clj->js data) User))
+
+#_
+(hash-user user-data)
