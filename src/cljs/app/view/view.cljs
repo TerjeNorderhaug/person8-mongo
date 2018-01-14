@@ -9,11 +9,26 @@
    [reagent.core :as reagent
     :refer [atom]]
    [app.view.patient.root :as patient.root]
-   [goog.string :as gstring]))
+   [app.view.provider.root :as provider.root]))
+
+(defn split-view [session]
+  [:div
+    [:div {:style {:width "30%"
+                   :float "left"
+                   :padding-right "2em"
+                   :border-right "thin solid gray"}}
+      [patient.root/view session]]
+    [:div {:style {:width "60%"
+                   :float "right"}}
+      [provider.root/view session]]])
 
 (defn view [{:keys [mode] :as session}]
   (case (if mode @mode)
     ("patient")
     [patient.root/view session]
-    ("provider" nil)
-    [:div "Provider"]))
+    ("provider")
+    [provider.root/view session]
+    ("split")
+    [split-view session]
+    (nil)
+    [:div "Waiting"]))

@@ -21,9 +21,16 @@
         (pr-str (pr-str initial))
         ")")])
 
+(def default-state
+  {:mode "split"
+   :stage "checkout"
+   :patient 5
+   :itinerary {:items [{:label "1"}
+                       {:label "2"}]}})
+
 (defn static-page []
   (go-loop []
-    (let [initial {:mode "patient"}
+    (let [initial default-state
           state (session/state initial)]
       (-> state
           (page :scripts (scripts initial)
@@ -31,16 +38,9 @@
                 :forkme false)
           (html5)))))
 
-(def default-state
-  (session/state {:mode "patient"
-                  :stage "checkout"
-                  :patient 5
-                  :itinerary {:items [{:label "1"}
-                                      {:label "2"}]}}))
-
 (defn activate [initial]
   (session/initialize initial)
   (let [el (dom/getElement "canvas")
         content (cljs.reader/read-string initial)
-        state default-state]
+        state (session/state default-state)]
     (reagent/render [#(view state)] el)))

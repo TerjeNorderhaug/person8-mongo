@@ -17,7 +17,7 @@
    (fn [{:keys [itinerary] :as session}]
     [ui/paper {:style {:padding-left "1em"
                        :padding-right "1em"}}
-     [:h3
+     [:h5
       [ui/font-icon {:class-name "material-icons"
                      :style {:font-size "60"}}
        ; use another icon here
@@ -25,11 +25,12 @@
                                          :font-size "8em"}]
        [:span {:style {:margin-left "0.5em"}}
         "Checkout"]]]
-     (into [:table]
+     [:table
+      (into [:tbody]
        (for [[id item]
              (map-indexed vector (if itinerary (:items @itinerary)))]
          ^{:key id}
-         [:tr [:td (pr-str item)]]))
+         [:tr [:td (pr-str item)]]))]
      [ui/flat-button {:label "Pay with WELL"
                       :primary true
                       :on-click pay-action}]])))
