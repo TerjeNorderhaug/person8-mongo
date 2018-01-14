@@ -5,7 +5,8 @@
   (:require
    [cljs.core.async :as async
     :refer [<!]]
-   [reagent.core :as reagent]))
+   [reagent.core :as reagent]
+   [re-frame.core :as rf]))
 
 (defonce event-queue (async/chan))
 
@@ -27,6 +28,7 @@
        (map #(vector (first %)(reagent/atom (second %))))
        (into {})))
 
+#_
 (defn reg-event-handler [k f]
   (let [in (->> (async/chan 1 (filter #(= k (first %))))
                 (async/tap event-mult))]
@@ -34,3 +36,17 @@
       (when-let [event (<! in)]
         (apply f (rest event))
         (recur)))))
+
+(defn initialize [initial]
+
+  (rf/reg-event-db
+    :initialize
+   (fn [db _] initial))
+
+  (rf/reg-event-db
+   :patient
+   (fn [db [_ id stage]]
+     {:pre [(string? stage)]}
+     (assoc db :mode "patient" :patient id :stage stage)))
+
+  (rf/dispatch [:initialize]))

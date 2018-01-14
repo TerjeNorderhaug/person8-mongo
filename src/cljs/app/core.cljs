@@ -22,26 +22,20 @@
         ")")])
 
 (defn static-page []
-  (go-loop [in (jokes/resource-chan)
-            [val ch] (alts! [in (timeout 2000)])]
-    (let [success (identical? in ch)
-          jokes (if success val (repeat 12 "No Joke!"))
-          initial {:jokes jokes}
+  (go-loop []
+    (let [initial {:mode "patient"}
           state (session/state initial)]
       (-> state
           (page :scripts (scripts initial)
-                :title "Jokes"
-                :forkme true)
+                :title "WellBE"
+                :forkme false)
           (html5)))))
 
 (defn activate [initial]
+  (session/initialize initial)
   (let [el (dom/getElement "canvas")
         content (cljs.reader/read-string initial)
-        state (session/state content)]
-    (reagent/render [#(view state)] el)
-    (let [in (jokes/resource-chan)]
-      (session/reg-event-handler
-       :refresh
-       (fn [_]
-         (go (when-let [value (<! in)]
-               (reset! (:jokes state) value))))))))
+        state {:mode (reagent/atom "patient")
+               :stage (reagent/atom "checkout")
+               :patient (reagent/atom 5)}]
+    (reagent/render [#(view state)] el)))

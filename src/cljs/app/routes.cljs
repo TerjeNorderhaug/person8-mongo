@@ -34,6 +34,14 @@
 (defroute "/" []
   nil)
 
+#_
 (defroute "/refresh" []
   (dispatch [:refresh])
   (navigate! "/"))
+
+#_
+(defroute "/patient/:id" [id]
+  (dispatch [:patient id]))
+
+(defroute "/patient/:id/:stage" [id stage]
+  (dispatch [:patient id stage]))

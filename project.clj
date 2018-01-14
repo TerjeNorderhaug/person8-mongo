@@ -11,9 +11,16 @@
                  [cljsjs/react-dom "15.6.2-0"]
                  [cljsjs/react-dom-server "15.6.2-0"]
                  [cljsjs/create-react-class "15.6.2-0"]
+                 [cljsjs/material-ui "0.19.2-0"]
+                 [cljs-react-material-ui "0.2.48"
+                  :exclusions [cljsjs/material-ui
+                               org.clojure/clojure
+                               org.clojure/clojurescript]]
                  [reagent "0.7.0"]
-                 [cljs-http "0.1.44"]
                  [secretary "1.2.3"]
+                 [re-frame "0.10.3-beta1"]
+                 [cljs-http "0.1.44"]
+                 [com.taoensso/timbre "4.10.0"]
                  [kioo "0.5.0"
                   :exclusions [org.clojure/clojure cljsjs/react cljsjs/react-dom]]]
 

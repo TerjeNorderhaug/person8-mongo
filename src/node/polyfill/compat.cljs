@@ -22,6 +22,10 @@ but that doesn't seem to be the case, which may require additional concerns.
 (when-let [xhr (nodejs/require "xhr2")]
   (set! js/XMLHttpRequest xhr))
 
+;; needed for isomorphic material-ui.
+
+(set! js/window js/global)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DOM
 
