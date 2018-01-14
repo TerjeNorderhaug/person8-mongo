@@ -8,9 +8,13 @@
     opacity: 0.9;
 }
 
+body {
+  margin: 0;
+}
+
 #canvas {
     font-size: larger;
-    margin-top: 65px;
+    // margin-top: 65px;
 }
 
 #canvas .well {
