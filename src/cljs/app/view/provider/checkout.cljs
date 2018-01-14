@@ -21,9 +21,19 @@
                                          :font-size "8em"}]
        [:span {:style {:margin-left "0.5em"}}
         "Checkout"]]]
-     [:table
-      (into [:tbody]
-            (for [[id item]
-                  (map-indexed vector (if itinerary (:items @itinerary)))]
-              ^{:key id}
-              [:tr [:td (pr-str item)]]))]])
+   [ui/table
+     #_
+     [ui/table-header
+      [ui/table-row]]
+     (into [ui/table-body]
+           (for [[id {:keys [label description cost]:as item}]
+                 (map-indexed vector (if itinerary (:items @itinerary)))]
+             ^{:key id}
+             [ui/table-row
+              #_[ui/table-row-column label]
+              [ui/table-row-column description]
+              [ui/table-row-column cost]]))
+    [ui/table-footer
+     [ui/table-row
+      [ui/table-row-column "Total"]
+      [ui/table-row-column "13"]]]]])

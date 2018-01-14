@@ -9,7 +9,6 @@
    [reagent.core :as reagent
     :refer [atom]]
    [re-frame.core :as rf]
-   [api.jokes :as jokes]
    [app.session :as session]
    [app.view.page
     :refer [page html5]]
@@ -26,8 +25,12 @@
   {:mode "split"
    :stage "checkout"
    :patient 5
-   :itinerary {:items [{:label "1"}
-                       {:label "2"}]}})
+   :itinerary {:items [{:label "1"
+                        :description "Examination and consultation"
+                        :cost "5"}
+                       {:label "2"
+                        :description "Prescription (Prednisone 5mg)"
+                        :cost "8"}]}})
 
 (defn static-page []
   (go-loop []
@@ -46,5 +49,6 @@
   (session/initialize default-state)
   (let [el (dom/getElement "canvas")
         state {:mode (rf/subscribe [:mode])
-               :stage (rf/subscribe [:stage])}]
+               :stage (rf/subscribe [:stage])
+               :itinerary (rf/subscribe [:itinerary])}]
     (reagent/render [#(view state)] el)))

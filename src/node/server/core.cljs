@@ -9,7 +9,6 @@
     :refer [chan close! timeout put!]]
    [reagent.core :as reagent
     :refer [atom]]
-   [api.jokes :as jokes]
    [api.exonum-client :as exonum-client]
    [api.well :as well]
    [app.core :as app
@@ -26,20 +25,18 @@
       (.set res "Content-Type" "text/html")
       (.send res (<! (static-page))))))
 
-(defn api-handler [req res]
-  (go-loop [in (jokes/resource-chan)
-            [val ch] (alts! [in (timeout 5000)])]
-    (if (identical? in ch)
-      (do
-        (.set res "Content-Type" "application/json")
-        (.send res (clj->js val)))
-      (do
-        (.send (.status res 504) "Gateway Timeout")))))
+(defn pay-handler [req res]
+  (let [payment
+        (exonum-client/Payment
+         {:from "6752be882314f5bbbc9a6af2ae634fc07038584a4a77510ea5eced45f54dc030"
+          :to "f5864ab6a5a2190666b47c676bcf15a1f2f07703c5bcafb5749aa735ce8b7c36"
+          :amount 15})]
+    (.serialize payment)))
 
 (defn server [port success]
   (doto (express)
     (.get "/" handler)
-    (.get "/api" api-handler)
+    (.get "/api/exonum/pay" pay-handler)
     (.use (.static express "resources/public"))
     (.listen port success)))
 

@@ -6,7 +6,8 @@
    [cljs.core.async :as async
     :refer [<!]]
    [reagent.core :as reagent]
-   [re-frame.core :as rf]))
+   [re-frame.core :as rf]
+   [cljs-http.client :as http]))
 
 (defonce event-queue (async/chan))
 
@@ -15,27 +16,10 @@
 (defn dispatch [event]
   (async/put! event-queue event))
 
-(defn dispatcher [dispatch-map]
-  (let [in (async/tap event-mult (async/chan))]
-    (go-loop []
-      (when-let [event (<! in)]
-        (when-let [f (get dispatch-map (first event))]
-          (apply f (rest event)))
-        (recur)))))
-
 (defn state [initial]
   (->> initial
        (map #(vector (first %)(reagent/atom (second %))))
        (into {})))
-
-#_
-(defn reg-event-handler [k f]
-  (let [in (->> (async/chan 1 (filter #(= k (first %))))
-                (async/tap event-mult))]
-    (go-loop []
-      (when-let [event (<! in)]
-        (apply f (rest event))
-        (recur)))))
 
 (defn initialize [initial]
 
@@ -59,9 +43,18 @@
    (fn [db]
      (:stage db)))
 
+  (rf/reg-sub
+   :itinerary
+   (fn [db]
+     (:itinerary db)))
+
   (rf/reg-event-db ;; should be fx
    :pay
    (fn [db [_ amount]]
+     (http/post "/api/exonum/pay"
+                {:json-params {:from nil
+                               :to nil
+                               :amount 16}})
      (assoc db :stage "payed")))
 
-  (rf/dispatch [:initialize]))
+  (rf/dispatch-sync [:initialize]))

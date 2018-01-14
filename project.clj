@@ -19,6 +19,7 @@
                  [reagent "0.7.0"]
                  [secretary "1.2.3"]
                  [re-frame "0.10.3-beta1"]
+                 [com.taoensso/timbre "4.10.0"]
                  [cljs-http "0.1.44"]
                  [com.taoensso/timbre "4.10.0"]
                  [kioo "0.5.0"

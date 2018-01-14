@@ -17,7 +17,7 @@
    {:on-left-icon-button-touch-tap #()
     :on-right-icon-button-touch-tap #()
     :title (reagent/as-element
-            [:div "WELL"])}])
+            [:div "WELL Provider Dashboard"])}])
 
 (defn view [{:keys [stage] :as session}]
   [ui/mui-theme-provider
