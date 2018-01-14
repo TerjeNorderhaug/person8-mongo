@@ -40,7 +40,7 @@
 (defn initialize [initial]
 
   (rf/reg-event-db
-    :initialize
+   :initialize
    (fn [db _] initial))
 
   (rf/reg-event-db
@@ -48,5 +48,20 @@
    (fn [db [_ id stage]]
      {:pre [(string? stage)]}
      (assoc db :mode "patient" :patient id :stage stage)))
+
+  (rf/reg-sub
+   :mode
+   (fn [db]
+     (:mode db)))
+
+  (rf/reg-sub
+   :stage
+   (fn [db]
+     (:stage db)))
+
+  (rf/reg-event-db ;; should be fx
+   :pay
+   (fn [db [_ amount]]
+     (assoc db :stage "payed")))
 
   (rf/dispatch [:initialize]))

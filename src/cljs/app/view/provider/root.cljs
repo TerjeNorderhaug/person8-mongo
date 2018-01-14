@@ -8,7 +8,9 @@
    [cljs-react-material-ui.core :as material
      :refer [get-mui-theme color]]
    [cljs-react-material-ui.reagent :as ui]
-   [cljs-react-material-ui.icons :as ic]))
+   [cljs-react-material-ui.icons :as ic]
+   [app.view.provider.checkout :as checkout]
+   [app.view.provider.payed :as payed]))
 
 (defn toolbar [session]
   [ui/app-bar
@@ -30,6 +32,8 @@
     [toolbar session]
     (case (if stage @stage)
       ("checkout")
-      [:div "checkout"]
+      [checkout/view session]
+      ("payed")
+      [payed/view session]
       (nil)
       [:div "Waiting"])]])

@@ -1,4 +1,4 @@
-(ns app.view.patient.checkout
+(ns app.view.provider.checkout
   (:require
    [reagent.core :as reagent
      :refer [atom]]
@@ -11,9 +11,8 @@
    [goog.string :as gstring]))
 
 (defn view [{:keys [itinerary] :as session}]
-  (let [pay-action #(rf/dispatch [:pay 1.2])]
-    [ui/paper {:style {:padding-left "1em"
-                       :padding-right "1em"}}
+  [ui/paper {:style {:padding-left "1em"
+                     :padding-right "1em"}}
      [:h5
       [ui/font-icon {:class-name "material-icons"
                      :style {:font-size "30"}}
@@ -24,10 +23,7 @@
         "Checkout"]]]
      [:table
       (into [:tbody]
-       (for [[id item]
-             (map-indexed vector (if itinerary (:items @itinerary)))]
-         ^{:key id}
-         [:tr [:td (pr-str item)]]))]
-     [ui/flat-button {:label "Pay with WELL"
-                      :primary true
-                      :on-click pay-action}]]))
+            (for [[id item]
+                  (map-indexed vector (if itinerary (:items @itinerary)))]
+              ^{:key id}
+              [:tr [:td (pr-str item)]]))]])

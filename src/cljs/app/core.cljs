@@ -8,6 +8,7 @@
    [goog.dom :as dom]
    [reagent.core :as reagent
     :refer [atom]]
+   [re-frame.core :as rf]
    [api.jokes :as jokes]
    [app.session :as session]
    [app.view.page
@@ -39,8 +40,11 @@
           (html5)))))
 
 (defn activate [initial]
-  (session/initialize initial)
+  #_
+  (-> (cljs.reader/read-string initial)
+      (session/initialize))
+  (session/initialize default-state)
   (let [el (dom/getElement "canvas")
-        content (cljs.reader/read-string initial)
-        state (session/state default-state)]
+        state {:mode (rf/subscribe [:mode])
+               :stage (rf/subscribe [:stage])}]
     (reagent/render [#(view state)] el)))
