@@ -11,4 +11,5 @@
    [goog.string :as gstring]))
 
 (defn view [session]
-  [:div "Payed"])
+  [ui/dialog {:title "Payment Completed"
+              :modal false}])

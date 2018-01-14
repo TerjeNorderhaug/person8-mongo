@@ -1,14 +1,11 @@
-# cljsnode
+# WellBE
 
-Reference implementation for universal (nee isomporhic) Clojurescript React SPA.
+Using WELL and Exonum in medical visits
+
+Universal (nee isomporhic) Clojurescript React SPA.
 Runs on Heroku using node express, bootstrap, reagent and Kioo templates,
 with code shared between frontend and backend, where Figwheel hotloads code changes
 to both.
-
-Check it out at https://cljsnode.herokuapp.com
-
-Fork on github as a starting point for your own projects.
-Soon to be available as a Leiningen template.
 
 ## Requirements
 
