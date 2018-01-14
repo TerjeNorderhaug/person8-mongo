@@ -2,7 +2,7 @@
 
 Using WELL and Exonum in medical visits.
 
-Please see src/cljs/api/ for custom clojurescript libraries for Exonum and WELL, and src/cljs/app for the react app. A small Node Express server is in node/server to serve the page. 
+Please see src/cljs/api/ for custom clojurescript libraries for Exonum and WELL, and src/cljs/app for the react app. A small Node Express server is in node/server to serve the page.
 
 Implemented as a universal (nee isomporhic) Clojurescript React SPA.
 Runs on Heroku using node express, bootstrap, reagent and Kioo templates,
@@ -58,9 +58,6 @@ To test the system, execute:
 
 ## License
 
-Copyright © 2015-2018 Terje Norderhaug
+Copyright © 2018 Terje Norderhaug
 
-Based on an app concept by Marian Schubert.
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Distributed under the Eclipse Public License either version 1.0 or (atyour option) any later version.
