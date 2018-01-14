@@ -1,8 +1,10 @@
 # WellBE
 
-Using WELL and Exonum in medical visits
+Using WELL and Exonum in medical visits.
 
-Universal (nee isomporhic) Clojurescript React SPA.
+Please see src/cljs/api/ for custom clojurescript libraries for Exonum and WELL, and src/cljs/app for the react app. A small Node Express server is in node/server to serve the page. 
+
+Implemented as a universal (nee isomporhic) Clojurescript React SPA.
 Runs on Heroku using node express, bootstrap, reagent and Kioo templates,
 with code shared between frontend and backend, where Figwheel hotloads code changes
 to both.
