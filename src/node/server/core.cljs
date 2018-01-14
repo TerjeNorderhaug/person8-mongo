@@ -11,6 +11,7 @@
     :refer [atom]]
    [api.jokes :as jokes]
    [api.exonum-client :as exonum-client]
+   [api.well :as well]
    [app.core :as app
     :refer [static-page]]))
 

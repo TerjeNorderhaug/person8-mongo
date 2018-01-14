@@ -10,6 +10,9 @@
 (defn new-type [params]
   (.newType Exonum (clj->js params)))
 
+(defn new-message [params]
+  (.newMessage Exonum (clj->js params)))
+
 (def User
   (new-type {:size 9
              :fields {:name {:type Exonum.String :size 8 :from 0 :to 8}
@@ -28,3 +31,12 @@
 
 #_
 (hash-user user-data)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; CRYPTOCURRENCY
+
+(defn Payment [{:keys [amount from to] :as transaction}]
+  (new-message {:size 72
+                :fields {:from {:type Exonum.Hash :size 32 :from 0 :to 32}
+                         :to {:type Exonum.Hash :size 32 :from 32 :to 64}
+                         :amount {:type Exonum.Uint64 :size 8 :from 64 :to 72}}}))
