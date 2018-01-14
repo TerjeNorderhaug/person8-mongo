@@ -10,37 +10,26 @@
    [cljs-react-material-ui.icons :as ic]
    [goog.string :as gstring]))
 
-(defn panel [data]
+(defn view [session]
   (let [time (reagent/atom nil)
-        date "Thursday, October 15, 2017"]
-   (fn [data]
+        date "Thursday, October 15, 2017"
+        pay-action #(rf/dispatch [:pay])]
+   (fn [{:keys [itinerary] :as session}]
     [ui/paper {:style {:padding-left "1em"
                        :padding-right "1em"}}
      [:h3
       [ui/font-icon {:class-name "material-icons"
-                     :style {:font-size "40"}}
+                     :style {:font-size "60"}}
+       ; use another icon here
        [ic/action-perm-contact-calendar {:color (color :grey600)
                                          :font-size "8em"}]
        [:span {:style {:margin-left "0.5em"}}
-        "Schedule your appointment"]]]
-     [ui/paper {:style {:padding "0.5em"}}
-      [:h3 "Available spots:"]
-      [:h4 "Thursday, October 15, 2017"]
-      [:div {:style {:margin-top "1em"}}
-       [:button.btn.btn-primary
-        {:style {:margin-left "0%" :width "100%"}
-         :on-click #(rf/dispatch
-                     [:schedule (str @time " on " date)])}
-        "Schedule Your Appointment"]]]])))
-
-(defn view [session]
-  [ui/mui-theme-provider
-   {:mui-theme (get-mui-theme
-                {:palette
-                 {:primary1-color "#661775"
-                  :primary2-color (color :deep-purple700)
-                  :primary3-color (color :deep-purple200)
-                  :alternate-text-color (color :white) ;; used for appbar text
-                  :primary-text-color (color :light-black)}})}
-   [ui/paper {:style {:height "auto"}}
-    [panel session]]])
+        "Checkout"]]]
+     (into [:table]
+       (for [[id item]
+             (map-indexed vector (if itinerary (:items @itinerary)))]
+         ^{:key id}
+         [:tr [:td (pr-str item)]]))
+     [ui/flat-button {:label "Pay with WELL"
+                      :primary true
+                      :on-click pay-action}]])))

@@ -24,7 +24,7 @@
 (defsnippet page "template.html" [:html]
   [state & {:keys [scripts title forkme]}]
   {[:head :title] (if title (content title) identity)
-   [:nav :.navbar-brand] (if title (content title) identity)
+   [:nav] (content [:div])
    [:main] (content [view state])
    [:.refresh-activator] (set-attr :href "#refresh")
    [:#forkme] (if forkme identity (content nil))

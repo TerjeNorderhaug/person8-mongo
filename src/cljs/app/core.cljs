@@ -31,11 +31,16 @@
                 :forkme false)
           (html5)))))
 
+(def default-state
+  (session/state {:mode "patient"
+                  :stage "checkout"
+                  :patient 5
+                  :itinerary {:items [{:label "1"}
+                                      {:label "2"}]}}))
+
 (defn activate [initial]
   (session/initialize initial)
   (let [el (dom/getElement "canvas")
         content (cljs.reader/read-string initial)
-        state {:mode (reagent/atom "patient")
-               :stage (reagent/atom "checkout")
-               :patient (reagent/atom 5)}]
+        state default-state]
     (reagent/render [#(view state)] el)))
