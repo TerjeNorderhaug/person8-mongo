@@ -10,16 +10,13 @@
    [cljs-react-material-ui.icons :as ic]
    [goog.string :as gstring]))
 
-(defn view [session]
-  (let [time (reagent/atom nil)
-        date "Thursday, October 15, 2017"
-        pay-action #(rf/dispatch [:pay])]
-   (fn [{:keys [itinerary] :as session}]
+(defn view [{:keys [itinerary] :as session}]
+  (let [pay-action #(rf/dispatch [:pay])]
     [ui/paper {:style {:padding-left "1em"
                        :padding-right "1em"}}
      [:h5
       [ui/font-icon {:class-name "material-icons"
-                     :style {:font-size "60"}}
+                     :style {:font-size "30"}}
        ; use another icon here
        [ic/action-perm-contact-calendar {:color (color :grey600)
                                          :font-size "8em"}]
@@ -33,4 +30,4 @@
          [:tr [:td (pr-str item)]]))]
      [ui/flat-button {:label "Pay with WELL"
                       :primary true
-                      :on-click pay-action}]])))
+                      :on-click pay-action}]]))

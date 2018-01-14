@@ -14,11 +14,13 @@
 (defn split-view [session]
   [:div
     [:div {:style {:width "30%"
-                   :float "left"
-                   :padding-right "2em"
-                   :border-right "thin solid gray"}}
-      [patient.root/view session]]
+                   :float "left"}}
+      [:div.phone
+        [:div.phone-screen
+          [patient.root/view session]]]]
     [:div {:style {:width "60%"
+                   :height "100%" ;; should be screen height
+                   :border-left "thin solid gray"
                    :float "right"}}
       [provider.root/view session]]])
 
