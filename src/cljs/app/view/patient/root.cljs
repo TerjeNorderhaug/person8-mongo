@@ -9,7 +9,7 @@
      :refer [get-mui-theme color]]
    [cljs-react-material-ui.reagent :as ui]
    [cljs-react-material-ui.icons :as ic]
-   [app.view.patient.selector :as pane
+   [app.view.patient.pane
     :refer [pane]]
    [app.view.patient.selector :as selector]
    [app.view.patient.visit :as visit]
@@ -22,15 +22,6 @@
     :on-right-icon-button-touch-tap #()
     :title (reagent/as-element
             [:div "WellBE"])}])
-
-(defmethod pane "visit" [session]
-  [visit/view session])
-
-(defmethod pane "checkout" [session]
-  [checkout/view session])
-
-(defmethod pane "payed" [session]
-  [payed/view session])
 
 (defn view [{:keys [stage] :as session}]
   [ui/mui-theme-provider

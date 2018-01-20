@@ -11,7 +11,9 @@
    [cljs-react-material-ui.icons :as ic]
    [app.view.provider.standby :as standby]
    [app.view.provider.visit :as visit]
-   [app.view.provider.checkout :as checkout]))
+   [app.view.provider.checkout :as checkout]
+   [app.view.provider.pane
+    :refer [pane]]))
 
 (defn toolbar [{:keys [pane itinerary stage panes]
                 :as session}]
@@ -37,18 +39,6 @@
       :style {:display (if-not (= stage "payed")
                          "none")}}
      "The patient has paid for the visit with WELL tokens"]))
-
-(defmulti pane (fn [{:keys [pane] :as session}]
-                 (if pane @pane)))
-
-(defmethod pane :default [session]
-  [standby/view session])
-
-(defmethod pane "dashboard" [session]
-  [standby/view session])
-
-(defmethod pane "visit" [session]
-  [visit/view session])
 
 (defn view [session]
  (let [selected (rf/subscribe [:pane])]
