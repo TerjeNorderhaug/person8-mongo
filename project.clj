@@ -1,5 +1,5 @@
 (defproject wcef-well "0.3.0-SNAPSHOT"
-  :description "Well demo with Exonum for hospitals"
+  :description "Helping nomadic patients intelligently manage their healthcare"
   :url "https://cljsnode.herokuapp.com"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
@@ -21,14 +21,21 @@
                  [re-frame "0.10.3-beta1"]
                  [com.taoensso/timbre "4.10.0"]
                  [cljs-http "0.1.44"]
+                 [com.taoensso/sente "1.12.0"]
+                 [camel-snake-kebab "0.4.0"]
                  [com.taoensso/timbre "4.10.0"]
+                 [cljs-web3 "0.19.0-0-9"]
+                 [district0x.re-frame/web3-fx "1.0.3"]
                  [kioo "0.5.0"
-                  :exclusions [org.clojure/clojure cljsjs/react cljsjs/react-dom]]]
+                  :exclusions [org.clojure/clojure cljsjs/react cljsjs/react-dom]]
+                 [mount "0.1.11"]]
 
   :npm {:dependencies [[express "4.16.2"]
                        [xhr2 "0.1.4"]
                        [xmldom "0.1.27"]
                        [exonum-client "0.3.0"]
+                       [keythereum "1.0.2"]
+                       [solc "0.4.19"]
                        [react "16.2.0"]
                        [react-dom "16.2.0"]
                        [create-react-class "15.6.2"]

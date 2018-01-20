@@ -19,7 +19,7 @@
         [:div.phone-screen
           [patient.root/view session]]]]
     [:div {:style {:width "60%"
-                   :height "100%" ;; should be screen height
+                   :height "100vh"
                    :border-left "thin solid gray"
                    :float "right"}}
       [provider.root/view session]]])

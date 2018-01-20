@@ -5,10 +5,11 @@
    [goog.dom :as dom]
    [goog.events :as events]
    [goog.history.EventType :as EventType]
+   [taoensso.timbre :as timbre]
+   [re-frame.core :as rf]
    [secretary.core :as secretary
     :refer-macros [defroute]]
-   [app.session :as session
-    :refer [dispatch]])
+   [app.session :as session])
   (:import
    [goog History]))
 
@@ -34,14 +35,6 @@
 (defroute "/" []
   nil)
 
-#_
-(defroute "/refresh" []
-  (dispatch [:refresh])
-  (navigate! "/"))
-
-#_
-(defroute "/patient/:id" [id]
-  (dispatch [:patient id]))
-
 (defroute "/patient/:id/:stage" [id stage]
-  (dispatch [:patient id stage]))
+  (timbre/info "PATIENT:" id stage)
+  (rf/dispatch [:patient id stage]))

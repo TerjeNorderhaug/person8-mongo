@@ -9,6 +9,10 @@
    [reagent.core :as reagent
     :refer [atom]]
    [re-frame.core :as rf]
+   [taoensso.timbre :as timbre]
+   [lib.rflib :as rflib]
+   [app.data :as data]
+   [api.well :as well]
    [app.session :as session]
    [app.view.page
     :refer [page html5]]
@@ -21,20 +25,9 @@
         (pr-str (pr-str initial))
         ")")])
 
-(def default-state
-  {:mode "split"
-   :stage "checkout"
-   :patient 5
-   :itinerary {:items [{:label "1"
-                        :description "Examination and consultation"
-                        :cost "5"}
-                       {:label "2"
-                        :description "Prescription (Prednisone 5mg)"
-                        :cost "8"}]}})
-
 (defn static-page []
   (go-loop []
-    (let [initial default-state
+    (let [initial data/state
           state (session/state initial)]
       (-> state
           (page :scripts (scripts initial)
@@ -46,9 +39,17 @@
   #_
   (-> (cljs.reader/read-string initial)
       (session/initialize))
-  (session/initialize default-state)
+  (session/initialize data/state)
+  #_
+  (rflib/dispatch-message
+   :providers (well/fetch-providers-list 4 1))
+  #_
+  (rflib/dispatch-message
+   :waiting (well/fetch-waiting-room-list 1))
   (let [el (dom/getElement "canvas")
         state {:mode (rf/subscribe [:mode])
                :stage (rf/subscribe [:stage])
+               :providers (rf/subscribe [:providers])
+               :waiting (rf/subscribe [:waiting])
                :itinerary (rf/subscribe [:itinerary])}]
     (reagent/render [#(view state)] el)))
