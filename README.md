@@ -1,6 +1,6 @@
 # WellBE
 
-Globally distributed healthcare for digital nomads.
+Globally distributed healthcare for digital nomads, powered by AI and blockchain to change lives for the better.
 
 Implemented as a universal (nee isomporhic) Clojurescript React SPA.
 Runs on Heroku using node express, bootstrap, reagent and Kioo templates,
