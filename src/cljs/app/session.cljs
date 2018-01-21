@@ -7,6 +7,7 @@
     :refer [<!]]
    [reagent.core :as reagent]
    [re-frame.core :as rf]
+   [taoensso.timbre :as timbre]
    [cljs-http.client :as http]))
 
 (defonce event-queue (async/chan))
@@ -21,6 +22,14 @@
        (map #(vector (first %)(reagent/atom (second %))))
        (into {})))
 
+(defn reg-property [name]
+  (rf/reg-event-db name
+   (fn [db [_ value]]
+     (assoc db name value)))
+  (rf/reg-sub name
+   (fn [db]
+     (get db name))))
+
 (defn initialize [initial]
 
   (rf/reg-event-db
@@ -28,20 +37,23 @@
    (fn [db _] initial))
 
   (rf/reg-event-db
+   :update
+   (fn [db [_ path f]]
+     (update-in db path f)))
+
+  (rf/reg-event-db
    :patient
    (fn [db [_ id stage]]
      {:pre [(string? stage)]}
-     (assoc db :mode "patient" :patient id :stage stage)))
+     (assoc db
+            :patient id
+            :stage stage)))
 
-  (rf/reg-sub
-   :mode
-   (fn [db]
-     (:mode db)))
-
-  (rf/reg-sub
-   :stage
-   (fn [db]
-     (:stage db)))
+  (reg-property :providers)
+  (reg-property :waiting)
+  (reg-property :mode)
+  (reg-property :stage)
+  (reg-property :pane)
 
   (rf/reg-sub
    :itinerary
@@ -49,12 +61,12 @@
      (:itinerary db)))
 
   (rf/reg-event-db ;; should be fx
-   :pay
-   (fn [db [_ amount]]
-     (http/post "/api/exonum/pay"
-                {:json-params {:from nil
-                               :to nil
-                               :amount 16}})
-     (assoc db :stage "payed")))
+                   :pay
+                   (fn [db [_ amount]]
+                     (http/post "/api/exonum/pay"
+                                {:json-params {:from nil
+                                               :to nil
+                                               :amount 16}})
+                     (assoc db :stage "payed")))
 
   (rf/dispatch-sync [:initialize]))
