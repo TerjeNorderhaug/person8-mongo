@@ -22,6 +22,9 @@
        (map #(vector (first %)(reagent/atom (second %))))
        (into {})))
 
+(defn subscriptions [ks]
+  (into {} (map #(vector % (rf/subscribe [%])) ks)))  
+
 (defn reg-property [name]
   (rf/reg-event-db name
    (fn [db [_ value]]

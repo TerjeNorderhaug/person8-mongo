@@ -40,16 +40,13 @@
   (-> (cljs.reader/read-string initial)
       (session/initialize))
   (session/initialize data/state)
-  #_
-  (rflib/dispatch-message
-   :providers (well/fetch-providers-list 4 1))
-  #_
-  (rflib/dispatch-message
-   :waiting (well/fetch-waiting-room-list 1))
   (let [el (dom/getElement "canvas")
-        state {:mode (rf/subscribe [:mode])
-               :stage (rf/subscribe [:stage])
-               :providers (rf/subscribe [:providers])
-               :waiting (rf/subscribe [:waiting])
-               :itinerary (rf/subscribe [:itinerary])}]
-    (reagent/render [#(view state)] el)))
+        state (session/subscriptions
+               (map first data/state))]
+    (reagent/render [#(view state)] el)
+    #_
+    (rflib/dispatch-message
+     :providers (well/fetch-providers-list 4 1))
+    #_
+    (rflib/dispatch-message
+     :waiting (well/fetch-waiting-room-list 1))))
