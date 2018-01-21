@@ -5,18 +5,24 @@
   (:require
    [cljs.core.async :as async
     :refer [<!]]
+   [cljs-web3.core :as web3]
+   [cljs-web3.eth :as web3-eth]
+   [cljs-web3.personal :as web3-personal]
+   [cljsjs.web3]
    [reagent.core :as reagent]
    [re-frame.core :as rf]
+   #_[re-frame.http-fx]
    [taoensso.timbre :as timbre]
    [cljs-http.client :as http]))
 
+#_
 (defonce event-queue (async/chan))
 
+#_
 (defonce event-mult (async/mult event-queue))
 
-#_
-(defn dispatch [event]
-  (async/put! event-queue event))
+(def interceptors [#_(when ^boolean js/goog.DEBUG debug)
+                   rf/trim-v])
 
 (defn state [initial]
   (->> initial
@@ -66,6 +72,7 @@
   (reg-property :pane)
   (reg-property :diagnostic)
   (reg-property :analysis)
+  (reg-property :diagnosis)
 
   (rf/reg-sub :itinerary :itinerary)
   (rf/reg-sub :patient :patient)
@@ -85,11 +92,34 @@
     (fn [db [_ desc]]
       (timbre/debug "Analyze:" desc)
          ;; FIX: use fx
-      (go-loop [analysis (<! (http/get "/api/infermedica/analysis"
+      (go-loop [result (<! (http/get "/api/infermedica/analysis"
                                     {:query-params {"desc" (str desc)}}))]
-        (timbre/debug "Analysis:" analysis)
-        (when (:success analysis)
-          (rf/dispatch [:analysis (:body analysis)])))
+        (timbre/debug "Analysis =>" result)
+        (when (:success result)
+          (rf/dispatch [:analysis (:body result)])))
       (assoc db :description desc)))
+
+  (rf/reg-event-db
+   :diagnostic/diagnose ;; should be fx
+   (fn [db [_ arg]]
+     (timbre/debug "Diagnose:" arg)
+     ;; FIX: use fx
+     (go-loop [defaults {:sex "male" :age "30"}
+               result (<! (http/get "/api/infermedica/diagnosis"
+                                      {:json-params (merge defaults arg)}))]
+       (timbre/debug "Diagnose =>" result)
+       (when (:success result)
+         (rf/dispatch [:diagnosis (:body result)])))
+     db))
+
+  (rf/reg-event-fx
+   :blockchain/unlock-account
+   interceptors
+   (fn [{:keys [db]} [address password]]
+     {:web3-fx.blockchain/fns
+      {:web3 (:web3 db)
+       :fns [[web3-personal/unlock-account address password 999999
+              :blockchain/account-unlocked
+              :log-error]]}}))
 
   (rf/dispatch-sync [:initialize]))

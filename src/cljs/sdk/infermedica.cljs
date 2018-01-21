@@ -31,6 +31,10 @@
   ;; https://developer.infermedica.com/docs/nlp
   (fetch "parse" params))
 
+(defn fetch-diagnosis [{:as params}]
+  ;; https://developer.infermedica.com/docs/diagnosis
+  (fetch "diagnosis" params))
+
 (defn generate-medical-analysis [text]
   (go
    (some->> {:text text
@@ -38,10 +42,16 @@
                             "risk_factor"]}
             (fetch-parse)
             (<!)
-            (:body)
-            (:mentions))))
+            (:body))))
 
 #_
 (-> "i feel smoach pain but no couoghing today"
     (generate-medical-analysis)
     (chan/echo))
+
+(defn generate-medical-diagnosis [{:as args}]
+  (go
+   (some->> args
+            (fetch-diagnosis)
+            (<!)
+            (:body))))

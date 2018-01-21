@@ -39,9 +39,9 @@
 (defn back-button [{:keys [diagnostic] :as session}
                    & {:keys [label]
                       :or {label "Back"}}]
-  [ui/raised-button
+  [ui/flat-button
    {:label label
-    :primary true
+    :secondary true
     :on-click #(let [active (or (if diagnostic (:active @diagnostic)) 0)]
                  (rf/dispatch
                   [:assign [:diagnostic :active] (dec active)]))}])
@@ -57,7 +57,7 @@
        [ui/text-field
         {:floating-label-text "How well are you today?"
          :multi-line true
-         :value @desc
+         :value (or @desc "")
          :on-change #(reset! desc (-> % .-target .-value))
          :hint-text "Describe your condition and eventual symptoms"}]
        [next-button session
@@ -65,20 +65,50 @@
 
 (defn analysis-step [{:keys [analysis] :as session}]
   [:div
-   [:p (if analysis (pr-str @analysis))]
-   [:p "Sounds like you have 100+ in fever and some pain..."]
-   [back-button session :label "Change"]
-   [next-button session :label "OK"]])
+   [:p]
+   #_ (if analysis (pr-str @analysis))
+   #_ [:p "Sounds like you have 100+ in fever and some pain..."]
+   (if analysis
+     [:p "Sounds like you experience:"])
+   [:div
+    (into
+     [ui/list]
+     (for [{:keys [id common_name name choice_id] :as item}
+           (if analysis (:mentions @analysis))]
+       ^{:key id}
+       [ui/list-item
+        {:primary-text (str (or common_name name)
+                            (if-not (= choice_id "present")
+                              " (not present)"))
+         #_:secondary-text #_(or type "")}]))]
+   [:div {:style {:width "100%"}}
+    [back-button session :label "Change"]
+    [:span {:style {:width "1em"}}]
+    [next-button session
+     :effect #(rf/dispatch [:diagnostic/diagnose
+                            {:evidence (:mentions @analysis)}])
+     :label "Continue"]]])
 
-(defn diagnosis-step [session]
+
+(defn diagnosis-step [{:keys [diagnosis] :as session}]
   [:div
-   [:p "You could be coming down with a flu"]
-   [:p "Recommending you check in with a doctor asap:"]
-   [:ul
-    [:li "Doctor Cough"]
-    [:li "Doctor Sharp"]]
+   [:div
+    (into
+     [ui/list]
+     (for [{:keys [id common_name name choice_id] :as item}
+           (if diagnosis (:mentions @diagnosis))]
+       ^{:key id}
+       [ui/list-item
+        {:primary-text (str (or common_name name))
+         :secondary-text (pr-str item)}]))]
+   #_[:p "You could be coming down with a flu"]
+   [:p "Recommend checking in with a doctor asap."]
+   [:p "Best matching physicians nearby:"]
+   [ui/list
+    [ui/list-item "Doctor Cough"]
+    [ui/list-item "Doctor Sharp"]]
    [next-button session
-    :label "OK"
+    :label "Schedule"
     :action #(rf/dispatch [:stage "schedule"])]])
 
 (defn view [{:keys [diagnostic] :as session}]

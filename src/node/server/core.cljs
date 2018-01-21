@@ -45,12 +45,22 @@
       (.set res "Content-Type" "application/json")
       (.send res (clj->js value)))))
 
+(defn diagnosis-handler [req res]
+  (let [query (js->clj (.-body req))]
+    (timbre/debug "Infermedica desc:" query)
+    (go-loop [value (<! (infermedica/generate-medical-diagnosis query))]
+      (timbre/debug "Infermedica diagnosis:" value)
+      (.status res 200)
+      (.set res "Content-Type" "application/json")
+      (.send res (clj->js value)))))
 
 (defn server [port success]
   (doto (express)
     (.get "/" handler)
     (.get "/api/infermedica/analysis"
           analysis-handler)
+    (.get "/api/infermedica/diagnosis"
+          diagnosis-handler)
     (.get "/api/exonum/pay"
           pay-handler)
     (.use (.static express "resources/public"))
