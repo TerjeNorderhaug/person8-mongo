@@ -25,7 +25,8 @@
       [:a.navbar-brand "WellBE"]]
     (into
      [:ul.nav.nav-pills]
-     (for [{:keys [id title] :as item} panes]
+     (for [{:keys [id title] :as item}
+           (if panes @panes)]
        ^{:key id}
        [:li {:role "presentation"
              :class (active-class id)}

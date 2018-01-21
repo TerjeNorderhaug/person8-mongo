@@ -23,7 +23,7 @@
        (into {})))
 
 (defn subscriptions [ks]
-  (into {} (map #(vector % (rf/subscribe [%])) ks)))  
+  (into {} (map #(vector % (rf/subscribe [%])) ks)))
 
 (defn reg-property [name]
   (rf/reg-event-db name
@@ -62,6 +62,9 @@
    :itinerary
    (fn [db]
      (:itinerary db)))
+
+  (rf/reg-sub :patient :patient)
+  (rf/reg-sub :panes :panes)
 
   (rf/reg-event-db ;; should be fx
                    :pay
