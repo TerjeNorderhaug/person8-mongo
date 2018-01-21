@@ -90,9 +90,12 @@
      :label "Continue"]]])
 
 
-(defn diagnosis-step [{:keys [diagnosis] :as session}]
+(defn diagnosis-step [{:keys [diagnosis providers] :as session}]
   [:div
-   [:div (if diagnosis (pr-str @diagnosis))]
+   #_
+   [:div (if (and diagnosis @diagnosis)
+           (pr-str @diagnosis))]
+   #_
    [:div
     (into
      [ui/list]
@@ -105,8 +108,13 @@
    #_[:p "You could be coming down with a flu"]
    [:p "Recommend checking in with a doctor asap."]
    [:p "Best matching physicians nearby:"]
-   [ui/list
-    [ui/list-item "Jen Mississippi"]]
+   (into
+    [ui/list]
+    (for [{:keys [name avatar] :as item}
+          (if providers (:providers @providers))]
+      [ui/list-item
+        {; :left-avatar avatar
+         :primary-text name}]))
    [next-button session
     :label "Schedule"
     :action #(rf/dispatch [:stage "schedule"])]])

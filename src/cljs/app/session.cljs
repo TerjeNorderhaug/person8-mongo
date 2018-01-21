@@ -105,7 +105,7 @@
      (timbre/debug "Diagnose:" arg)
      ;; FIX: use fx
      (go-loop [defaults {:sex "male" :age "30"}
-               result (<! (http/get "/api/infermedica/diagnosis"
+               result (<! (http/post "/api/infermedica/diagnosis"
                                       {:json-params (merge defaults arg)}))]
        (timbre/debug "Diagnose =>" result)
        (when (:success result)

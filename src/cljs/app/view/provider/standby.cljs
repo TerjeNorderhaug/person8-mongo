@@ -22,7 +22,9 @@
                            state-of-residency]
                     :as patient}]
                (map-indexed vector
-                            (if waiting @waiting))]
+                            (concat
+                             (if waiting @waiting)
+                             (if false [])))]
             ^{:key id}
             [:tr
              [:td
