@@ -12,7 +12,7 @@
    [app.view.provider.pane
      :refer [pane]]))
 
-(defn view [{:keys [waiting] :as session}]
+(defn view [{:keys [waiting stage] :as session}]
  [:div.well
   [:table.table.waiting
    [:thead [:caption {:style {:width "100%"}}
@@ -24,7 +24,9 @@
                (map-indexed vector
                             (concat
                              (if waiting @waiting)
-                             (if false [])))]
+                             (if (and stage
+                                      (= @stage "schedule")
+                                      []))))]
             ^{:key id}
             [:tr
              [:td
