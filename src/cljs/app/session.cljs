@@ -58,11 +58,7 @@
   (reg-property :stage)
   (reg-property :pane)
 
-  (rf/reg-sub
-   :itinerary
-   (fn [db]
-     (:itinerary db)))
-
+  (rf/reg-sub :itinerary :itinerary)
   (rf/reg-sub :patient :patient)
   (rf/reg-sub :panes :panes)
 
