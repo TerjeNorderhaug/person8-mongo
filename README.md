@@ -4,13 +4,28 @@ Globally distributed continuous healthcare for globetrotters with chronic condit
 
 Implemented as a universal (nee isomporhic) Clojurescript React SPA. Runs on Docker and Heroku using node express, bootstrap, reagent and Kioo templates, with code shared between frontend and backend, where Figwheel hotloads code changes to both.
 
+## Infermedica
+
+To use AI powered preliminary diagnostics, request a developer account from InferMedica:
+
+    https://developer.infermedica.com/
+
+Add the provided app id and key to a `.env`file on the toplevel of the project:
+
+    INFERMEDICA_APP_ID=
+    INFERMEDICA_APP_KEY=
+
 ## Deploy with Docker
 
 Start a local web server with an etherium blockchain:
 
-    docker blockchain up
+    docker-compose up
 
 Access http://localhost:5000 from a browser.
+
+To only start the Ethereum blockchain client:
+
+    docker-compose up blockchain
 
 ## Run Locally
 
@@ -19,12 +34,17 @@ Requirements: leiningen, heroku, npm
 To start a server on your own computer:
 
     lein do clean, deps, compile
-    lein run
+    heroku local web
 
 Point your browser to the displayed local port.
 Click on the displayed text to refresh.
 
 ## Deploy to Heroku
+
+Set the heroku environment with the keys from Infermedica:
+
+    heroku config:set INFERMEDICA_APP_ID=...
+    heroku config:set INFERMEDICA_APP_KEY=...
 
 To start a server on Heroku:
 

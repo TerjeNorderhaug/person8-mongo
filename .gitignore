@@ -8,6 +8,7 @@ pom.xml.asc
 *~
 /.lein-*
 /.nrepl-port
+/.env
 /env
 /resources/public/js/out
 /logs
@@ -16,3 +17,4 @@ npm-debug.log
 main.js
 package.json
 profiles.clj
+blockchain
