@@ -9,12 +9,12 @@
     :refer [chan close! timeout put!]]
    [reagent.core :as reagent
     :refer [atom]]
+   [taoensso.timbre :as timbre]
+   [sdk.web3 :as web3]
    [api.exonum-client :as exonum-client]
    [api.well :as well]
    [app.core :as app
     :refer [static-page]]))
-
-(enable-console-print!)
 
 (def express (nodejs/require "express"))
 
@@ -43,6 +43,6 @@
 (defn -main [& mess]
   (let [port (or (.-PORT (.-env js/process)) 1337)]
     (server port
-            #(println (str "Server running at http://127.0.0.1:" port "/")))))
+            #(timbre/info (str "Server running at http://127.0.0.1:" port "/")))))
 
 (set! *main-cli-fn* -main)
