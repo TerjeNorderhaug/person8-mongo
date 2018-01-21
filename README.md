@@ -2,7 +2,7 @@
 
 Globally distributed continuous healthcare for globetrotters with chronic conditions, applying AI and blockchain to change lives for the better.
 
-Implemented as a universal (nee isomporhic) Clojurescript React SPA. Runs on Docker and Heroku using node express, bootstrap, reagent and Kioo templates, with code shared between frontend and backend, where Figwheel hotloads code changes to both.
+Delivered as a universal (nee isomporhic) Clojurescript React dApp. Runs on Docker and Heroku using node express, bootstrap, and material design, with hotloaded code shared between frontend and backend.
 
 ## Infermedica
 
