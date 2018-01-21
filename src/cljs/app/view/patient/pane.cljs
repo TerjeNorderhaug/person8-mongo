@@ -1,4 +1,4 @@
-(app.view.patient.pane)
+(ns app.view.patient.pane)
 
 (defmulti pane (fn [{:keys [stage] :as session}]
                   (if stage @stage)))
