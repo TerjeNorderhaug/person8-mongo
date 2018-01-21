@@ -33,6 +33,7 @@
 
 (defn fetch-diagnosis [{:as params}]
   ;; https://developer.infermedica.com/docs/diagnosis
+  (timbre/debug "Fetch diagnosis:" params)
   (fetch "diagnosis" params))
 
 (defn generate-medical-analysis [text]

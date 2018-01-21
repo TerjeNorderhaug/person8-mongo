@@ -17,6 +17,7 @@
    :patient 5
    :diagnostic {}
    :analysis {}
+   :diagnosis nil
    :itinerary {:items [{:label "1"
                         :description "Examination and consultation"
                         :cost "5"}

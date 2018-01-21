@@ -47,7 +47,8 @@
 
 (defn diagnosis-handler [req res]
   (let [query (js->clj (.-body req))]
-    (timbre/debug "Infermedica desc:" query)
+    (timbre/debug "Infermedica desc:" query
+      (js->clj (.-query req)))
     (go-loop [value (<! (infermedica/generate-medical-diagnosis query))]
       (timbre/debug "Infermedica diagnosis:" value)
       (.status res 200)

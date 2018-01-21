@@ -92,6 +92,7 @@
 
 (defn diagnosis-step [{:keys [diagnosis] :as session}]
   [:div
+   [:div (if diagnosis (pr-str @diagnosis))]
    [:div
     (into
      [ui/list]
@@ -105,8 +106,7 @@
    [:p "Recommend checking in with a doctor asap."]
    [:p "Best matching physicians nearby:"]
    [ui/list
-    [ui/list-item "Doctor Cough"]
-    [ui/list-item "Doctor Sharp"]]
+    [ui/list-item "Jen Mississippi"]]
    [next-button session
     :label "Schedule"
     :action #(rf/dispatch [:stage "schedule"])]])
