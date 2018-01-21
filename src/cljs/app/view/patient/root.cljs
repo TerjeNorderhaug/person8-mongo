@@ -11,6 +11,7 @@
    [cljs-react-material-ui.icons :as ic]
    [app.view.patient.pane
     :refer [pane]]
+   [app.view.patient.diagnostic :as diagnostic]
    [app.view.patient.selector :as selector]
    [app.view.patient.visit :as visit]
    [app.view.patient.checkout :as checkout]

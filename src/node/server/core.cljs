@@ -11,6 +11,7 @@
     :refer [atom]]
    [taoensso.timbre :as timbre]
    [sdk.web3 :as web3]
+   [sdk.infermedica :as infermedica]
    [api.exonum-client :as exonum-client]
    [api.well :as well]
    [app.core :as app
@@ -33,10 +34,25 @@
           :amount 15})]
     (.serialize payment)))
 
+
+(defn analysis-handler [req res]
+  (let [query (js->clj (.-query req))
+        desc (get query "desc")]
+    (timbre/debug "Infermedica desc:" desc)
+    (go-loop [value (<! (infermedica/generate-medical-analysis desc))]
+      (timbre/debug "Infermedica analysis:" value)
+      (.status res 200)
+      (.set res "Content-Type" "application/json")
+      (.send res (clj->js value)))))
+
+
 (defn server [port success]
   (doto (express)
     (.get "/" handler)
-    (.get "/api/exonum/pay" pay-handler)
+    (.get "/api/infermedica/analysis"
+          analysis-handler)
+    (.get "/api/exonum/pay"
+          pay-handler)
     (.use (.static express "resources/public"))
     (.listen port success)))
 

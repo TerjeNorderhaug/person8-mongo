@@ -10,11 +10,13 @@
 
 (def state
   {:mode "split"
-   :stage "select"
+   :stage "diagnostic"
    :panes [{:id "dashboard" :title "Dashboard"}
            {:id "visit" :title "Visit"}]
    :pane "dashboard"
    :patient 5
+   :diagnostic {}
+   :analysis {}
    :itinerary {:items [{:label "1"
                         :description "Examination and consultation"
                         :cost "5"}

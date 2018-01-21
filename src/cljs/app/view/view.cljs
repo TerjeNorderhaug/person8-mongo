@@ -33,4 +33,4 @@
     ("split")
     [split-view session]
     (nil)
-    [:div "Waiting"]))
+    [:div "Loading..."]))

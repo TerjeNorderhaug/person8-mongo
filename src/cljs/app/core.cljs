@@ -43,10 +43,4 @@
   (let [el (dom/getElement "canvas")
         state (session/subscriptions
                (map first data/state))]
-    (reagent/render [#(view state)] el)
-    #_
-    (rflib/dispatch-message
-     :providers (well/fetch-providers-list 4 1))
-    #_
-    (rflib/dispatch-message
-     :waiting (well/fetch-waiting-room-list 1))))
+    (reagent/render [#(view state)] el)))

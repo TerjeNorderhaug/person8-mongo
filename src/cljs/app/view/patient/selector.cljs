@@ -53,5 +53,5 @@
                                       "/visit")}]]
        [ui/card-text textprofile]]))])
 
-(defmethod pane "select" [session]
+(defmethod pane "schedule" [session]
   [view session])

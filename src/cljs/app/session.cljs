@@ -14,6 +14,7 @@
 
 (defonce event-mult (async/mult event-queue))
 
+#_
 (defn dispatch [event]
   (async/put! event-queue event))
 
@@ -45,6 +46,12 @@
      (update-in db path f)))
 
   (rf/reg-event-db
+   :assign
+   (fn [db [_ path value]]
+     (timbre/debug "Assign:" path value)
+     (assoc-in db path value)))
+
+  (rf/reg-event-db
    :patient
    (fn [db [_ id stage]]
      {:pre [(string? stage)]}
@@ -57,6 +64,8 @@
   (reg-property :mode)
   (reg-property :stage)
   (reg-property :pane)
+  (reg-property :diagnostic)
+  (reg-property :analysis)
 
   (rf/reg-sub :itinerary :itinerary)
   (rf/reg-sub :patient :patient)
@@ -70,5 +79,17 @@
                                                :to nil
                                                :amount 16}})
                      (assoc db :stage "payed")))
+
+  (rf/reg-event-db
+    :diagnostic/analyze ;; should be fx
+    (fn [db [_ desc]]
+      (timbre/debug "Analyze:" desc)
+         ;; FIX: use fx
+      (go-loop [analysis (<! (http/get "/api/infermedica/analysis"
+                                    {:query-params {"desc" (str desc)}}))]
+        (timbre/debug "Analysis:" analysis)
+        (when (:success analysis)
+          (rf/dispatch [:analysis (:body analysis)])))
+      (assoc db :description desc)))
 
   (rf/dispatch-sync [:initialize]))
