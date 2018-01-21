@@ -1,14 +1,20 @@
 # WellBE
 
-Globally distributed continuous healthcare for globetrotters with chronic conditions, applying AI and blockchain to change lives for the better. 
+Globally distributed continuous healthcare for globetrotters with chronic conditions, applying AI and blockchain to change lives for the better.
 
 Implemented as a universal (nee isomporhic) Clojurescript React SPA. Runs on Docker and Heroku using node express, bootstrap, reagent and Kioo templates, with code shared between frontend and backend, where Figwheel hotloads code changes to both.
 
-## Requirements
+## Deploy with Docker
 
-leiningen, heroku, npm
+Start a local web server with an etherium blockchain:
+
+    docker blockchain up
+
+Access http://localhost:5000 from a browser.
 
 ## Run Locally
+
+Requirements: leiningen, heroku, npm
 
 To start a server on your own computer:
 
