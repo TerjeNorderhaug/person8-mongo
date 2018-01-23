@@ -25,13 +25,15 @@
                             (concat
                              (if waiting @waiting)
                              (if (and stage
-                                      (= @stage "schedule")
-                                      []))))]
+                                      (= @stage "schedule"))
+                                 [{:avatar "https://media-exp2.licdn.com/mpr/mpr/shrinknp_200_200/p/3/000/024/0af/328f6fb.jpg"
+                                   :fname "Juliet"
+                                   :lname "Oberding"}])))]
             ^{:key id}
             [:tr
              [:td
-              [:img.avatar {:src (str "https://well-api.joinwell.com/"
-                                  avatar)}]]
+              [:img.avatar {:src avatar
+                            :style {:width "6em" :height "6em"}}]]
              [:td
                {:style {:text-align "left"}}
                (str fname lname)]]))]])

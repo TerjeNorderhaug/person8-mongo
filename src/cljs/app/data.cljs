@@ -59,5 +59,5 @@
                    "updated_at" nil "code" nil "parent_waitingroom_id" 0 "rating" 0
                    "feedback" nil "mint_flag" 0 "mint_file" nil "cancel_visit" 0
                    "fname" "Demo" "lname" "Patient" "providerUserId" 1
-                   "avatar" "avatar/0bcd8485d8642fa2f53ea5cd7f572744.jpeg"
+                   "avatar" "https://well-api.joinwell.com/avatar/0bcd8485d8642fa2f53ea5cd7f572744.jpeg"
                    "stateOfResidency" "CO"}])})
