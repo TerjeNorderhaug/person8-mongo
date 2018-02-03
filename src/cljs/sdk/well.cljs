@@ -4,7 +4,7 @@
   (:require
    [cljs-http.client :as http]
    [cljs.core.async :refer [<! chan]]
-   [app.lib :as lib]))
+   [lib.chan :as chan]))
 
 ;; API Reference
 ;; https://well-api.joinwell.com/docs/
@@ -19,7 +19,7 @@
             {; :with-credentials false
              :headers {"Accept" "application/json"}}))
 #_
-(lib/echo (provider-home))
+(chan/echo (provider-home))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -32,7 +32,7 @@
  (fetch-auth {:email "provider@demo.com"
               :password "password"
               :partnerid 4})
- (lib/echo))
+ (chan/echo))
 
 #_
 (def oauth-token ;; can be retrieved with fetch-auth
@@ -58,7 +58,7 @@
 
 #_
 (-> (fetch-patients-list)
-    (lib/echo))
+    (chan/echo))
 
 (defn fetch-patient [id]
   (http/get (endpoint "provider/getPatientById/" (str id))
@@ -68,7 +68,7 @@
 
 #_
 (-> (fetch-patient 5)
-    (lib/echo))
+    (chan/echo))
 
 (defn fetch-waiting-room-list [id]
   (http/get (endpoint "provider/getwaitingroom/" (str id))
@@ -81,7 +81,7 @@
 
 #_
 (-> (fetch-waiting-room-list 1)
-    (lib/echo))
+    (chan/echo))
 
 (defn fetch-providers-list [provider-id patient-id]
    (http/get (endpoint "providers/providerlist/"
@@ -94,4 +94,4 @@
 
 #_
 (-> (fetch-providers-list 4 1)
-    (lib/echo))
+    (chan/echo))

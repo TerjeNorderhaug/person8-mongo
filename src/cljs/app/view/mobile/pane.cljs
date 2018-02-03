@@ -1,4 +1,4 @@
-(ns app.view.patient.pane
+(ns app.view.mobile.pane
   (:require
    [reagent.core :as reagent
     :refer [atom]]

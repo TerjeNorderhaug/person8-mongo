@@ -8,7 +8,7 @@
             substitute listen unwrap]]
    [reagent.core :as reagent
     :refer [atom]]
-   [app.view.patient.root :as patient.root]
+   [app.view.mobile.root :as mobile]
    [app.view.provider.root :as provider.root]))
 
 (defn split-view [session]
@@ -17,7 +17,7 @@
                    :float "left"}}
       [:div.phone
         [:div.phone-screen
-          [patient.root/view session]]]]
+          [mobile/view session]]]]
     [:div {:style {:width "60%"
                    :height "100vh"
                    :border-left "thin solid gray"
@@ -26,9 +26,9 @@
 
 (defn view [{:keys [mode] :as session}]
   (case (if mode @mode)
-    ("patient")
-    [patient.root/view session]
-    ("provider")
+    ("mobile")
+    [mobile/view session]
+    ("dashboard")
     [provider.root/view session]
     ("split")
     [split-view session]

@@ -1,31 +1,18 @@
-# WellBE
+# HackBench
 
-Globally distributed continuous healthcare for globetrotters with chronic conditions, applying AI and blockchain to change lives for the better.
+Clojure starter template for rapid prototyping.
 
-Delivered as a universal (nee isomporhic) Clojurescript React dApp. Runs on Docker and Heroku using node express, bootstrap, and material design, with hotloaded code shared between frontend and backend.
+Providing the framework to build a universal (nee isomporhic) Clojurescript React app for mobile and/or web.
 
-## Infermedica
-
-To use AI powered preliminary diagnostics, request a developer account from InferMedica:
-
-    https://developer.infermedica.com/
-
-Add the provided app id and key to a `.env`file on the toplevel of the project:
-
-    INFERMEDICA_APP_ID=
-    INFERMEDICA_APP_KEY=
+Runs on Docker and Heroku using node express, bootstrap, and material design, with hotloaded code shared between frontend and backend.
 
 ## Deploy with Docker
 
-Start a local web server with an etherium blockchain:
+Start a local web server in a Docker container:
 
     docker-compose up
 
 Access http://localhost:5000 from a browser.
-
-To only start the Ethereum blockchain client:
-
-    docker-compose up blockchain
 
 ## Run Locally
 
@@ -40,11 +27,6 @@ Point your browser to the displayed local port.
 Click on the displayed text to refresh.
 
 ## Deploy to Heroku
-
-Set the heroku environment with the keys from Infermedica:
-
-    heroku config:set INFERMEDICA_APP_ID=...
-    heroku config:set INFERMEDICA_APP_KEY=...
 
 To start a server on Heroku:
 
@@ -81,4 +63,5 @@ To test the system, execute:
 
 Copyright © 2018 Terje Norderhaug
 
-Distributed under the Eclipse Public License either version 1.0 or (atyour option) any later version.
+Distributed under the Eclipse Public License either version 1.0
+or (at your option) any later version.

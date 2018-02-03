@@ -12,7 +12,6 @@
    [taoensso.timbre :as timbre]
    [lib.rflib :as rflib]
    [app.data :as data]
-   [api.well :as well]
    [app.session :as session]
    [app.view.page
     :refer [page html5]]
@@ -31,7 +30,7 @@
           state (session/state initial)]
       (-> state
           (page :scripts (scripts initial)
-                :title "WellBE"
+                :title "HackBench"
                 :forkme false)
           (html5)))))
 

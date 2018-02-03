@@ -1,4 +1,4 @@
-(ns app.view.patient.root
+(ns app.view.mobile.root
   (:require
    [goog.string :as gstring]
    [reagent.core :as reagent
@@ -9,13 +9,8 @@
      :refer [get-mui-theme color]]
    [cljs-react-material-ui.reagent :as ui]
    [cljs-react-material-ui.icons :as ic]
-   [app.view.patient.pane
-    :refer [pane]]
-   [app.view.patient.diagnostic :as diagnostic]
-   [app.view.patient.selector :as selector]
-   [app.view.patient.visit :as visit]
-   [app.view.patient.checkout :as checkout]
-   [app.view.patient.payed :as payed]))
+   [app.view.mobile.pane
+    :refer [pane]]))
 
 (defn toolbar [session]
   [ui/app-bar

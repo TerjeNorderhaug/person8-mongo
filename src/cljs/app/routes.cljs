@@ -35,6 +35,8 @@
 (defroute "/" []
   nil)
 
-(defroute "/patient/:id/:stage" [id stage]
-  (timbre/info "PATIENT:" id stage)
-  (rf/dispatch [:patient id stage]))
+(defroute "/split" []
+  (rf/dispatch [:mode "split"]))
+
+(defroute "/mobile" []
+  (rf/dispatch [:mode "mobile"]))

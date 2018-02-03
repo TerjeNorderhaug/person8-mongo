@@ -1,4 +1,4 @@
-(ns app.lib
+(ns lib.chan
   (:require-macros
    [cljs.core.async.macros :refer [go go-loop]])
   (:require

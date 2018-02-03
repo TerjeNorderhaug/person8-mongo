@@ -16,3 +16,13 @@
    (go
     (when-let [msg (<! ch)]
       (rf/dispatch [k msg])))))
+
+
+(defn reg-property [name]
+  (rf/reg-event-db name
+                   (fn [db [_ value]]
+                     (assoc db name value)))
+  (rf/reg-sub name
+              (fn [db]
+                (get db name)))
+  name)

@@ -9,6 +9,10 @@
    [taoensso.timbre :as timbre]
    [lib.chan :as chan]))
 
+;; TODO:
+;; 1. Use record to keep state for each infermedica api request.
+;; 2. make isomorphic so not depending on proxy through server.
+
 (def app-id
   (or (aget js/process "env" "INFERMEDICA_APP_ID")
       (timbre/warn "Need to set INFERMEDICA_APP_ID environment var")))
@@ -56,3 +60,25 @@
             (fetch-diagnosis)
             (<!)
             (:body))))
+
+(defn express-analysis-handler [req res]
+  (let [query (js->clj (.-query req))
+        desc (get query "desc")]
+    (timbre/debug "Infermedica desc:" desc)
+    (go-loop [value (<! (generate-medical-analysis desc))]
+      (timbre/debug "Infermedica analysis:" value)
+      (.status res 200)
+      (.set res "Content-Type" "application/json")
+      (.send res (clj->js value)))))
+
+(defn express-diagnosis-handler [req res]
+  (let [query (js->clj (.-body req))]
+    (timbre/debug "Infermedica query:"
+                  (js-keys req)
+                  query
+                  (js->clj (.-query req)))
+    (go-loop [value (<! (generate-medical-diagnosis query))]
+      (timbre/debug "Infermedica diagnosis:" value)
+      (.status res 200)
+      (.set res "Content-Type" "application/json")
+      (.send res (clj->js value)))))

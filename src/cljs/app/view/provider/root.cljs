@@ -9,9 +9,6 @@
      :refer [get-mui-theme color]]
    [cljs-react-material-ui.reagent :as ui]
    [cljs-react-material-ui.icons :as ic]
-   [app.view.provider.standby :as standby]
-   [app.view.provider.visit :as visit]
-   [app.view.provider.checkout :as checkout]
    [app.view.provider.pane
     :refer [pane]]))
 

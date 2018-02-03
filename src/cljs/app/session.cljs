@@ -5,21 +5,14 @@
   (:require
    [cljs.core.async :as async
     :refer [<!]]
-   [cljs-web3.core :as web3]
-   [cljs-web3.eth :as web3-eth]
-   [cljs-web3.personal :as web3-personal]
-   [cljsjs.web3]
    [reagent.core :as reagent]
-   [re-frame.core :as rf]
+   [re-frame.core :as rf
+    :refer [reg-sub]]
+   [lib.rflib :as rflib
+    :refer [reg-property]]
    #_[re-frame.http-fx]
    [taoensso.timbre :as timbre]
    [cljs-http.client :as http]))
-
-#_
-(defonce event-queue (async/chan))
-
-#_
-(defonce event-mult (async/mult event-queue))
 
 (def interceptors [#_(when ^boolean js/goog.DEBUG debug)
                    rf/trim-v])
@@ -31,14 +24,6 @@
 
 (defn subscriptions [ks]
   (into {} (map #(vector % (rf/subscribe [%])) ks)))
-
-(defn reg-property [name]
-  (rf/reg-event-db name
-   (fn [db [_ value]]
-     (assoc db name value)))
-  (rf/reg-sub name
-   (fn [db]
-     (get db name))))
 
 (defn initialize [initial]
 
@@ -65,17 +50,10 @@
             :patient id
             :stage stage)))
 
-  (reg-property :providers)
-  (reg-property :waiting)
   (reg-property :mode)
   (reg-property :stage)
   (reg-property :pane)
-  (reg-property :diagnostic)
-  (reg-property :analysis)
-  (reg-property :diagnosis)
 
-  (rf/reg-sub :itinerary :itinerary)
-  (rf/reg-sub :patient :patient)
   (rf/reg-sub :panes :panes)
 
   (rf/reg-event-db ;; should be fx
@@ -111,15 +89,5 @@
        (when (:success result)
          (rf/dispatch [:diagnosis (:body result)])))
      db))
-
-  (rf/reg-event-fx
-   :blockchain/unlock-account
-   interceptors
-   (fn [{:keys [db]} [address password]]
-     {:web3-fx.blockchain/fns
-      {:web3 (:web3 db)
-       :fns [[web3-personal/unlock-account address password 999999
-              :blockchain/account-unlocked
-              :log-error]]}}))
 
   (rf/dispatch-sync [:initialize]))
