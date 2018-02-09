@@ -10,8 +10,10 @@
     :refer [atom]]
    [re-frame.core :as rf]
    [taoensso.timbre :as timbre]
-   [lib.rflib :as rflib]
-   [app.data :as data]
+   [mount.core :as mount
+    :refer [defstate]]
+   [util.rflib :as rflib]
+   [app.state :as state]
    [app.session :as session]
    [app.view.page
     :refer [page html5]]
@@ -26,20 +28,25 @@
 
 (defn static-page []
   (go-loop []
-    (let [initial data/state
+    (let [initial state/state
           state (session/state initial)]
       (-> state
           (page :scripts (scripts initial)
-                :title "HackBench"
+                :title (if (:brand state) @(:brand state) "HackBench")
                 :forkme false)
           (html5)))))
+
+(defstate reporting
+  :start #(timbre/info "Starting")
+  :stop #(timbre/info "Stopping"))
 
 (defn activate [initial]
   #_
   (-> (cljs.reader/read-string initial)
       (session/initialize))
-  (session/initialize data/state)
+  (session/initialize state/state)
   (let [el (dom/getElement "canvas")
         state (session/subscriptions
-               (map first data/state))]
-    (reagent/render [#(view state)] el)))
+               (map first state/state))]
+    (reagent/render [#(view state)] el))
+  (mount/start))

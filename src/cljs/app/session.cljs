@@ -8,7 +8,7 @@
    [reagent.core :as reagent]
    [re-frame.core :as rf
     :refer [reg-sub]]
-   [lib.rflib :as rflib
+   [util.rflib :as rflib
     :refer [reg-property]]
    #_[re-frame.http-fx]
    [taoensso.timbre :as timbre]
@@ -42,52 +42,13 @@
      (timbre/debug "Assign:" path value)
      (assoc-in db path value)))
 
-  (rf/reg-event-db
-   :patient
-   (fn [db [_ id stage]]
-     {:pre [(string? stage)]}
-     (assoc db
-            :patient id
-            :stage stage)))
-
+  (reg-property :brand)
   (reg-property :mode)
   (reg-property :stage)
   (reg-property :pane)
+  (reg-property :mobile)
 
   (rf/reg-sub :panes :panes)
-
-  (rf/reg-event-db ;; should be fx
-                   :pay
-                   (fn [db [_ amount]]
-                     (http/post "/api/exonum/pay"
-                                {:json-params {:from nil
-                                               :to nil
-                                               :amount 16}})
-                     (assoc db :stage "payed")))
-
-  (rf/reg-event-db
-    :diagnostic/analyze ;; should be fx
-    (fn [db [_ desc]]
-      (timbre/debug "Analyze:" desc)
-         ;; FIX: use fx
-      (go-loop [result (<! (http/get "/api/infermedica/analysis"
-                                    {:query-params {"desc" (str desc)}}))]
-        (timbre/debug "Analysis =>" result)
-        (when (:success result)
-          (rf/dispatch [:analysis (:body result)])))
-      (assoc db :description desc)))
-
-  (rf/reg-event-db
-   :diagnostic/diagnose ;; should be fx
-   (fn [db [_ arg]]
-     (timbre/debug "Diagnose:" arg)
-     ;; FIX: use fx
-     (go-loop [defaults {:sex "male" :age "30"}
-               result (<! (http/post "/api/infermedica/diagnosis"
-                                      {:json-params (merge defaults arg)}))]
-       (timbre/debug "Diagnose =>" result)
-       (when (:success result)
-         (rf/dispatch [:diagnosis (:body result)])))
-     db))
+  (rf/reg-sub :modes :modes)
 
   (rf/dispatch-sync [:initialize]))

@@ -1,6 +1,8 @@
 (ns api.exonum-client)
 
 ;; See https://github.com/exonum/exonum-client
+;; NPM dependencies:
+;; [exonum-client "0.3.0"][keythereum "1.0.2"][solc "0.4.19"]
 
 (def Exonum (js/require "exonum-client"))
 

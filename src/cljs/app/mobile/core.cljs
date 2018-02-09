@@ -1,4 +1,4 @@
-(ns app.view.mobile.root
+(ns app.mobile.core
   (:require
    [goog.string :as gstring]
    [reagent.core :as reagent
@@ -9,15 +9,13 @@
      :refer [get-mui-theme color]]
    [cljs-react-material-ui.reagent :as ui]
    [cljs-react-material-ui.icons :as ic]
-   [app.view.mobile.pane
+   [app.mobile.toolbar
+    :refer [toolbar]]
+   [app.mobile.pane
     :refer [pane]]))
 
-(defn toolbar [session]
-  [ui/app-bar
-   {:on-left-icon-button-touch-tap #()
-    :on-right-icon-button-touch-tap #()
-    :title (reagent/as-element
-            [:div "WellBE"])}])
+(defmethod pane ["intro"] [session]
+  [:div "Intro"])
 
 (defn view [{:keys [stage] :as session}]
   [ui/mui-theme-provider

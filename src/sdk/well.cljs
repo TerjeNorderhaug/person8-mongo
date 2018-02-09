@@ -4,7 +4,7 @@
   (:require
    [cljs-http.client :as http]
    [cljs.core.async :refer [<! chan]]
-   [lib.chan :as chan]))
+   [util.chan :as chan]))
 
 ;; API Reference
 ;; https://well-api.joinwell.com/docs/

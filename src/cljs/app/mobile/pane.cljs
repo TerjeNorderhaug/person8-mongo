@@ -1,4 +1,4 @@
-(ns app.view.mobile.pane
+(ns app.mobile.pane
   (:require
    [reagent.core :as reagent
     :refer [atom]]
@@ -11,8 +11,9 @@
    [goog.string :as gstring]))
 
 (defmulti pane (fn [{:keys [stage] :as session}]
-                  (if stage @stage)))
+                  (if stage [@stage])))
 
-(defmethod pane :default [session]
-  #_[ui/linear-progress]
-  [:div "(value prop here)"])
+(defmethod pane :default [{:keys [] :as session}]
+  [ui/card
+   [ui/card-text
+    [:div "Hello"]]])

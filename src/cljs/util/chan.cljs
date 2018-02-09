@@ -1,11 +1,13 @@
-(ns lib.mq
+(ns util.chan
   (:require-macros
    [cljs.core.async.macros
     :refer [go go-loop]])
   (:require
    [cljs.core.async :as async
     :refer [<! chan close! alts! timeout put!]]
-   [taoensso.sente :as sente]
    [taoensso.timbre :as timbre]))
 
-;; see app.messaging.sente.broker & client in pw
+(defn echo [ch]
+  (go
+   (when-let [msg (<! ch)]
+     (timbre/info msg))))

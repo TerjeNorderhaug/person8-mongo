@@ -8,8 +8,8 @@
             substitute listen unwrap]]
    [reagent.core :as reagent
     :refer [atom]]
-   [app.view.mobile.root :as mobile]
-   [app.view.provider.root :as provider.root]))
+   [app.mobile.core :as mobile]
+   [app.dashboard.core :as dashboard]))
 
 (defn split-view [session]
   [:div
@@ -22,15 +22,31 @@
                    :height "100vh"
                    :border-left "thin solid gray"
                    :float "right"}}
-      [provider.root/view session]]])
+      [dashboard/view session]]])
+
+(defn loading-view [{:keys [modes] :as session}]
+  [:div {:style {:margin-top "5em" :padding "3em"}}
+   #_
+   [:div {:style {:margin-top "5em" :padding "3em"}}
+    [:div.progress
+     [:div.progress-bar.progress-bar-animated
+      {:role "progress-bar"
+       :aria-valuenow "100"
+       :aria-valuemin "0"
+       :aria-valuemax "100"
+       :style {:width "100%"}}]]]
+   (into [:ul.list-group]
+         (for [{:keys [id title] :as item} (if modes @modes)]
+           [:a.list-group-item {:href (str "/#" id)}
+            title]))])
 
 (defn view [{:keys [mode] :as session}]
   (case (if mode @mode)
     ("mobile")
     [mobile/view session]
     ("dashboard")
-    [provider.root/view session]
+    [dashboard/view session]
     ("split")
     [split-view session]
     (nil)
-    [:div "Loading..."]))
+    [loading-view session]))

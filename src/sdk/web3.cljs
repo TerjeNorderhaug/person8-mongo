@@ -17,7 +17,11 @@
    [cljs-web3.shh :as web3-shh]
    [cljs-web3.async.eth :as web3-eth-async]))
 
+;; Ethereum blockchain interface
 ;; https://github.com/district0x/cljs-web3
+;;
+;; Dependencies:
+;; [cljs-web3 "0.19.0-0-9"][district0x.re-frame/web3-fx "1.0.3"]
 
 ;; curl -H "Content-Type: application/json" -X POST --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}' http://127.0.0.1:8545
 

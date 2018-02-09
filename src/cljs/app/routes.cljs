@@ -38,5 +38,8 @@
 (defroute "/split" []
   (rf/dispatch [:mode "split"]))
 
+(defroute "/dashboard" []
+  (rf/dispatch [:mode "dashboard"]))
+
 (defroute "/mobile" []
   (rf/dispatch [:mode "mobile"]))

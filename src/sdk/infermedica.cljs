@@ -7,7 +7,7 @@
     :refer [chan <! >! put! close! timeout promise-chan]]
    [cljs-http.client :as http]
    [taoensso.timbre :as timbre]
-   [lib.chan :as chan]))
+   [util.chan :as chan]))
 
 ;; TODO:
 ;; 1. Use record to keep state for each infermedica api request.
