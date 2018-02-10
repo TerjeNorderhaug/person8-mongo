@@ -10,6 +10,8 @@
      :refer [get-mui-theme color]]
    [cljs-react-material-ui.reagent :as ui]
    [cljs-react-material-ui.icons :as ic]
+   [app.dashboard.toolbar :as toolbar
+    :refer [toolbar]]
    [app.dashboard.pane
     :refer [pane]]
    [app.dashboard.about :as about]
@@ -24,25 +26,6 @@
 
 (defmethod pane ["info"] [session]
   [info/view session])
-
-(defn toolbar [{:keys [pane itinerary stage panes brand]
-                :as session}]
- (timbre/debug "TOOLBAR=" session)
- (let [active-class #(if (and pane (= @pane %))
-                       "active")]
-  [:nav.navbar.navbar-default
-   [:div.container-fluid
-    [:div.navbar-header
-      [:a.navbar-brand (if brand @brand)]]
-    (into
-     [:ul.nav.nav-pills]
-     (for [{:keys [id title] :as item}
-           (if panes @panes)]
-       ^{:key id}
-       [:li {:role "presentation"
-             :class (active-class id)}
-        [:a {:on-click #(rf/dispatch [:pane id])}
-         title]]))]]))
 
 (defn notification [{:keys [stage] :as session}]
   (timbre/debug "NOTIFICATION=" session)

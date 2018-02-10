@@ -9,20 +9,8 @@
    [reagent.core :as reagent
     :refer [atom]]
    [app.mobile.core :as mobile]
-   [app.dashboard.core :as dashboard]))
-
-(defn split-view [session]
-  [:div
-    [:div {:style {:width "30%"
-                   :float "left"}}
-      [:div.phone
-        [:div.phone-screen
-          [mobile/view session]]]]
-    [:div {:style {:width "60%"
-                   :height "100vh"
-                   :border-left "thin solid gray"
-                   :float "right"}}
-      [dashboard/view session]]])
+   [app.dashboard.core :as dashboard]
+   [app.view.split :as split]))
 
 (defn loading-view [{:keys [modes] :as session}]
   [:div {:style {:margin-top "5em" :padding "3em"}}
@@ -47,6 +35,6 @@
     ("dashboard")
     [dashboard/view session]
     ("split")
-    [split-view session]
+    [split/view session]
     (nil)
     [loading-view session]))

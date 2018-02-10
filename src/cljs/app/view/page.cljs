@@ -33,3 +33,5 @@
 (defn html5 [content]
   (->> (render-to-string content)
        (str "<!DOCTYPE html>\n")))
+
+#_ nil

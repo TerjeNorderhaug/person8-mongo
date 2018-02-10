@@ -6,6 +6,15 @@ Providing the framework to build a universal (nee isomporhic) Clojurescript Reac
 
 Runs on Docker and Heroku using node express, bootstrap, and material design, with hotloaded code shared between frontend and backend.
 
+## References
+
+https://clojure.org/
+https://clojurescript.org/
+https://reagent-project.github.io/
+https://getbootstrap.com/docs/4.0/layout/overview/
+http://www.material-ui.com
+https://expressjs.com/
+
 ## Deploy with Docker
 
 Start a local web server in a Docker container:

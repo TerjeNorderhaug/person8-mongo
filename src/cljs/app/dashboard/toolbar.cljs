@@ -15,16 +15,16 @@
                 :as session}]
  (let [active-class #(if (and pane (= @pane %))
                        "active")]
-  [:nav.navbar.navbar-default
-   [:div.container-fluid
-    [:div.navbar-header
-      [:a.navbar-brand (if brand @brand)]]
-    (into
-     [:ul.nav.nav-pills]
-     (for [{:keys [id title] :as item}
-           (if panes @panes)]
-       ^{:key id}
-       [:li {:role "presentation"
-             :class (active-class id)}
-        [:a {:on-click #(rf/dispatch [:pane id])}
-         title]]))]]))
+   [:nav.navbar.navbar-expand-lg.navbar-light.bg-light
+    [:a.navbar-brand {:href "#"}
+      (if brand @brand)]
+    [:div.collapse.navbar-collapse
+     (into
+      [:ul.navbar-nav]
+      (for [{:keys [id title] :as item}
+            (if panes @panes)]
+        ^{:key id}
+        [:li.nav-item {:role "presentation"
+                       :class (active-class id)}
+         [:a.nav-link {:on-click #(rf/dispatch [:pane id])}
+          title]]))]]))
