@@ -18,14 +18,14 @@
                                org.clojure/clojurescript]]
                  [reagent "0.7.0"]
                  [secretary "1.2.3"]
-                 [re-frame "0.10.4"]
+                 [re-frame "0.10.5"]
                  [com.taoensso/timbre "4.10.0"]
                  [cljs-http "0.1.44"]
                  [com.taoensso/sente "1.12.0"]
                  [camel-snake-kebab "0.4.0"]
                  [kioo "0.5.0"
                   :exclusions [org.clojure/clojure cljsjs/react cljsjs/react-dom]]
-                 [mount "0.1.11"]]
+                 [mount "0.1.12"]]
 
   :npm {:dependencies [[express "4.16.2"]
                        [xhr2 "0.1.4"]
@@ -33,7 +33,7 @@
                        [react "16.2.0"]
                        [react-dom "16.2.0"]
                        [create-react-class "15.6.3"]
-                       [source-map-support "0.5.0"]]
+                       [source-map-support "0.5.3"]]
         :root :root}
 
   :plugins [[lein-cljsbuild "1.1.7"]
