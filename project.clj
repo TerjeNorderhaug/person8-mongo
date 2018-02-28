@@ -48,7 +48,7 @@
 
   :main "main.js"
 
-  :source-paths ["src/cljs"]
+  :source-paths ["src/universal"]
 
   :clean-targets ^{:protect false} [[:cljsbuild :builds :server :compiler :output-to]
                                     [:cljsbuild :builds :app :compiler :output-dir]
@@ -63,7 +63,7 @@
 
   :cljsbuild {:builds
               {:app
-               {:source-paths ["src/browser" "src/cljs"]
+               {:source-paths ["src/browser" "src/universal"]
                 :compiler {:output-to "resources/public/js/out/app.js"
                            :output-dir "resources/public/js/out"
                            :asset-path "js/out"
@@ -71,7 +71,7 @@
                            :optimizations :none}}
 
                :server
-               {:source-paths ["src/node" "src/cljs"]
+               {:source-paths ["src/node" "src/universal"]
                 :compiler {:target :nodejs
                            :output-to "main.js"
                            :output-dir "target"

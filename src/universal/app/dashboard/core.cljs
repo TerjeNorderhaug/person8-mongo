@@ -39,12 +39,9 @@
 (defn panel [session]
   [pane session])
 
-(defn view [session]
- (let [selected (rf/subscribe [:pane :current])]
-   (fn [{:keys [stage providers] :as session}]
-     (let [session (assoc session :pane selected)]
-       (timbre/debug "SESSION=" session)
-       [ui/mui-theme-provider
+(defn view [{:keys [stage providers] :as session}]
+   (timbre/debug "SESSION=" session)
+   [ui/mui-theme-provider
         {:mui-theme (get-mui-theme
                      {:palette
                       {:primary1-color "#9DCFE1"
@@ -55,4 +52,4 @@
         [:div {}
          [toolbar session]
          [notification session]
-         [panel session]]]))))
+         [panel session]]])
