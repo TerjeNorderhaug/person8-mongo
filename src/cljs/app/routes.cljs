@@ -36,10 +36,10 @@
   nil)
 
 (defroute "/split" []
-  (rf/dispatch [:mode "split"]))
+  (rf/dispatch [:mode :current "split"]))
 
 (defroute "/dashboard" []
-  (rf/dispatch [:mode "dashboard"]))
+  (rf/dispatch [:mode :current "dashboard"]))
 
 (defroute "/mobile" []
-  (rf/dispatch [:mode "mobile"]))
+  (rf/dispatch [:mode :current "mobile"]))

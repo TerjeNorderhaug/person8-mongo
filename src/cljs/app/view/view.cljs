@@ -12,7 +12,7 @@
    [app.dashboard.core :as dashboard]
    [app.view.split :as split]))
 
-(defn loading-view [{:keys [modes] :as session}]
+(defn loading-view [{:keys [mode] :as session}]
   [:div {:style {:margin-top "5em" :padding "3em"}}
    #_
    [:div {:style {:margin-top "5em" :padding "3em"}}
@@ -24,12 +24,13 @@
        :aria-valuemax "100"
        :style {:width "100%"}}]]]
    (into [:ul.list-group]
-         (for [{:keys [id title] :as item} (if modes @modes)]
+         (for [{:keys [id title] :as item}
+               (if mode (:options @mode))]
            [:a.list-group-item {:href (str "/#" id)}
             title]))])
 
 (defn view [{:keys [mode] :as session}]
-  (case (if mode @mode)
+  (case (if mode (:current @mode))
     ("mobile")
     [mobile/view session]
     ("dashboard")

@@ -10,15 +10,13 @@
 
 (def state
   {:brand "HackBench"
-   :modes [{:id "split" :title "Split"}
-           {:id "mobile" :title "Mobile"}
-           {:id "dashboard" :title "Dashboard"}]
-   :mode (case :default
-           :split "split"
-           nil)
+   :mode {:current nil
+          :options [{:id "split" :title "Split"}
+                    {:id "mobile" :title "Mobile"}
+                    {:id "dashboard" :title "Dashboard"}]}
    :stage nil
    :mobile {:stage nil}
-   :panes [{:id "about" :title "About"}
-           {:id "main" :title "Main"}
-           {:id "info" :title "Info"}]
-   :pane "info"})
+   :tab {:current "main"
+         :options [{:id "about" :title "About"}
+                   {:id "main" :title "Main"}
+                   {:id "info" :title "Info"}]}})

@@ -37,13 +37,10 @@
      "The patient has paid for the visit with WELL tokens"]))
 
 (defn panel [session]
-  (timbre/debug "PANEL="
-                (if (:pane session) @(:pane session))
-                session)
   [pane session])
 
 (defn view [session]
- (let [selected (rf/subscribe [:pane])]
+ (let [selected (rf/subscribe [:pane :current])]
    (fn [{:keys [stage providers] :as session}]
      (let [session (assoc session :pane selected)]
        (timbre/debug "SESSION=" session)

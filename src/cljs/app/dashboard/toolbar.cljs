@@ -11,9 +11,9 @@
    [cljs-react-material-ui.reagent :as ui]
    [cljs-react-material-ui.icons :as ic]))
 
-(defn toolbar [{:keys [pane panes brand]
+(defn toolbar [{:keys [tab brand]
                 :as session}]
- (let [active-class #(if (and pane (= @pane %))
+ (let [active-class #(if (and tab (= (:current @tab) %))
                        "active")]
    [:nav.navbar.navbar-expand-lg.navbar-light.bg-light
     [:a.navbar-brand {:href "#"}
@@ -22,9 +22,9 @@
      (into
       [:ul.navbar-nav]
       (for [{:keys [id title] :as item}
-            (if panes @panes)]
+            (if tab (:options @tab))]
         ^{:key id}
         [:li.nav-item {:role "presentation"
                        :class (active-class id)}
-         [:a.nav-link {:on-click #(rf/dispatch [:pane id])}
+         [:a.nav-link {:on-click #(rf/dispatch [:tab :current id])}
           title]]))]]))

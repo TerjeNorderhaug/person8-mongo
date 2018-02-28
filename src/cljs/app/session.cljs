@@ -44,11 +44,9 @@
 
   (reg-property :brand)
   (reg-property :mode)
+  (reg-property :tab)
   (reg-property :stage)
-  (reg-property :pane)
   (reg-property :mobile)
-
-  (rf/reg-sub :panes :panes)
-  (rf/reg-sub :modes :modes)
+  (reg-property :dashboard)
 
   (rf/dispatch-sync [:initialize]))

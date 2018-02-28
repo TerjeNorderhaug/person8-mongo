@@ -11,12 +11,12 @@
    [cljs-react-material-ui.reagent :as ui]
    [cljs-react-material-ui.icons :as ic]))
 
-(defn pane-dispatcher [{:keys [pane] :as session}]
-  (if pane [@pane]))
+(defn pane-dispatcher [{:keys [tab] :as session}]
+  (if tab [(:current @tab)]))
 
 (defmulti pane pane-dispatcher)
 
-(defmethod pane :default [{:keys [panes] :as session}]
+(defmethod pane :default [{:keys [] :as session}]
   (let [current (pane-dispatcher session)]
     (timbre/warn "No pane dispatch for" current))
   [:div {:style {:padding-top "3em"
