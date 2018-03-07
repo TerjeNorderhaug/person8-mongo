@@ -1,8 +1,5 @@
-## Develop on the local distribution
-
 FROM theasp/clojurescript-nodejs:alpine
 WORKDIR /usr/src/app
-RUN apk --no-cache add python
 COPY project.clj /usr/src/app/project.clj
 RUN lein deps
 COPY ./ /usr/src/app-tmp/

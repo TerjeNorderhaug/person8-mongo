@@ -19,7 +19,7 @@ https://expressjs.com/
 
 Start a local web server in a Docker container:
 
-    docker-compose up
+    docker-compose up release
 
 Access http://localhost:5000 from a browser.
 
