@@ -83,7 +83,7 @@
 
   :profiles {:dev
              {:plugins
-              [[lein-figwheel "0.5.14"]
+              [[lein-figwheel "0.5.15"]
                [lein-doo "0.1.8"]]
               :cljsbuild
               {:builds

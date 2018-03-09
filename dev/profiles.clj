@@ -11,13 +11,13 @@
 ;;     or openAdmin page http://127.0.0.1:5000/admin#/admin
 ;;
 ;; see https://github.com/bhauman/lein-figwheel/wiki/Using-the-Figwheel-REPL-within-NRepl
- 
+
 {:repl
  {:main ^:replace dev.user ; `lein repl` fails if :main is the string but warns if it's a symbol
   :source-paths ["env"]
   :dependencies ;; all three are for proto-repl
   [[com.cemerick/piggieback "0.2.1"]
-   [figwheel-sidecar "0.5.14"]
+   [figwheel-sidecar "0.5.15"]
    [compliment "0.3.4"] ;; hack to avoid issues in repl, likely optional
    [org.clojure/tools.namespace "0.2.11"] ; optional?
    [org.clojure/tools.nrepl "0.2.13"] ; no difference so skip?

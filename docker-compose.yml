@@ -4,6 +4,7 @@ version: "3.3"
 
 version: "3.2"
 services:
+
   release:
     build:
       context: .
@@ -12,6 +13,7 @@ services:
       - "5000:1337"
       - "1337:1337"
     # env_file: .env
+    
   dev:
     build:
       context: .
@@ -24,3 +26,5 @@ services:
       - type: bind
         source: .
         target: /usr/src/app
+    
+

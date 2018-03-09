@@ -1,12 +1,17 @@
 FROM theasp/clojurescript-nodejs:alpine
+
 WORKDIR /usr/src/app
 COPY project.clj /usr/src/app/project.clj
 RUN lein deps
-COPY ./ /usr/src/app-tmp/
+
+WORKDIR /usr/src/app-tmp/
+COPY ./ .
+RUN lein clean
 RUN set -ex; \
-  rm -rf /usr/src/app-tmp/node_modules /usr/src/app-tmp/target; \
-  rm -rf /usr/src/app-tmp/.git; \
-  rm /usr/src/app-tmp/Dockerfile /usr/src/app-tmp/docker-compose.yml; \
-  mv /usr/src/app-tmp/* /usr/src/app/
-RUN lein compile
-ENTRYPOINT lein trampoline run
+  rm -rf .git; \
+  rm Dockerfile docker-compose.yml; \
+  mv ./* /usr/src/app/
+
+WORKDIR /usr/src/app
+RUN lein with-profile production do deps, compile
+ENTRYPOINT lein with-profile production run
