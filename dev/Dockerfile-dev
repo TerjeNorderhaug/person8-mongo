@@ -1,6 +1,0 @@
-FROM theasp/clojurescript-nodejs:alpine
-WORKDIR /usr/src/app
-COPY project.clj /usr/src/app/project.clj
-RUN lein deps
-RUN lein compile
-ENTRYPOINT lein figwheel

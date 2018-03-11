@@ -25,6 +25,8 @@
                  [camel-snake-kebab "0.4.0"]
                  [kioo "0.5.0"
                   :exclusions [org.clojure/clojure cljsjs/react cljsjs/react-dom]]
+                 [bidi "2.1.2"]
+                 [macchiato/core "0.2.10"]
                  [mount "0.1.12"]]
 
   :npm {:dependencies [[express "4.16.2"]
@@ -83,7 +85,7 @@
 
   :profiles {:dev
              {:plugins
-              [[lein-figwheel "0.5.15"]
+              [[lein-figwheel "0.5.14"]
                [lein-doo "0.1.8"]]
               :cljsbuild
               {:builds
@@ -95,7 +97,7 @@
                 {:compiler {:pretty-print true
                             :source-map false}
                  :figwheel {:heads-up-display false}}}}
-              :npm {:dependencies [[ws "3.2.0"]]}}
+              :npm {:dependencies [[ws "3.3.3"]]}}
 
              :test {:cljsbuild
                     {:builds
