@@ -28,7 +28,7 @@
    [:#forkme] (if forkme identity (content nil))
    [:body] (append [:div (for [[ix src] (map-indexed vector scripts)]
                            ^{:key (str ix)}
-                           (script-element src))])})
+                           [script-element src])])})
 
 (defn html5 [content]
   (->> (render-to-string content)

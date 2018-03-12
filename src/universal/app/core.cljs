@@ -40,13 +40,13 @@
   :start #(timbre/info "Starting")
   :stop #(timbre/info "Stopping"))
 
+(def use-default-state? true)
+
 (defn activate [initial]
-  #_
-  (-> (cljs.reader/read-string initial)
-      (session/initialize))
-  (session/initialize state/state)
-  (let [el (dom/getElement "canvas")
-        state (session/subscriptions
-               (map first state/state))]
-    (reagent/render [#(view state)] el))
-  (mount/start))
+  (let [initial (if use-default-state? state/state initial)]
+    (session/initialize initial)
+    (let [el (dom/getElement "canvas")
+          state (session/subscriptions
+                 (map first initial))]
+      (reagent/render [#(view state)] el))
+    (mount/start)))

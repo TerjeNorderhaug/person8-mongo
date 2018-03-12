@@ -13,10 +13,12 @@
    [bidi.bidi :as bidi]
    [macchiato.http :as http]
    [macchiato.middleware.resource :as resource]
+   [mount.core :as mount
+    :refer [defstate]]
    [app.core :as app
     :refer [static-page]]))
 
-(def express (nodejs/require "express"))
+(defstate express :start (nodejs/require "express"))
 
 (defn handler [req res]
   (if (= "https" (aget (.-headers req) "x-forwarded-proto"))
@@ -25,7 +27,7 @@
       (.set res "Content-Type" "text/html")
       (.send res (<! (static-page))))))
 
-(defn macchiato [http-router & [opts]]
+(defn macchiato-handler [http-router & [opts]]
   (let [route (http/handler http-router opts)]
     (fn [req res next]
       (if-not (route req res)
@@ -49,15 +51,17 @@
       #_(wrap-defaults)
       (resource/wrap-resource "resources/public")))
 
-(defn server [port success]
-  (doto (express)
+(defn server [express-app port success]
+  (doto express-app
     (.get "/" handler)
-    (.use "/" (macchiato router))
+    (.use "/" (macchiato-handler router))
     (.listen port success)))
 
 (defn -main [& mess]
-  (let [port (or (.-PORT (.-env js/process)) 1337)]
-    (server port
-            #(timbre/info (str "Server running at http://127.0.0.1:" port "/")))))
+  (mount/start)
+  (let [port (or (.-PORT (.-env js/process)) 1337)
+        express-app (@express)
+        success #(timbre/info (str "Server running at http://127.0.0.1:" port "/"))]
+    (server express-app port success)))
 
 (set! *main-cli-fn* -main)

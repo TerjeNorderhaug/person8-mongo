@@ -10,7 +10,7 @@ pom.xml.asc
 /.lein-*
 /.nrepl-port
 /.env
-/env
+# /env
 /resources/public/js/out
 /logs
 /node_modules
