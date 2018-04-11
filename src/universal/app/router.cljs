@@ -1,4 +1,4 @@
-(ns app.routes
+(ns app.router
   (:require
    [cljs.core.async :as async
     :refer [<!]]

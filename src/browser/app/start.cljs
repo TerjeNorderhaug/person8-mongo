@@ -1,7 +1,7 @@
 (ns app.start
   (:require
    [app.core :as app]
-   [app.routes :as routes]))
+   [app.router :as router]))
 
 (enable-console-print!)
 
