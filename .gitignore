@@ -17,4 +17,5 @@ pom.xml.asc
 npm-debug.log
 main.js
 package.json
+package-lock.json
 /profiles.clj

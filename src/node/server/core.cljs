@@ -15,6 +15,8 @@
    [macchiato.middleware.resource :as resource]
    [mount.core :as mount
     :refer [defstate]]
+   [app.routes :as routes
+    :refer [routes]]
    [app.core :as app
     :refer [static-page]]))
 
@@ -35,9 +37,6 @@
 
 (def handlers
   {:root #(timbre/warn "Missing root handler")})
-
-(def routes
-  ["/" {"" :root}])
 
 (defn bidi-router [routes handlers & [raise]]
   (fn [req res]

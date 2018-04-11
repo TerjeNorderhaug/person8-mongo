@@ -7,6 +7,6 @@
 
 (defn ^:export main [initial]
   (app/activate (cljs.reader/read-string initial))
-  (routes/hook-browser-navigation!))
+  (router/hook-browser-navigation!))
 
 (set! js/main-cljs-fn main)

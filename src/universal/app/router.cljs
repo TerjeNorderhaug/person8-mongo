@@ -9,6 +9,8 @@
    [re-frame.core :as rf]
    [secretary.core :as secretary
     :refer-macros [defroute]]
+   [app.routes :as routes
+    :refer [routes]]
    [app.session :as session])
   (:import
    [goog History]))
@@ -33,7 +35,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defroute "/" []
-  nil)
+  (rf/dispatch [:mode :current nil]))
 
 (defroute "/split" []
   (rf/dispatch [:mode :current "split"]))
