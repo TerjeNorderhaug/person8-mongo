@@ -45,3 +45,6 @@
 
 (defroute "/mobile" []
   (rf/dispatch [:mode :current "mobile"]))
+
+(defroute "/tab/:id" [id]
+  (rf/dispatch [:tab :current id]))

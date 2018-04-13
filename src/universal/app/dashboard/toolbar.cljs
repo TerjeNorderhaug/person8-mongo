@@ -26,5 +26,5 @@
         ^{:key id}
         [:li.nav-item {:role "presentation"
                        :class (active-class id)}
-         [:a.nav-link {:on-click #(rf/dispatch [:tab :current id])}
+         [:a.nav-link {:on-click #(rf/dispatch [:tab :current id])}             
           title]]))]]))

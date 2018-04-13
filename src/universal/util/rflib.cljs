@@ -19,19 +19,24 @@
     (when-let [msg (<! ch)]
       (rf/dispatch [k msg])))))
 
+(defn reg-property-sub [name]
+  (rf/reg-sub name
+            (fn [db [_ & path]]
+              (get-in db (vec (cons name path))))))
+
+(defn reg-property-put [name]
+  (rf/reg-event-db name
+                   (fn [db [_ & arg]]
+                     (let [path (cons name (butlast arg))
+                           value (last arg)]
+                       (assoc-in db path value)))))
 
 (defn reg-property
   "Register re-frame dispatch and subscribe handlers for a property.
   Note that properties support access paths."
   ([name]
-   (rf/reg-event-db name
-                    (fn [db [_ & arg]]
-                      (let [path (cons name (butlast arg))
-                            value (last arg)]
-                        (assoc-in db path value))))
-   (rf/reg-sub name
-               (fn [db [_ & path]]
-                 (get-in db (vec (cons name path)))))
+   (reg-property-put name)
+   (reg-property-sub name)
    name))
 
 #_

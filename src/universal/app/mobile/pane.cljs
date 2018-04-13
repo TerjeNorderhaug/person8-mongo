@@ -13,7 +13,13 @@
 (defmulti pane (fn [{:keys [stage] :as session}]
                   (if stage [@stage])))
 
-(defmethod pane :default [{:keys [] :as session}]
+(defmethod pane :default [{:keys [tab] :as session}]
   [ui/card
-   [ui/card-text
-    [:div "Hello"]]])
+   (into [:ul.list-group {:style {:margin-top "1em"}}]
+         (for [{:keys [id title] :as item}
+               (if tab (:options @tab))]
+           [:a.list-group-item
+            {:class (if (and tab (= id (:current @tab)))
+                       "active")
+             :href (str "/#/tab/" id)}
+            title]))])
