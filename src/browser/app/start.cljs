@@ -1,6 +1,6 @@
 (ns app.start
   (:require
-   #_[sdk.pubnub :as pubnub] ;; tmp
+   [sdk.pubnub :as pubnub]
    [app.core :as app]
    [app.router :as router]))
 

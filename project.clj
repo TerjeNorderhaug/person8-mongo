@@ -16,7 +16,7 @@
                   :exclusions [cljsjs/material-ui
                                org.clojure/clojure
                                org.clojure/clojurescript]]
-                 #_[cljsjs/pubnub "4.1.1-0"]
+                 [cljsjs/pubnub "4.1.1-0"]
                  [reagent "0.7.0"]
                  [secretary "1.2.3"]
                  [re-frame "0.10.5"]
@@ -36,7 +36,7 @@
                        [react "16.2.0"]
                        [react-dom "16.2.0"]
                        [create-react-class "15.6.3"]
-                       #_[pubnub "4.1.1"]
+                       [pubnub "4.1.1"]
                        [source-map-support "0.5.3"]]
         :root :root}
 

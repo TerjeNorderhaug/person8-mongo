@@ -45,6 +45,11 @@
   (reg-property :brand)
   (reg-property :mode)
   (reg-property :tab)
+  (reg-property
+   :change-tab
+   {:dispatch (fn [_ tab] [:tab :current tab])
+    :pubnub/publish (fn [_ tab]
+                      {:channel "demo" :message {:tab tab}})})
   (reg-property :stage)
   (reg-property :mobile)
   (reg-property :dashboard)

@@ -24,16 +24,33 @@
             (fn [db [_ & path]]
               (get-in db (vec (cons name path))))))
 
+(defn property-put-fn [name]
+  (fn [db [_ & arg]]
+    (let [path (cons name (butlast arg))
+          value (last arg)]
+      (assoc-in db path value))))
+
 (defn reg-property-put [name]
-  (rf/reg-event-db name
-                   (fn [db [_ & arg]]
-                     (let [path (cons name (butlast arg))
-                           value (last arg)]
-                       (assoc-in db path value)))))
+  (rf/reg-event-db name (property-put-fn name)))
+
+(defn reg-event-effects [name {:as effects}]
+  (rf/reg-event-fx name
+                   (fn [{:keys [db] :as cofx} [_ & arg]]
+                     (let []
+                        (->> effects
+                         (map (fn [[k f]]
+                                [k (apply f db arg)]))
+                         (into {}))))))
 
 (defn reg-property
   "Register re-frame dispatch and subscribe handlers for a property.
   Note that properties support access paths."
+  ([name effects]
+   (reg-event-effects name
+                      (assoc effects
+                        :db (property-put-fn name)))
+   (reg-property-sub name)
+   name)
   ([name]
    (reg-property-put name)
    (reg-property-sub name)

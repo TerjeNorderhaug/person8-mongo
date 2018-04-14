@@ -27,8 +27,11 @@
 
 (def pubnub
   (memoize
-   (fn []
-     (new-pubnub config))))
+   (fn
+     ([]
+      (new-pubnub config))
+     ([config]
+      (new-pubnub config)))))
 
 (defn add-listener [pubnub args]
   (.addListener pubnub (clj->js args)))
@@ -59,7 +62,33 @@
 #_
 (demo (pubnub))
 
+(defn register [pubnub {:keys [tag channel] :or {tag :pubnub/message}}]
+  (add-listener pubnub
+                {:status (fn [status]
+                           (timbre/info "Pubnub Status:" (js->clj status)))
+                 :message (fn [message]
+                            (timbre/info "Pubnub Message:" (js->clj message))
+                            (rf/dispatch [tag message]))})
+  (subscribe pubnub {:channels [channel]}))
+
 (rf/reg-fx
- :pubnub-publish
- (fn [{:as event}]
-   (publish pubnub event)))
+ :pubnub/register
+ (fn [{:as arg}]
+   (timbre/debug "Pubnub register:" arg)
+   (register (pubnub) arg)))
+
+(rf/reg-event-fx
+  :pubnub/register
+  (fn [{:keys [db] :as cofx} [_ arg]]
+    {:pubnub/register arg}))
+
+(rf/reg-fx
+   :pubnub/publish
+   (fn [{:as event}]
+     (timbre/debug "Pubnub publish:" event)
+     (publish (pubnub) event)))
+
+(rf/reg-event-fx
+  :pubnub/publish
+  (fn [{:keys [db] :as cofx} [_ event]]
+    {:pubnub/publish event}))
