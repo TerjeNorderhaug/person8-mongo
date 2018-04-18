@@ -1,5 +1,5 @@
-(defproject hackbench "0.4.0-SNAPSHOT"
-  :description "Rapid prototyping for clojure"
+(defproject hackbench "0.4.1-SNAPSHOT"
+  :description "Rapid prototyping using clojure"
   :url "https://cljsnode.herokuapp.com"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}

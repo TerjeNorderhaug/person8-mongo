@@ -20,9 +20,9 @@
   (let [PN (PubNub)]
     (new PN (clj->js config))))
 
-(def config {:publishKey   (or (env "PUBNUB_PUBLISH_KEY")
+(def config {:publishKey   (or #_(env "PUBNUB_PUBLISH_KEY")
                                "pub-c-9fa72b4b-080d-4483-8f26-c10f390749ed")
-             :subscribeKey (or (env "PUBNUB_SUBSCRIBE_KEY")
+             :subscribeKey (or #_(env "PUBNUB_SUBSCRIBE_KEY")
                                "sub-c-51fe3994-092b-11e8-be21-ca57643e6300")})
 
 (def pubnub
@@ -65,10 +65,15 @@
 (defn register [pubnub {:keys [tag channel] :or {tag :pubnub/message}}]
   (add-listener pubnub
                 {:status (fn [status]
-                           (timbre/info "Pubnub Status:" (js->clj status)))
-                 :message (fn [message]
-                            (timbre/info "Pubnub Message:" (js->clj message))
-                            (rf/dispatch [tag message]))})
+                           (let [status (js->clj status :keywordize-keys true)]
+                             (timbre/info "Pubnub Status:" status)))
+                 :message (fn [event]
+                            (let [{:keys [message] :as event}
+                                  (js->clj event :keywordize-keys true)]
+                              (timbre/info "Pubnub event:" tag event)
+                              (when (= channel (:channel event))
+                                (timbre/info "Pubnub message:" tag message)
+                                (rf/dispatch [tag message]))))})
   (subscribe pubnub {:channels [channel]}))
 
 (rf/reg-fx
