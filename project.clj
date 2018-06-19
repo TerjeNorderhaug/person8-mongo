@@ -5,7 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[org.clojure/clojure "1.9.0"]
-                 [org.clojure/clojurescript "1.9.946"]
+                 [org.clojure/clojurescript "1.10.312" #_"1.9.946"]
                  [org.clojure/core.async "0.4.474"]
                  [cljsjs/react "15.6.2-4"]
                  [cljsjs/react-dom "15.6.2-4"]
@@ -87,7 +87,7 @@
 
   :profiles {:dev
              {:plugins
-              [[lein-figwheel "0.5.14"]
+              [[lein-figwheel "0.5.16"]
                [lein-doo "0.1.8"]]
               :cljsbuild
               {:builds
