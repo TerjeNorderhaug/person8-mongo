@@ -26,7 +26,7 @@
                  [camel-snake-kebab "0.4.0"]
                  [kioo "0.5.0"
                   :exclusions [org.clojure/clojure cljsjs/react cljsjs/react-dom]]
-                 [bidi "2.1.2"]
+                 [bidi "2.1.4"]
                  [macchiato/core "0.2.10"]
                  [mount "0.1.12"]]
 
