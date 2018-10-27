@@ -27,7 +27,7 @@
                  [kioo "0.5.0"
                   :exclusions [org.clojure/clojure cljsjs/react cljsjs/react-dom]]
                  [bidi "2.1.4"]
-                 [macchiato/core "0.2.10"]
+                 [macchiato/core "0.2.14"]
                  [mount "0.1.12"]]
 
   :npm {:dependencies [[express "4.16.4"]
