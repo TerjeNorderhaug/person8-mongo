@@ -15,7 +15,7 @@
                 :as session}]
  (let [active-class #(if (and tab (= (:current @tab) %))
                        "active")]
-   [:nav.navbar.navbar-expand-lg.navbar-light.bg-light
+   [:nav.navbar.navbar-expand-sm.navbar-light.bg-light
     [:a.navbar-brand {:href "#"}
       (if brand @brand)]
     [:div.collapse.navbar-collapse
