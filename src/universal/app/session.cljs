@@ -8,6 +8,7 @@
    [reagent.core :as reagent]
    [re-frame.core :as rf
     :refer [reg-sub]]
+   [util.lib :as lib]
    [util.rflib :as rflib
     :refer [reg-property]]
    #_[re-frame.http-fx]
@@ -50,6 +51,14 @@
    {:dispatch (fn [_ tab] [:tab :current tab])
     :pubnub/publish (fn [_ tab]
                       {:channel "demo" :message {:tab tab}})})
+
+  (rf/reg-event-db
+   :pubnub/message
+   (fn [db [k msg]]
+     (timbre/debug "PUBNUB EVENT:" k msg)
+     (lib/deep-merge db msg)))
+  (rf/dispatch [:pubnub/register {:channel "demo" :tag :pubnub/message}])
+
   (reg-property :stage)
   (reg-property :mobile)
   (reg-property :dashboard)
