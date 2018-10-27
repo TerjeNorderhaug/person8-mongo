@@ -5,7 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[org.clojure/clojure "1.9.0"]
-                 [org.clojure/clojurescript "1.10.312" #_"1.9.946"]
+                 [org.clojure/clojurescript "1.10.339"]
                  [org.clojure/core.async "0.4.474"]
                  [cljsjs/react "15.6.2-4"]
                  [cljsjs/react-dom "15.6.2-4"]
@@ -30,7 +30,7 @@
                  [macchiato/core "0.2.10"]
                  [mount "0.1.12"]]
 
-  :npm {:dependencies [[express "4.16.2"]
+  :npm {:dependencies [[express "4.16.4"]
                        [xhr2 "0.1.4"]
                        [xmldom "0.1.27"]
                        [react "16.2.0"]
