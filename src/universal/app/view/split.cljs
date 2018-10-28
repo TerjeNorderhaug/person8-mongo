@@ -3,6 +3,7 @@
    [kioo.reagent
     :refer [defsnippet deftemplate snippet]])
   (:require
+   [goog.string :as gstring]
    [kioo.reagent
     :refer [html-content content append after set-attr do->
             substitute listen unwrap]]
@@ -14,6 +15,12 @@
 (defn view [session]
   [:div.row
     [:div.col-auto
+      [:a.btn.btn-default.close
+       {:type "button"
+        :href "#dashboard"
+        :aria-label "close"}
+       [:span {:aria-hidden "true"}
+         (gstring/unescapeEntities "&times;")]]
       [:div.phone
         [:div.phone-screen
          (case :iframe

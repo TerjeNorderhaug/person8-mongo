@@ -9,9 +9,13 @@
      :refer [get-mui-theme color]]
    [cljs-react-material-ui.reagent :as ui]
    [cljs-react-material-ui.icons :as ic]
+   [util.lib :as lib
+    :refer [pp-element pp-str]]
    [app.dashboard.pane
     :refer [pane]]))
 
 (defn view [session]
   [:div
-   [:h1 "Info"]])
+    [:code {:style {:overflow-wrap :break-all
+                    :max-width "100%"}}
+      (pp-str session)]])

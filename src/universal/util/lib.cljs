@@ -1,8 +1,12 @@
 (ns util.lib
   (:require-macros
-   [cljs.core.async.macros :refer [go go-loop]])
+   [cljs.core.async.macros
+    :refer [go go-loop]])
   (:require
-   [cljs.core.async :refer [<!]]))
+   [cljs.core.async
+    :refer [<!]]
+   [cljs.pprint
+    :refer [pprint]]))
 
 #_
 (defn echo [ch]
@@ -13,6 +17,14 @@
 
 (defn node? []
   (exists? goog/nodeGlobalRequire))
+
+(defn pp-str [data]
+  (with-out-str (pprint data)))
+
+(defn pp-element [data]
+  [:pre
+   [:code {:style {:overflow-wrap :break-all}}
+    (pp-str data)]])
 
 (defn deep-merge [original mods]
   (merge-with (fn [x y]
