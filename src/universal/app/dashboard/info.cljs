@@ -14,8 +14,17 @@
    [app.dashboard.pane
     :refer [pane]]))
 
+(defn session-table [session]
+  (into
+   [:table.table]
+   (for [[k v] session]
+     [:tr
+      [:th (name k)]
+      [:td
+       [:code {:style {:white-space "pre-wrap"
+                       :font-family "monospace"
+                       :overflow-wrap "break-word"}}
+            (if v @v)]]])))
+
 (defn view [session]
-  [:div
-    [:code {:style {:overflow-wrap :break-all
-                    :max-width "100%"}}
-      (pp-str session)]])
+   [session-table session])
