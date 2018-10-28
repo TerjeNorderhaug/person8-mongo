@@ -17,7 +17,16 @@
                    :float "left"}}
       [:div.phone
         [:div.phone-screen
-          [mobile/view session]]]]
+         (case :iframe
+           :iframe
+           [:iframe
+            {:style {:width "100%"
+                     :height "100%"
+                     :border "none"}
+             :src "/mobile"}
+            "Not Supported"]
+           :inline
+           [mobile/view session])]]]
     [:div {:style {:width "60%"
                    :height "100vh"
                    :border-left "thin solid gray"

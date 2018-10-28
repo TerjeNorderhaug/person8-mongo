@@ -26,21 +26,22 @@
         (pr-str (pr-str initial))
         ")")])
 
+(defn html-content [initial]
+  (let [state (session/state initial)]
+    (-> state
+        (page :scripts (scripts initial)
+              :title (if (:brand state) @(:brand state) "HackBench")
+              :forkme false)
+        (html5))))
+
 (defn static-page []
-  (go-loop []
-    (let [initial state/state
-          state (session/state initial)]
-      (-> state
-          (page :scripts (scripts initial)
-                :title (if (:brand state) @(:brand state) "HackBench")
-                :forkme false)
-          (html5)))))
+  (go (html-content state/state)))
 
 (defstate reporting
   :start #(timbre/info "Starting")
   :stop #(timbre/info "Stopping"))
 
-(def use-default-state? true)
+(def use-default-state? false)
 
 (defn activate [initial]
   (let [initial (if use-default-state? state/state initial)]

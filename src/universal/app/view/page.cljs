@@ -11,6 +11,7 @@
    [reagent.dom.server
     :refer [render-to-string]]
    [goog.string :as gstring]
+   [app.mobile.core :as mobile]
    [app.view.view
     :refer [view]]))
 

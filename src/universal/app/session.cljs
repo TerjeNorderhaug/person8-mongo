@@ -50,7 +50,7 @@
    :change-tab
    {:dispatch (fn [_ tab] [:tab :current tab])
     :pubnub/publish (fn [_ tab]
-                      {:channel "demo" :message {:tab tab}})})
+                      {:channel "demo" :message {:tab {:current tab}}})})
 
   (rf/reg-event-db
    :pubnub/message

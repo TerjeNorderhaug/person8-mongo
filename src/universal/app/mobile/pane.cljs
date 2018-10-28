@@ -21,5 +21,5 @@
            [:a.list-group-item
             {:class (if (and tab (= id (:current @tab)))
                        "active")
-             :href (str "/#/tab/" id)}
+             :href (str "#tab/" id)}
             title]))])

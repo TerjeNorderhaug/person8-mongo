@@ -13,8 +13,10 @@
    [bidi.bidi :as bidi]
    [macchiato.http :as http]
    [macchiato.middleware.resource :as resource]
+   [macchiato.util.response :as r]
    [mount.core :as mount
     :refer [defstate]]
+   [app.state :as state]
    [app.routes :as routes
     :refer [routes]]
    [app.core :as app
@@ -36,7 +38,15 @@
         (next)))))
 
 (def handlers
-  {:root #(timbre/warn "Missing root handler")})
+  {:root #(timbre/warn "Missing root handler")
+   :mobile (fn [req res]
+              (-> (assoc-in state/state
+                            [:mode :current]
+                            "mobile")
+                  (app/html-content)
+                  (r/ok)
+                  (r/content-type "text/html")
+                  (res)))})
 
 (defn bidi-router [routes handlers & [raise]]
   (fn [req res]
