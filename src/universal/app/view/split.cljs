@@ -12,9 +12,8 @@
    [app.dashboard.core :as dashboard]))
 
 (defn view [session]
-  [:div
-    [:div {:style {:width "30%"
-                   :float "left"}}
+  [:div.row
+    [:div.col-auto
       [:div.phone
         [:div.phone-screen
          (case :iframe
@@ -27,8 +26,7 @@
             "Not Supported"]
            :inline
            [mobile/view session])]]]
-    [:div {:style {:width "60%"
-                   :height "100vh"
-                   :border-left "thin solid gray"
-                   :float "right"}}
-      [dashboard/view session]]])
+    [:div.col
+     {:style {:height "100vh"
+              :border-left "thin solid gray"}}
+     [dashboard/view session]]])
