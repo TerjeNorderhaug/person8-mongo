@@ -26,6 +26,18 @@
    [:code {:style {:overflow-wrap :break-all}}
     (pp-str data)]])
 
+(defn pp-table [{:as data}]
+  (into
+   [:table.table]
+   (for [[k v] data]
+     [:tr
+      [:th (name k)]
+      [:td
+       [:code {:style {:white-space "pre-wrap"
+                       :font-family "monospace"
+                       :overflow-wrap "break-word"}}
+            (if v @v)]]])))
+
 (defn deep-merge [original mods]
   (merge-with (fn [x y]
                 (cond
