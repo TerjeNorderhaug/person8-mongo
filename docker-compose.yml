@@ -1,8 +1,7 @@
-version: "3.3"
 # reference: https://docs.docker.com/compose/compose-file
 # docker-compose up --build
 
-version: "3.2"
+version: "3.4"
 services:
 
   release:
