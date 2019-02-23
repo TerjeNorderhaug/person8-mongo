@@ -24,6 +24,8 @@
 
 (defstate express :start (nodejs/require "express"))
 
+(def cors (nodejs/require "cors"))
+
 (defn handler [req res]
   (if (= "https" (aget (.-headers req) "x-forwarded-proto"))
     (.redirect res (str "http://" (.get req "Host") (.-url req)))
@@ -62,6 +64,7 @@
 
 (defn server [express-app port success]
   (doto express-app
+    (.use (cors))
     (.get "/" handler)
     (.use "/" (macchiato-handler router))
     (.listen port success)))

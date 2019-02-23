@@ -31,6 +31,7 @@
                  [mount "0.1.12"]]
 
   :npm {:dependencies [[express "4.16.4"]
+                       [cors "2.8.5"]
                        [xhr2 "0.1.4"]
                        [xmldom "0.1.27"]
                        [react "16.2.0"]
