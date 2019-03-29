@@ -13,6 +13,7 @@
    [mount.core :as mount
     :refer [defstate]]
    [util.rflib :as rflib]
+   [sdk.okta :as okta]
    [app.state :as state]
    [app.session :as session]
    [app.view.page
@@ -21,7 +22,8 @@
     :refer [view]]))
 
 (defn scripts [initial]
-  [{:src "/js/out/app.js"}
+  [{:src okta/auth-js}
+   {:src "/js/out/app.js"}
    (str "main_cljs_fn("
         (pr-str (pr-str initial))
         ")")])

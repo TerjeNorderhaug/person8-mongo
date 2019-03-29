@@ -9,7 +9,7 @@
   (transform-keys ->kebab-case-keyword m))
 
 (def state
-  {:brand "HackBench"
+  {:brand "Person8"
    :mode {:current nil
           :options [{:id "split" :title "Split"}
                     {:id "mobile" :title "Mobile"}
