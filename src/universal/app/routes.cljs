@@ -2,4 +2,5 @@
 
 (def routes
   ["/" {"" :root
-        "mobile" :mobile}])
+        "mobile" :mobile
+        "okta" {"redirect" :okta-redirect}}])

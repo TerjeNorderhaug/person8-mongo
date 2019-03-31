@@ -8,6 +8,7 @@
    [util.env :as env
     :refer [env]]))
 
+
 (def auth-js "https://ok1static.oktacdn.com/assets/js/sdk/okta-auth-js/2.0.1/okta-auth-js.min.js")
 
 ;; https://developer.okta.com/code/javascript/okta_sign-in_widget/
@@ -59,6 +60,8 @@
 ;; SIGN IN widget
 ;; https://developer.okta.com/code/javascript/okta_sign-in_widget/
 
+(set! *warn-on-infer* true)
+
 (def default-client-id "0oab4exampleR4Jbi0h7")
 (def test1-client-id "0oaehotqz5N8l2Ake356")
 
@@ -87,22 +90,22 @@
   (let [sign-in (new js/OktaSignIn (clj->js default-widget-config))
         token (.-token sign-in)]
     (if (not (.hasTokensInUrl token))
-      (.renderEl sign-in #js{:el widget-container}
-
-               (fn [res]
-                 (timbre/info "Signed on")
-                 (timbre/debug "Okto ->" (js-keys res)(js->clj res))
-                 (rf/dispatch [:mobile :user
+      (.renderEl sign-in
+                 #js{:el widget-container}
+                 (fn [^js/Object res]
+                   (timbre/info "Signed on")
+                   (timbre/debug "Okto ->" (js-keys res)(js->clj res))
+                   (rf/dispatch [:mobile :user]
                                (assoc (js->clj (.-user res) :keywordize-keys true)
-                                      :status (or (.-status res) true))])
-                 (let [token-manager (.-tokenManager sign-in)]
-                   (.add token-manager "my_id_token" res))
-                 (timbre/debug "Hide widget")
-                 (.hide sign-in)
-                 #_
-                 (.setCookieAndRedirect (.-session res) "https://in-progress.okta.com/app/UserHome"))
-               (fn [err]
-                (timbre/error "Okto ->" (js->clj err))))
+                                      :status (or (.-status res) true)))
+                   (let [token-manager (.-tokenManager sign-in)]
+                    (.add token-manager "my_id_token" res))
+                   (timbre/debug "Hide widget")
+                  (.hide sign-in)
+                  #_
+                   (.setCookieAndRedirect (.-session res) "https://in-progress.okta.com/app/UserHome"))
+                 (fn [err]
+                   (timbre/error "Okto ->" (js->clj err))))
       (.parseTokensFromUrl token
                            (fn [res]
                              (timbre/debug "Okto:" (js-keys res)(js->clj res)))))))
