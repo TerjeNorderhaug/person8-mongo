@@ -38,6 +38,7 @@
                        [react-dom "16.2.0"]
                        [create-react-class "15.6.3"]
                        [pubnub "4.1.1"]
+                       [~(symbol "@okta/okta-sdk-nodejs") "1.2.0"]
                        [source-map-support "0.5.3"]]
         :root :root}
 
