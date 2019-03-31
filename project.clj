@@ -121,5 +121,5 @@
                             :pretty-print false}}
                 :app
                 {:compiler {:output-dir "target/app/out"
-                            ; :optimizations :advanced
+                            :optimizations :advanced
                             :pretty-print false}}}}}})

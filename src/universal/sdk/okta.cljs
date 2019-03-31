@@ -60,7 +60,7 @@
 ;; SIGN IN widget
 ;; https://developer.okta.com/code/javascript/okta_sign-in_widget/
 
-(set! *warn-on-infer* true)
+(set! *warn-on-infer* false)
 
 (def default-client-id "0oab4exampleR4Jbi0h7")
 (def test1-client-id "0oaehotqz5N8l2Ake356")
@@ -107,7 +107,7 @@
                  (fn [err]
                    (timbre/error "Okto ->" (js->clj err))))
       (.parseTokensFromUrl token
-                           (fn [res]
+                           (fn [^js/Object res]
                              (timbre/debug "Okto:" (js-keys res)(js->clj res)))))))
 
 
