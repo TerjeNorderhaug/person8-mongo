@@ -92,7 +92,7 @@
     (if (not (.hasTokensInUrl token))
       (.renderEl sign-in
                  #js{:el widget-container}
-                 (fn [^js/Object res]
+                 (fn [^js res]
                    (timbre/info "Signed on")
                    (timbre/debug "Okto ->" (js-keys res)(js->clj res))
                    (rf/dispatch [:mobile :user]
@@ -107,7 +107,7 @@
                  (fn [err]
                    (timbre/error "Okto ->" (js->clj err))))
       (.parseTokensFromUrl token
-                           (fn [^js/Object res]
+                           (fn [^js res]
                              (timbre/debug "Okto:" (js-keys res)(js->clj res)))))))
 
 
