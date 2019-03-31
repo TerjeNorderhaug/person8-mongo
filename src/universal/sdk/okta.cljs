@@ -100,9 +100,9 @@
                  (fn [^js res]
                    (timbre/info "Signed on")
                    (timbre/debug "Okto ->" (js-keys res)(js->clj res))
-                   (rf/dispatch [:mobile :user]
-                               (assoc (js->clj (.-user res) :keywordize-keys true)
-                                      :status (or (.-status res) true)))
+                   (rf/dispatch [:mobile :user
+                                  (assoc (js->clj (.-user res) :keywordize-keys true)
+                                         :status (or (.-status res) true))])
                    (let [token-manager (.-tokenManager sign-in)]
                     (.add token-manager "my_id_token" res))
                    (timbre/debug "Hide widget")
