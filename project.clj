@@ -113,7 +113,7 @@
                                   :output-dir "target/test"}}}}}
 
              :production
-             {:env {:production true}
+             {; :env {:production true}
               :cljsbuild
               {:builds
                {:server
