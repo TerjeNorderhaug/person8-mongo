@@ -122,4 +122,5 @@
                 :app
                 {:compiler {:output-dir "target/app/out"
                             :optimizations :advanced
+                            :infer-externs true
                             :pretty-print false}}}}}})
