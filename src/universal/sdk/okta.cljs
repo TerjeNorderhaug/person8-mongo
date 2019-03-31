@@ -75,7 +75,7 @@
 (def default-widget-config
        {:baseUrl "https://in-progress.okta.com"
         :clientId test1-client-id
-        :redirectUri "http://localhost:5000/implicit/callback"
+        :redirectUri "https://person-8.herokuapp.com/okta/redirect"
         :authParams  {;:issuer "default"
                       ; :scopes ["openid" "email" "profile" "address" "phone"]
                       ;:responseType ["id_token" "token"]
