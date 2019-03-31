@@ -49,7 +49,14 @@
                   (r/ok)
                   (r/content-type "text/html")
                   (res)))
-   :okta-redirect #(timbre/info "Okta Redirect")})
+   :okta-redirect (fn [req res]
+                    (timbre/info "Okta Redirect")
+                    (-> "Okta Redirect"
+                         (r/ok)
+                         (r/content-type "text/html")
+                         (res)))})
+
+
 
 (defn bidi-router [routes handlers & [raise]]
   (fn [req res]
