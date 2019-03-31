@@ -69,12 +69,17 @@
 (def default-widget-config ; sign on works and returns user profile but general
    {:baseUrl "https://in-progress.okta.com"})
 
+(def default-widget-config ;; gets token but not profile
+   {:baseUrl "https://in-progress.okta.com"
+    :clientId test1-client-id})
+
 #_
 (def default-widget-config ;; gets token but not profile
      {:baseUrl "https://in-progress.okta.com"
       :clientId test1-client-id
       :redirectUri "http://localhost:5000/implicit/callback"})
 
+#_
 (def default-widget-config
        {:baseUrl "https://in-progress.okta.com"
         :clientId test1-client-id
