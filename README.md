@@ -70,7 +70,7 @@ To test the system, execute:
 
 ## License
 
-Copyright © 2018 Terje Norderhaug
+Copyright © 2019 Terje Norderhaug
 
 Distributed under the Eclipse Public License either version 1.0
 or (at your option) any later version.
