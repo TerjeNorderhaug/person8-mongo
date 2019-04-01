@@ -21,9 +21,9 @@
   [ui/mui-theme-provider
    {:mui-theme (get-mui-theme
                 {:palette
-                 {:primary1-color "#9DCFE1"
-                  :primary2-color (color :deep-blue700)
-                  :primary3-color (color :deep-blue200)
+                 {:primary1-color (color :blue-grey900)
+                  :primary2-color (color :indigo700)
+                  :primary3-color (color :indigo200)
                   :alternate-text-color (color :white) ;; used for appbar text
                   :primary-text-color (color :light-black)}})}
    [:div

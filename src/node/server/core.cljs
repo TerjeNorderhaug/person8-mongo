@@ -20,9 +20,12 @@
    [app.routes :as routes
     :refer [routes]]
    [app.core :as app
-    :refer [static-page]]))
+    :refer [static-page]]
+   [sdk.twilio :as twilio]))
 
 (defstate express :start (nodejs/require "express"))
+
+(defstate okta :start (nodejs/require "@okta/okta-sdk-nodejs"))
 
 (def cors (nodejs/require "cors"))
 

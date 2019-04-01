@@ -59,6 +59,7 @@
      (lib/deep-merge db msg)))
   (rf/dispatch [:pubnub/register {:channel "demo" :tag :pubnub/message}])
 
+  (reg-property :profile)
   (reg-property :stage)
   (reg-property :mobile)
   (reg-property :dashboard)

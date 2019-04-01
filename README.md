@@ -1,8 +1,8 @@
-# HackBench
+# Person8
 
-Clojure starter template for rapid prototyping.
+SPA to restore the identity of homeless youth, submitted to the [Oktane 19 hackathon](https://oktane19-hackathon.devpost.com/).
 
-Providing the framework to build a universal (nee isomporhic) Clojurescript React app for mobile and/or web.
+Universal (isomporhic) Clojurescript React app for mobile and/or web.
 
 Runs on Docker and Heroku using node express, bootstrap, and material design, with hotloaded code shared between frontend and backend.
 
