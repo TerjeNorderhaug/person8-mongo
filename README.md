@@ -1,10 +1,6 @@
 # Person8
 
-SPA to restore the identity of homeless youth.
-
-Universal (isomporhic) Clojurescript React app for mobile and/or web.
-
-Runs on Docker and Heroku using node express, bootstrap, and material design, with hotloaded code shared between frontend and backend.
+SPA to restore the identity of homeless youth using MongoDB Atlas & Stich for serverless implementation.
 
 ## References
 
