@@ -16,15 +16,20 @@
    [macchiato.util.response :as r]
    [mount.core :as mount
     :refer [defstate]]
+   [re-frame.core :as rf]
    [app.state :as state]
    [app.routes :as routes
     :refer [routes]]
    [app.core :as app
     :refer [static-page]]
+   [sdk.pubnub :as pubnub]
    [sdk.twilio :as twilio]))
+
+(defstate pubnub :start (pubnub/register (pubnub/pubnub) {:channel "demo"}))
 
 (defstate express :start (nodejs/require "express"))
 
+#_
 (defstate okta :start (nodejs/require "@okta/okta-sdk-nodejs"))
 
 (def cors (nodejs/require "cors"))
@@ -81,6 +86,10 @@
     (.listen port success)))
 
 (defn -main [& mess]
+  (rf/reg-event-fx
+   :pubnub/message
+   (fn [{:keys [db] :as cofx} [_ & args]]
+     (timbre/debug "pubnub message ->" args)))
   (mount/start)
   (let [port (or (.-PORT (.-env js/process)) 1337)
         express-app (@express)

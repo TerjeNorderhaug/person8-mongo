@@ -13,8 +13,10 @@
    [mount.core :as mount
     :refer [defstate]]
    [util.rflib :as rflib]
+   [util.request :as request]
    [sdk.okta :as okta]
    [sdk.twilio :as twilio]
+   [sdk.mongo :as mongo]
    [app.state :as state]
    [app.session :as session]
    [app.view.page
@@ -22,8 +24,11 @@
    [app.view.view
     :refer [view]]))
 
+(def demo-mode true)
+
 (defn scripts [initial]
-  [{:src okta/auth-js}
+  [{:src mongo/stich-sdk-url}
+   {:src okta/auth-js}
    {:src "/js/out/app.js"}
    (str "main_cljs_fn("
         (pr-str (pr-str initial))
@@ -43,6 +48,11 @@
 (defstate reporting
   :start #(timbre/info "Starting")
   :stop #(timbre/info "Stopping"))
+
+(defstate do-signin
+    :start (if demo-mode
+             (rf/dispatch [:mobile :user okta/guest-login-data])
+             (okta/custom-sign-in)))
 
 (def use-default-state? false)
 

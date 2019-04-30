@@ -17,6 +17,21 @@
 (def default-client-id "0oab4exampleR4Jbi0h7")
 (def test1-client-id "0oaehotqz5N8l2Ake356")
 
+(def guest-login-data
+  "Use as a stand-in for testing/demo when okta response is not available"
+  {:user
+   {:id "00ue8h0fw356",
+    :password-Changed "2019-04-29T20:51:16.000Z"}
+   :profile {:login "rune@in-progress.com",
+             :firstName "Rune",
+             :lastName "Norderhaug",
+             :locale "en",
+             :timezone "America/Los_Angeles"},
+   :type "SESSION_SSO",
+   :session {:token "PdaXm4A0u55IPPuS",
+             :setCookieAndRedirect true,}
+   :status "SUCCESS"})
+
 (def default-widget-config
   (case :simple
    ; sign on works and returns user profile but general only
@@ -32,18 +47,18 @@
     :clientId test1-client-id
     :redirectUri "http://localhost:5000/implicit/callback"}
    :custom
-    {:baseUrl "https://in-progress.okta.com"
-     :clientId test1-client-id
-     :redirectUri "https://person-8.herokuapp.com/okta/redirect"
-     :authParams  {:issuer "default"
-                   :scopes ["openid" "email" "profile" #_"address" #_"phone"]
-                   :responseType ["id_token" "token"]
-                   :display "page"}}))
+   {:baseUrl "https://in-progress.okta.com"
+    :clientId test1-client-id
+    :redirectUri "https://person-8.herokuapp.com/okta/redirect"
+    :authParams  {:issuer "default"
+                  :scopes ["openid" "email" "profile" #_"address" #_"phone"]
+                  :responseType ["id_token" "token"]
+                  :display "page"}}))
 
 (def widget-appearance
   {:logo "/media/logo-cropped.png"
    :registration true
-   :smsRecovery true}) 
+   :smsRecovery true})
 
 (defn show-widget [widget-container]
   {:pre [(string? widget-container)]}
@@ -91,6 +106,7 @@
       (if js-custom-sign-in
         (js-custom-sign-in)))))
 
+#_
 (defstate do-signin
   :start (if-not (lib/node?)
            (custom-sign-in)))

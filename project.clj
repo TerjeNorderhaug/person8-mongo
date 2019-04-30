@@ -5,8 +5,8 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[org.clojure/clojure "1.9.0"]
-                 [org.clojure/clojurescript "1.10.339"]
-                 [org.clojure/core.async "0.4.474"]
+                 [org.clojure/clojurescript "1.10.520"]
+                 [org.clojure/core.async "0.4.490"]
                  [cljsjs/react "15.6.2-4"]
                  [cljsjs/react-dom "15.6.2-4"]
                  [cljsjs/react-dom-server "15.6.2-4"]
@@ -17,18 +17,20 @@
                                org.clojure/clojure
                                org.clojure/clojurescript]]
                  [cljsjs/pubnub "4.1.1-0"]
+                 [camel-snake-kebab "0.4.0"]
+                 [mount "0.1.12"]
+                 [bidi "2.1.4"]
                  [reagent "0.7.0"]
                  [secretary "1.2.3"]
                  [re-frame "0.10.5"]
-                 [com.taoensso/timbre "4.10.0"]
-                 [cljs-http "0.1.44"]
-                 [com.taoensso/sente "1.12.0"]
-                 [camel-snake-kebab "0.4.0"]
+                 [cljs-http "0.1.46"]
+                 [com.taoensso/timbre "4.10.0"
+                  :exclusions [com.taoensso/encore]]
+                 [com.taoensso/sente "1.14.0-RC2"]
                  [kioo "0.5.0"
                   :exclusions [org.clojure/clojure cljsjs/react cljsjs/react-dom]]
-                 [bidi "2.1.4"]
-                 [macchiato/core "0.2.14"]
-                 [mount "0.1.12"]]
+                 [macchiato/core "0.2.14"]]
+
 
   :npm {:dependencies [[express "4.16.4"]
                        [cors "2.8.5"]

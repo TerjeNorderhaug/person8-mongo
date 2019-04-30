@@ -22,8 +22,8 @@
        (if-let [twilio (js/require "twilio")]
          (twilio sid token))))))
 
-(def account-sid (env "TWILIO_SID"))
-(def auth-token (env "TWILIO_TOKEN"))
+(def account-sid (if (lib/node?)(env "TWILIO_SID")))
+(def auth-token  (if (lib/node?)(env "TWILIO_TOKEN")))
 
 (def client (twilio-client account-sid auth-token))
 

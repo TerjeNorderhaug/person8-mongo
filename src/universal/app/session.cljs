@@ -13,7 +13,8 @@
     :refer [reg-property]]
    #_[re-frame.http-fx]
    [taoensso.timbre :as timbre]
-   [cljs-http.client :as http]))
+   [cljs-http.client :as http]
+   [sdk.okta :as okta]))
 
 (def interceptors [#_(when ^boolean js/goog.DEBUG debug)
                    rf/trim-v])
@@ -60,6 +61,20 @@
   (rf/dispatch [:pubnub/register {:channel "demo" :tag :pubnub/message}])
 
   (reg-property :profile)
+
+  (rf/reg-event-db
+   :new-field-event
+   (fn [{:as db} [_ id {:keys [label timestamp] :as event}]]
+     ; TODO: fields should be map
+     (timbre/debug "New field event:" id event)
+     (let [fields (get-in db [:profile :fields])
+           ix (->> (map-indexed vector fields)
+                   (filter #(= id (:id (second %))))
+                   (first)
+                   (first))]
+       (timbre/debug "Appending to event:" ix)
+       (update-in db [:profile :fields ix :events] conj event))))
+
   (reg-property :stage)
   (reg-property :mobile)
   (reg-property :dashboard)

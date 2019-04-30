@@ -20,7 +20,8 @@
 (defn view [{:keys [stage] :as session}]
   [ui/mui-theme-provider
    {:mui-theme (get-mui-theme
-                {:palette
+                {:font-size 16
+                 :palette
                  {:primary1-color (color :blue-grey900)
                   :primary2-color (color :indigo700)
                   :primary3-color (color :indigo200)
