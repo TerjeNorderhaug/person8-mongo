@@ -1,6 +1,6 @@
 # Person8
 
-SPA to restore the identity of homeless youth using MongoDB Atlas & Stich for serverless implementation.
+SPA to restore the identity of homeless youth using MongoDB Atlas & Stitch for serverless implementation.
 
 ## References
 
