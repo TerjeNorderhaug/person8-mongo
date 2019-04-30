@@ -1,6 +1,6 @@
 # Person8
 
-SPA to restore the identity of homeless youth, submitted to the [Oktane 19 hackathon](https://oktane19-hackathon.devpost.com/).
+SPA to restore the identity of homeless youth.
 
 Universal (isomporhic) Clojurescript React app for mobile and/or web.
 
